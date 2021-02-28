@@ -36,7 +36,7 @@ const UserSchema = new Schema(
 		},
 		dob: {
 			type: Date,
-			requirded: true,
+			required: true,
 		},
 		profileImage: {
 			type: String,
@@ -50,6 +50,7 @@ const UserSchema = new Schema(
 					required: true,
 				},
 				rating: {
+					type: Number,
 					enum: [1, 0, -1],
 					required: true,
 				},
