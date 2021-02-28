@@ -1,4 +1,14 @@
-# Additional Ignores
+#======================
+#  Additional Ignores
+#======================
+
+# Environment Variables
+config/default.json 
+
+
+#========================
+#  Default Node Ignores
+#========================
 
 # Logs
 logs
