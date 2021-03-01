@@ -3,7 +3,7 @@
 #======================
 
 # Environment Variables
-config/default.json 
+server/config/default.json
 
 
 #========================

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 // Database connection function
 const connectDB = require("./config/db.js");
@@ -13,8 +14,15 @@ app.use(
 	})
 );
 
+// Statically define react front-end
+app.use(express.static(path.join(__dirname, "../client/build")));
+
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
+
+app.get("/", (req, res) => {
+	return res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
