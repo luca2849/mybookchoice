@@ -118,4 +118,51 @@ router.post(
 	}
 );
 
+// POST /api/auth/login/email
+// Purpose - Log In a user
+// Access - Public
+router.post(
+	"/login/email",
+	[
+		check("email", "Email is required").not().isEmpty(),
+		check("email", "A valid email is required").isEmail(),
+		check("password", "A valid password is required").not().isEmpty(),
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+		const { email, password } = req.body;
+		try {
+			const user = await User.findOne({ email: email });
+			if (!user) {
+				return res
+					.status(400)
+					.json({ errors: [{ msg: "Invalid log in details" }] });
+			}
+			const isMatch = await bcrypt.compare(password, user.password);
+			if (!isMatch) {
+				return res
+					.status(400)
+					.json({ errors: [{ msg: "Invalid log in details" }] });
+			}
+			// Create JWT
+			const payload = {
+				user: {
+					id: user._id,
+				},
+			};
+			const token = jwt.sign(payload, config.get("jwtSecret"), {
+				expiresIn: config.get("jwtExpiry"),
+			});
+			return res.json({ token });
+		} catch (error) {
+			return res
+				.status(500)
+				.json({ errors: [{ msg: "Internal server error" }] });
+		}
+	}
+);
+
 module.exports = router;
