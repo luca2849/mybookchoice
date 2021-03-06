@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/user", require("./routes/user"));
 
 // Serve React Build
 app.get("/", (req, res) => {
