@@ -14,6 +14,9 @@ const jwt = require("jsonwebtoken");
 // Mongo Models
 const User = require("../models/User");
 
+// POST /api/auth/register/email
+// Purpose - Create a new User
+// Access - Public
 router.post(
 	"/register/email",
 	[
@@ -54,17 +57,33 @@ router.post(
 		}
 		// Query database
 		try {
+			// Check if e-mail is already registered
 			let emailCheck = await User.findOne({ email });
 			if (emailCheck) {
 				return res
 					.status(400)
 					.json({ errors: [{ msg: "Email already registered" }] });
 			}
+			// Check if username exists
 			const usernameCheck = await User.findOne({ username });
 			if (usernameCheck) {
 				return res
 					.status(400)
 					.json({ errors: [{ msg: "Username is taken" }] });
+			}
+			// Password format validation
+			const passwordRegex = new RegExp(
+				"(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])"
+			);
+			if (!passwordRegex.test(password)) {
+				return res.status(400).json({
+					errors: [
+						{
+							msg:
+								"Password requires at least 1 upper-case character, 1 symbol, 1 lower-case character and 1 number",
+						},
+					],
+				});
 			}
 			// Compile Date
 			const dateDOB = moment.utc(dob, "DD-MM-YYYY").toDate();
