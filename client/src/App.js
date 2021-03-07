@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PrivateRoute from "./Components/Misc/Routing/PrivateRoute";
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
@@ -10,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 // Pages
 import Home from "./Pages/Home/Home";
 import Landing from "./Pages/Landing/Landing";
+import Logout from "./Pages/Logout/Logout";
 // CSS
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,6 +42,8 @@ function App() {
 					<Switch>
 						{/* Unprotected Routes */}
 						<Route exact path="/" component={Landing} />
+						<PrivateRoute exact path="/home" component={Home} />
+						<Route exact path="/logout" component={Logout} />
 					</Switch>
 				</>
 			</Router>
