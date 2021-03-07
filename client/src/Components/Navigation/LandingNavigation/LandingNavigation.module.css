@@ -1,0 +1,22 @@
+.nav p, h2{
+    margin: 0;
+}
+.nav > div{
+    padding: 0.5em 0.5em;
+}
+.navLeft {
+    font-size: 200%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.navLeft svg{
+    margin: auto 0.5em auto 0;
+}
+.container{
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://www.detroitlabs.com/wp-content/uploads/2018/02/alfons-morales-YLSwjSy7stw-unsplash.jpg");
+    background-size: contain;
+    height: 100vh;
+}
