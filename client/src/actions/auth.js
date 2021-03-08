@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
+	console.log("fired");
 	if (localStorage.token) {
 		setAuthToken(localStorage.token);
 		try {

@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import Home from "./Pages/Home/Home";
 import Landing from "./Pages/Landing/Landing";
 import Logout from "./Pages/Logout/Logout";
+import Profile from "./Pages/Profile/Profile";
 // CSS
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +23,7 @@ if (localStorage.token) {
 
 function App() {
 	useEffect(() => {
+		console.log("GO");
 		store.dispatch(loadUser());
 	}, []);
 	return (
@@ -43,6 +45,11 @@ function App() {
 						{/* Unprotected Routes */}
 						<Route exact path="/" component={Landing} />
 						<PrivateRoute exact path="/home" component={Home} />
+						<PrivateRoute
+							exact
+							path="/profile"
+							component={Profile}
+						/>
 						<Route exact path="/logout" component={Logout} />
 					</Switch>
 				</>

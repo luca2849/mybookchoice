@@ -1,0 +1,56 @@
+.mainNav{
+    background: #eeeeee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mainNav > *{
+    padding: 0.5rem;
+}
+
+.mainNav p, svg{
+    margin: 0;
+}
+
+.brand{
+    display: flex;
+    align-items: center;
+}
+
+.brand h1{
+    margin: 0 0 0 1rem;
+    font-size: 175%;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.brand svg{
+    transform: scale(0.8);
+    margin: 0;
+}
+
+.user{
+    padding: 0.5rem 2rem;
+    font-size: 120%;
+    letter-spacing: 1px;
+    background: transparent;
+    border: 1px solid #10a7d1;
+    color: #10a7d1;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.user svg{
+    margin: 0 0.5em 0 0;
+    font-size: 150%;
+}
+
+.user:hover{
+    background: #10a7d1;
+    color: white;
+}

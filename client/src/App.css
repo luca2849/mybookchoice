@@ -8,3 +8,12 @@
 .Toastify__close-button {
     padding: 10px;
 }
+/* Global Styles */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+p {
+    margin: 0;
+}

@@ -5,7 +5,7 @@ const Logo = ({ fill }) => {
 		<svg
 			height="56"
 			overflow="visible"
-			viewBox="0 0 57  56"
+			viewBox="0 0 57 56"
 			width="57"
 			xmlns="http://www.w3.org/2000/svg"
 			style={{ fill }}
