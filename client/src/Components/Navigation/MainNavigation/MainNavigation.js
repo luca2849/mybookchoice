@@ -23,7 +23,7 @@ const MainNavigation = ({ children, user }) => {
 					<Link to="/profile">
 						<button className={styles.user}>
 							<BsFillPersonFill />
-							{user.username}
+							{user && user.username}
 						</button>
 					</Link>
 				</div>
@@ -35,7 +35,7 @@ const MainNavigation = ({ children, user }) => {
 };
 
 MainNavigation.propTypes = {
-	user: PropTypes.object.isRequired,
+	user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

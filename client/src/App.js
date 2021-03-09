@@ -23,7 +23,6 @@ if (localStorage.token) {
 
 function App() {
 	useEffect(() => {
-		console.log("GO");
 		store.dispatch(loadUser());
 	}, []);
 	return (

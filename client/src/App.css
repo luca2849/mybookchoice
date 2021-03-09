@@ -9,6 +9,9 @@
     padding: 10px;
 }
 /* Global Styles */
+html, body{
+    overscroll-behavior-y: contain;
+}
 a {
     text-decoration: none;
     color: inherit;
@@ -16,4 +19,8 @@ a {
 
 p {
     margin: 0;
+}
+
+button:focus{
+    outline: none;
 }

@@ -7,13 +7,13 @@ import MainNavigation from "../../Navigation/MainNavigation/MainNavigation";
 
 const PrivateRoute = ({
 	component: Component,
-	auth: { isAuthenticated, user },
+	auth: { isAuthenticated, loading },
 	...rest
 }) => (
 	<Route
 		{...rest}
 		render={(props) =>
-			!isAuthenticated ? (
+			!isAuthenticated && !loading ? (
 				<Redirect to="/" />
 			) : (
 				<MainNavigation>
@@ -25,7 +25,7 @@ const PrivateRoute = ({
 );
 
 PrivateRoute.propTypes = {
-	auth: PropTypes.object.isRequired,
+	auth: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,0 +1,27 @@
+.bookContainer{
+    background-size: cover;
+    display: flex;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto 2rem auto;
+}
+
+.book{
+    margin-top: auto;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+    color: white;
+    position: relative;
+    bottom: 0;
+    font-size: 140%;
+    padding: 1rem;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.icon{
+    position: absolute;
+    bottom: 0;
+    right: 5%;
+    transform: scale(1.5);
+}
