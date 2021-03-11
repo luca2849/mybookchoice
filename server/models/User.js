@@ -43,6 +43,11 @@ const UserSchema = new Schema(
 			required: true,
 			default: "default.jpg",
 		},
+		preferences: {
+			genres: [{ type: String }],
+			types: [{ type: String }],
+			authors: [{ type: String }],
+		},
 		ratings: [
 			{
 				book_isbn: {

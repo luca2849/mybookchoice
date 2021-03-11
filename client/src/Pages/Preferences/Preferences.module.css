@@ -1,0 +1,176 @@
+.container {
+    display: flex;
+    height: calc(100vh - 72px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h1 {
+    margin: -40px 0 40px 0;
+    letter-spacing: 2px;
+}
+
+.container > * {
+    margin-bottom: 20px;
+}
+
+.container > div:nth-of-type(n - 1) {
+    margin-bottom: 0;
+}
+
+.container > div:first-of-type {
+    width: 50%;
+}
+
+.container .buttons {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container button {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.container button:nth-of-type(2) {
+    background: #10a7d1;
+    color: #fff;
+}
+
+.container button:nth-of-type(2):hover {
+    background: #fff;
+    color: #10a7d1;
+    border: 2px solid #10a7d1;
+}
+
+.genre {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60rem;
+    max-width: 100%;
+    justify-content: center;
+}
+
+.genreFlex {
+    flex: 1 0 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.genreFlex > div {
+    margin: 2rem;
+}
+
+.genreBottom {
+    display: flex;
+    align-items: flex-end;
+}
+
+.genre {
+    box-sizing: border-box;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.genreFlex {
+    box-sizing: border-box;
+    width: 25%;
+    display: flex;
+}
+
+.genreFlex > div {
+    flex: 0 1 auto;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.genreTop {
+    padding: 1rem;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.genreTop > * {
+    max-height: 75px;
+    max-width: 150px;
+}
+
+.genreTop > svg {
+    transform: scale(3);
+}
+
+.genreBottom {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.genreContent{
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.clicked {
+    border: 2px solid rgb(43, 158, 253);
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+
+.select {
+    width: 40%;
+}
+
+.select svg {
+    margin: 0.5rem;
+}
+
+.container h3 {
+    width: 50%;
+    text-align: left;
+    margin: 20px 0 10px 0;
+}
+
+.completed {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.completed h3 {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.select button{
+    display: block;
+    margin: 0 auto;
+}
+
+.select button {
+    background: #10a7d1;
+    color: #fff;
+}
+
+.select button:hover {
+    background: #fff;
+    color: #10a7d1;
+    border: 2px solid #10a7d1;
+}

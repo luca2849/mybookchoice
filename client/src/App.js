@@ -13,7 +13,9 @@ import Home from "./Pages/Home/Home";
 import Landing from "./Pages/Landing/Landing";
 import Logout from "./Pages/Logout/Logout";
 import Profile from "./Pages/Profile/Profile";
+import Preferences from "./Pages/Preferences/Preferences";
 // CSS
+import "rsuite/dist/styles/rsuite-default.css";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 // Check token
@@ -44,6 +46,11 @@ function App() {
 						{/* Unprotected Routes */}
 						<Route exact path="/" component={Landing} />
 						<PrivateRoute exact path="/home" component={Home} />
+						<PrivateRoute
+							exact
+							path="/preferences"
+							component={Preferences}
+						/>
 						<PrivateRoute
 							exact
 							path="/profile"

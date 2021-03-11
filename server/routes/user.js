@@ -47,4 +47,37 @@ router.get("/:username", auth, async (req, res) => {
 	}
 });
 
+// POST /api/user/preferences
+// Purpose - Update user preferences
+// Access - Private
+router.post("/preferences", auth, async (req, res) => {
+	const { genres, types, authors } = req.body;
+	if (!genres || !types || !authors)
+		return res
+			.status(400)
+			.json({ errors: [{ msg: "Missing parameters" }] });
+	try {
+		const user = await User.findOne({ _id: req.user.id }).select(
+			"-password -__v"
+		);
+		if (!user) {
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found" }] });
+		}
+		user.preferences = {
+			genres,
+			types,
+			authors,
+		};
+		await user.save();
+		return res.status(200).json(user);
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
 module.exports = router;
