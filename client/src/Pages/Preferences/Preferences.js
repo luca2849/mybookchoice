@@ -114,8 +114,6 @@ const Preferences = ({ addPreferences }) => {
 				setClicked([...clicked, name]);
 			} else if (currentPage === 2) {
 				setClickedTypes([...clickedTypes, name]);
-			} else if (currentPage === 3) {
-				// setClickedAuthors([...clickedAuthors, name]);
 			}
 		}
 	};

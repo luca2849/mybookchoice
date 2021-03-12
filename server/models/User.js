@@ -50,21 +50,25 @@ const UserSchema = new Schema(
 		},
 		ratings: [
 			{
-				book_isbn: {
-					type: String,
-					required: true,
+				book_id: {
+					type: Schema.Types.ObjectId,
+					ref: "book",
 				},
 				rating: {
 					type: Number,
 					enum: [1, 0, -1],
 					required: true,
 				},
+				ratedOn: {
+					type: Date,
+					default: Date.now(),
+				},
 			},
 		],
 		friends: [
 			{
 				user: {
-					type: Schema.Types.Object,
+					type: Schema.Types.ObjectId,
 					ref: "user",
 				},
 				since: {
