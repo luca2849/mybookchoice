@@ -73,7 +73,7 @@ router.post(
 			}
 			// Password format validation
 			const passwordRegex = new RegExp(
-				"(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])"
+				"(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])"
 			);
 			if (!passwordRegex.test(password)) {
 				return res.status(400).json({
