@@ -119,11 +119,12 @@ router.post("/rating", auth, async (req, res) => {
 // Access - Private
 router.get("/books", auth, async (req, res) => {
 	try {
+		const { bookCount, skip } = req.query;
 		const user = await User.findOne({ _id: req.user.id });
 		const books = await Book.find()
 			.sort({ ratingCount: -1 })
-			.skip(user.ratings.length)
-			.limit(10);
+			.skip(user.ratings.length + +skip)
+			.limit(+bookCount); // Note - '+' converts str to int
 		if (!user || !books)
 			return res
 				.status(404)

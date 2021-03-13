@@ -17,3 +17,6 @@ export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const CLEAR_USER = "CLEAR_USER";
 export const CLEAR_USERS = "CLEAR_USERS";
 export const USER_UPDATED = "USER_UPDATED";
+// Books
+export const BOOKS_UPDATED = "BOOKS_UPDATED";
+export const BOOK_ERROR = "BOOK_ERROR";

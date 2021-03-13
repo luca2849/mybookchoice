@@ -5,7 +5,7 @@ import Book from "../Book/Book";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({
-	x: i * -10,
+	x: i * -3,
 	y: i * 10,
 	scale: 1,
 	rot: 0,
