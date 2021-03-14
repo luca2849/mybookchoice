@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
+app.use("/api/recommend", require("./routes/recommend"));
 
 // Serve React Build
 app.get("/", (req, res) => {

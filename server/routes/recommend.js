@@ -1,11 +1,12 @@
 // Express & Routing
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../middleware/auth");
 const recommend = require("../util/recommend");
 
-router.get("/", async (req, res) => {
-	const books = await recommend("60437e4b1965ce4110f1ef8f", 3);
+router.get("/", auth, async (req, res) => {
+	const userId = req.user._id;
+	const books = await recommend(userId, 3);
 	return res.json({ books });
 });
 

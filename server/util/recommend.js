@@ -32,10 +32,6 @@ const recommend = async (targetUser, n) => {
 		}
 		// Sort
 		scores.sort((a, b) => (a.score > b.score ? 1 : -1));
-		// Get Current User's Not Read Books
-		const userNotRead = currentUser.ratings.filter(
-			(item) => item.rating === 0
-		);
 		// Get n nearest neighbors liked books (which are either not read or not rated by current user)
 		if (scores.length < n) n = scores.length;
 		let books = [];
@@ -61,7 +57,7 @@ const recommend = async (targetUser, n) => {
 			books.push(likesBooks.filter((book) => book));
 		}
 		// Return books w/out duplicates
-		return Array.from(new Set(books));
+		return Array.from(new Set(books.flat(1)));
 	} catch (error) {
 		console.error(error);
 	}

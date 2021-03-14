@@ -1,5 +1,0 @@
-{
-    "mongoURI": "mongodb://localhost/mybookchoice",
-    "jwtSecret": "NGz8IAgUacnfslFl5JHJVKgu3BCMDeFm",
-    "jwtExpiry": 360000000
-}
