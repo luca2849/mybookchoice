@@ -1,42 +1,30 @@
 const User = require("../models/User");
 const Book = require("../models/Book");
 const mongoose = require("mongoose");
+const preferencesRec = require("./preferencesRec");
+const booksRec = require("./booksRec");
 
 const recommend = async (targetUser, n) => {
 	try {
-		// Get current user
-		const currentUser = await User.findOne({ _id: targetUser }).populate(
-			"ratings.book_id"
-		);
-		if (!currentUser) return -1;
-		// Get all users except current
-		const users = await User.find({
-			_id: { $nin: [mongoose.Types.ObjectId(targetUser)] },
-		}).populate("ratings.book_id");
-		if (users.length < 1) return -1;
-		const scores = [];
-		// As every user rates the same books in the same order, searches are not needed
-		for (const user of users) {
-			let sumSquares = 0;
-			// User to check needs more ratings than the current user
-			if (user.ratings.length <= currentUser.ratings.length) continue;
-			for (let i = 0; i < currentUser.ratings.length; i++) {
-				const rating1 = currentUser.ratings[i].rating;
-				const rating2 = user.ratings[i].rating;
-				const diff = rating1 - rating2;
-				sumSquares += diff * diff;
-			}
-			const d = Math.sqrt(sumSquares);
-			const similarity = 1 / (1 + d);
-			scores.push({ user: user._id, score: similarity });
+		const preferenceScores = await preferencesRec(targetUser);
+		const bookScores = await booksRec(targetUser);
+		const currentUser = await User.findOne({ _id: targetUser });
+		const averageScores = [];
+		for (let i = 0; i < bookScores.length; i++) {
+			// Find preference score for user
+			const record = search(bookScores[i].user, "user", preferenceScores);
+			// Average Score
+			const averageScore = {
+				user: bookScores[i].user,
+				score: 0.5 * (bookScores[i].score + record.score),
+			};
+			averageScores.push(averageScore);
 		}
-		// Sort
-		scores.sort((a, b) => (a.score > b.score ? 1 : -1));
 		// Get n nearest neighbors liked books (which are either not read or not rated by current user)
-		if (scores.length < n) n = scores.length;
+		if (averageScores.length < n) n = averageScores.length;
 		let books = [];
 		for (let i = 0; i < n; i++) {
-			const currentScore = scores[i];
+			const currentScore = averageScores[i];
 			// Get this users liked books
 			const currUser = await User.findOne({ _id: currentScore.user });
 			if (!currUser) continue;
@@ -60,6 +48,18 @@ const recommend = async (targetUser, n) => {
 		return Array.from(new Set(books.flat(1)));
 	} catch (error) {
 		console.error(error);
+	}
+};
+
+const search = (term, key, array) => {
+	for (let i = 0; i < array.length; i++) {
+		if (
+			mongoose.Types.ObjectId(array[i][key]).equals(
+				mongoose.Types.ObjectId(term)
+			)
+		) {
+			return array[i];
+		}
 	}
 };
 

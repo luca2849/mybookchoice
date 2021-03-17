@@ -18,6 +18,7 @@ import Preferences from "./Pages/Preferences/Preferences";
 import "rsuite/dist/styles/rsuite-default.css";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import Recommendations from "./Pages/Recommendations/Recommendations";
 // Check token
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
@@ -55,6 +56,11 @@ function App() {
 							exact
 							path="/profile"
 							component={Profile}
+						/>
+						<PrivateRoute
+							exact
+							path="/recommendations"
+							component={Recommendations}
 						/>
 						<Route exact path="/logout" component={Logout} />
 					</Switch>

@@ -19,4 +19,5 @@ export const CLEAR_USERS = "CLEAR_USERS";
 export const USER_UPDATED = "USER_UPDATED";
 // Books
 export const BOOKS_UPDATED = "BOOKS_UPDATED";
+export const RECOMMENDATIONS_UPDATED = "RECOMMENDATIONS_UPDATED";
 export const BOOK_ERROR = "BOOK_ERROR";

@@ -1,4 +1,8 @@
-import { BOOKS_UPDATED, BOOK_ERROR } from "../actions/types";
+import {
+	BOOKS_UPDATED,
+	BOOK_ERROR,
+	RECOMMENDATIONS_UPDATED,
+} from "../actions/types";
 
 const initialState = {
 	loading: true,
@@ -15,6 +19,11 @@ export default function (state = initialState, action) {
 				isAuthenticated: false,
 				loading: false,
 				user: null,
+			};
+		case RECOMMENDATIONS_UPDATED:
+			return {
+				...state,
+				books: payload.books,
 			};
 		case BOOKS_UPDATED:
 			return {
