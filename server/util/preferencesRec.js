@@ -18,8 +18,8 @@ const preferencesRecc = async (targetUser) => {
 			let sumSquares = 0;
 			// For each user, calculate nearest neighbors based on preferences
 			// Order both users genre preferences
-			const userGenres = new Array(8).fill(0);
-			const currentGenres = new Array(8).fill(0);
+			const userVector = new Array(12).fill(0);
+			const currentVector = new Array(12).fill(0);
 			const genres = [
 				"Science-Fiction",
 				"Fiction",
@@ -30,18 +30,27 @@ const preferencesRecc = async (targetUser) => {
 				"Romance",
 				"Non-Fiction",
 			];
+			const types = ["Novel", "Poem", "Comic", "Play"];
 			// Add selected genres to pre-defined arrays
 			for (const genre of user.preferences.genres) {
 				const index = genres.indexOf(genre);
-				userGenres[index] = 1;
+				userVector[index] = 1;
 			}
 			for (const genre of currentUser.preferences.genres) {
 				const index = genres.indexOf(genre);
-				currentGenres[index] = 1;
+				currentVector[index] = 1;
+			}
+			for (const type of currentUser.preferences.types) {
+				const index = types.indexOf(type);
+				currentVector[index + 8] = 1;
+			}
+			for (const type of user.preferences.types) {
+				const index = types.indexOf(type);
+				userVector[index + 8] = 1;
 			}
 			// Find similarity between arrays
-			for (let i = 0; i < 8; i++) {
-				const diff = currentGenres[i] - userGenres[i];
+			for (let i = 0; i < 12; i++) {
+				const diff = currentVector[i] - userVector[i];
 				sumSquares += diff * diff;
 			}
 			const d = Math.sqrt(sumSquares);

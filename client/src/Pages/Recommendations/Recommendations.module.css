@@ -39,16 +39,3 @@
 .book h2 {
     text-transform: uppercase;
 }
-
-.pagination{
-    margin: 20px;
-    display: flex;
-    justify-content:center;
-}
-
-.pagination button {
-    padding: 1rem;
-    margin: 0.2rem;
-    border-radius: 10px;
-    border: 2px solid rgb(128, 128, 128);
-}

@@ -42,7 +42,12 @@ const recommend = async (targetUser, n) => {
 				}
 				return null;
 			});
-			books.push(likesBooks.filter((book) => book));
+			const cleanBooks = likesBooks
+				.filter((book) => book)
+				.map((book) => {
+					return { book, certainty: currentScore.score };
+				});
+			books.push(cleanBooks);
 		}
 		// Return books w/out duplicates
 		return Array.from(new Set(books.flat(1)));
