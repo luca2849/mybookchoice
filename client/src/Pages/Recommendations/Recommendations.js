@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getRecommendations } from "../../actions/book";
+import Loading from "../../Components/Misc/Loading/Loading";
 import styles from "./Recommendations.module.css";
 
-const Recommendations = ({ getRecommendations, books }) => {
+const Recommendations = ({ getRecommendations, book: { books, loading } }) => {
 	useEffect(() => {
 		getRecommendations(100, 0);
 	}, []);
 
-	if (!books) {
-		return <p>Loading...</p>;
+	if (loading) {
+		return <Loading />;
 	}
 	return (
 		<>
+			<h2>Your Recommendations</h2>
 			<div className={styles.books}>
 				{books.map((book) => (
 					<div className={styles.book}>
-						<div className={styles.bookInner}>
-							<div className={styles.imageContainer}>
-								<img
-									src={`http://covers.openlibrary.org/b/olid/${book.olId}-M.jpg`}
-								/>
+						<a
+							href={`https://openlibrary.org/works/${book.olId}`}
+							target="_blank"
+						>
+							<div className={styles.bookInner}>
+								<div className={styles.imageContainer}>
+									<img
+										src={`http://covers.openlibrary.org/b/olid/${book.olId}-M.jpg`}
+									/>
+								</div>
+								<div className={styles.bookDetails}>
+									<h4>{book.title}</h4>
+									<h5>{book.authors[0]}</h5>
+								</div>
 							</div>
-							<div className={styles.bookDetails}>
-								<h4>{book.title}</h4>
-								<h4>{book.authors[0]}</h4>
-								<h5>
-									{Math.round(book.certainty * 100000) / 1000}
-									%
-								</h5>
-							</div>
-						</div>
+						</a>
 					</div>
 				))}
 			</div>
@@ -39,7 +42,7 @@ const Recommendations = ({ getRecommendations, books }) => {
 };
 
 const mapStateToProps = (state) => ({
-	books: state.book.books,
+	book: state.book,
 });
 
 export default connect(mapStateToProps, { getRecommendations })(

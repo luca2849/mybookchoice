@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const Book = require("../models/Book");
 const mongoose = require("mongoose");
 
 const preferencesRecc = async (targetUser) => {
@@ -40,6 +39,7 @@ const preferencesRecc = async (targetUser) => {
 				const index = genres.indexOf(genre);
 				currentVector[index] = 1;
 			}
+			// Add types to arrays
 			for (const type of currentUser.preferences.types) {
 				const index = types.indexOf(type);
 				currentVector[index + 8] = 1;

@@ -24,11 +24,13 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				books: payload.books,
+				loading: false,
 			};
 		case BOOKS_UPDATED:
 			return {
 				...state,
 				books: payload,
+				loading: false,
 			};
 		default:
 			return state;
