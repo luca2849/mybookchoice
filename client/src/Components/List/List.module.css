@@ -1,0 +1,28 @@
+.list{
+    margin: 1rem 0;
+}
+
+.item {
+    border: 1px solid rgb(184, 184, 184);
+    padding: 1rem;
+    margin: 0 2rem;
+    font-size: 1.1rem;
+    color: black;
+    cursor: pointer;
+    background: white;
+    transition: all 0.25s;
+}
+
+.item:first-of-type {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.item:last-of-type {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.item:hover {
+    background: rgb(243, 243, 243);
+}

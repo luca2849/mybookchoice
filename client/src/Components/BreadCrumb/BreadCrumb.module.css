@@ -1,0 +1,28 @@
+.item, .crumb {
+    display: flex;
+}
+.crumb {
+    width: 80%;
+    font-size: 120%;
+    background: #ededed;
+    padding: 0.75rem;
+    margin: 1rem auto;
+    border-radius: 10px;
+}
+.item {
+    font-size: 120%;
+}
+.item span {
+    margin: 0 10px;
+}
+.item a {
+    color: rgb(16, 167, 209);
+    letter-spacing: 2px;
+    transition: all 0.25s;
+    border-bottom: 2px solid transparent;
+}
+.item a:hover {
+    color: rgb(14, 136, 170);
+    border-bottom: 2px solid rgb(14, 136, 170);
+    text-decoration: none;
+}

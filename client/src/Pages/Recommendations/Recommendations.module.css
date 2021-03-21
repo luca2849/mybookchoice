@@ -21,15 +21,13 @@ h2 {
 .book {
     font-size: 60%;
     width: 250px;
-    height: 500px;
+    height: 550px;
 }
 .bookInner {
     margin: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.3);
-    margin: 20px;
     height: 80%;
-    overflow-x: ellipsis;
     overflow: hidden;
 }
 .bookInner .imageContainer {

@@ -11,6 +11,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { ImCross } from "react-icons/im";
 
 import Deck from "../../Components/Deck/Deck";
+import Loading from "../../Components/Misc/Loading/Loading";
 
 const Home = ({ addRating }) => {
 	const [books, setBooks] = useState([]);
@@ -86,11 +87,13 @@ const Home = ({ addRating }) => {
 		setBooks(tmp.slice(1));
 	};
 
+	if (!books) console.log("No Books...");
+
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.cardsContainer}>
-					<Deck books={books} />
+					{books.length === 0 ? <Loading /> : <Deck books={books} />}
 				</div>
 				<div className={styles.mainContent}>
 					<div className={styles.actions}>

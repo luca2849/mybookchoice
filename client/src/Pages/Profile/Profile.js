@@ -1,15 +1,54 @@
 import React from "react";
-import Deck from "../../Components/Deck/Deck";
+import { connect } from "react-redux";
 import styles from "./Profile.module.css";
+import { Link } from "react-router-dom";
+import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
+import List from "../../Components/List/List";
+import Loading from "../../Components/Misc/Loading/Loading";
 
-import { animated } from "react-spring";
-
-const Profile = () => {
+const Profile = ({ user }) => {
+	if (!user) return <Loading />;
 	return (
-		<animated.div className={styles.root}>
-			<Deck />
-		</animated.div>
+		<div className={styles.profile}>
+			<BreadCrumb>
+				<BreadCrumb.Item>
+					<Link to={"/home"}>Home</Link>
+				</BreadCrumb.Item>
+				<BreadCrumb.Item>
+					<Link to={"/profile"}>Profile</Link>
+				</BreadCrumb.Item>
+			</BreadCrumb>
+			<div className={styles.profileContainer}>
+				<div className={styles.userSection}>
+					<div className={styles.imageContainer}>
+						<img src={`/${user.profileImage}`} />
+					</div>
+					<h3>{user.username}</h3>
+				</div>
+				<div className={styles.actions}>
+					<h3>My Account</h3>
+					<List>
+						<List.Item>My Recommendations</List.Item>
+						<List.Item>My Past Ratings</List.Item>
+						<List.Item>My Friends</List.Item>
+						<List.Item>My Messages</List.Item>
+						<List.Item>My Reviews</List.Item>
+					</List>
+					<h3>Account Settings</h3>
+					<List>
+						<List.Item>Password Reset</List.Item>
+						<List.Item>Edit Profile</List.Item>
+						<List.Item>Log Out</List.Item>
+						<List.Item>Delete My Account</List.Item>
+					</List>
+				</div>
+			</div>
+		</div>
 	);
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+	user: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(Profile);

@@ -9,7 +9,7 @@ const to = (i) => ({
 	y: i * 10,
 	scale: 1,
 	rot: 0,
-	delay: i * 100,
+	delay: i * 50,
 });
 const from = (i) => ({ x: 0, rot: 0, scale: 1, y: 0 });
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
