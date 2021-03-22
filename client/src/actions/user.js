@@ -44,3 +44,24 @@ export const addRating = (bookData, rating) => async (dispatch) => {
 		dispatch({ type: USER_ERROR });
 	}
 };
+
+export const editProfile = (formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	const body = JSON.stringify({ formData });
+	try {
+		const res = await axios.put("/api/user", body, config);
+		console.log(res.data);
+		toast.success("Updates Saved", { autoClose: 2000 });
+		dispatch({ type: USER_UPDATED, payload: res.data });
+	} catch (err) {
+		const errors = err.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};

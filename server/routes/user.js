@@ -158,4 +158,29 @@ router.get("/:username", auth, async (req, res) => {
 	}
 });
 
+// PUT /api/user
+// Purpose - Edit logged in user's profile
+// Access - Private
+router.put("/", auth, async (req, res) => {
+	try {
+		const user = await User.findOneAndUpdate(
+			{ _id: req.user.id },
+			req.body.formData,
+			{
+				returnOriginal: false,
+			}
+		);
+		if (!user)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found" }] });
+		return res.json(user);
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
 module.exports = router;

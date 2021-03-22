@@ -6,9 +6,9 @@ const List = ({ children }) => {
 	return <div className={styles.list}>{children}</div>;
 };
 
-const Item = ({ children }) => {
+const Item = ({ children, onClick }) => {
 	return (
-		<div className={styles.item}>
+		<div onClick={onClick} className={styles.item}>
 			<p>{children}</p>
 		</div>
 	);

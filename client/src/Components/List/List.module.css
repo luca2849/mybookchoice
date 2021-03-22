@@ -16,11 +16,16 @@
 .item:first-of-type {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    border-bottom: none;
 }
 
 .item:last-of-type {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+.item:not(:first-child):not(:last-child) {
+    border-bottom: none;
 }
 
 .item:hover {

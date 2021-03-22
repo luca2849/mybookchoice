@@ -2,9 +2,12 @@ import axios from "axios";
 import { BOOKS_UPDATED, BOOK_ERROR, RECOMMENDATIONS_UPDATED } from "./types";
 import { toast } from "react-toastify";
 
+import setAuthToken from "../utils/setAuthToken";
+
 // Load User
 export const getRecommendations = (limit, skip) => async (dispatch) => {
 	try {
+		setAuthToken(localStorage.getItem("token"));
 		const res = await axios.get(
 			`/api/recommend?limit=${limit}&skip=${skip}`
 		);
