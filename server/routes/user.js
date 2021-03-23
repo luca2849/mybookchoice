@@ -1,11 +1,32 @@
 // Express & Routing
 const express = require("express");
 const router = express.Router();
+// File Uploads
+const multer = require("multer");
+// ID Generation
+const idGen = require("../util/idGen");
+// File System
+const fs = require("fs");
 // Middleware
 const auth = require("../middleware/auth");
 // Mongo Models
 const User = require("../models/User");
 const Book = require("../models/Book");
+
+// Setup File Storage
+
+let storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, "./public/profileImages");
+	},
+	filename: (req, file, cb) => {
+		cb(null, `${idGen(20)}.${file.originalname.split(".")[1]}`);
+	},
+});
+
+let upload = multer({
+	storage,
+});
 
 // GET /api/user
 // Purpose - Get current user data
@@ -182,5 +203,33 @@ router.put("/", auth, async (req, res) => {
 			.json({ errors: [{ msg: "Internal server error" }] });
 	}
 });
+
+// PUT /api/user/avatar
+// Purpose - Edit logged in user's profile picture
+// Access - Private
+router.post(
+	"/avatar",
+	[auth, upload.single("profileImage")],
+	async (req, res) => {
+		const file = req.file;
+		const user = await User.findOne({ _id: req.user.id }).select(
+			"-password"
+		);
+		if (!user) {
+			return res.status(404).json({ msg: "User not found" });
+		}
+		const oldAvatar = user.profileImage;
+		try {
+			if (oldAvatar !== "default.jpg") {
+				fs.unlinkSync(`./public/profileImages/${oldAvatar}`);
+			}
+		} catch (error) {
+			console.log("Error deleting old avatar", error);
+		}
+		user.profileImage = file.filename;
+		await user.save();
+		return res.status(200).json(user);
+	}
+);
 
 module.exports = router;

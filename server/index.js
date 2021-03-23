@@ -13,17 +13,19 @@ app.use(
 		extend: false,
 	})
 );
-
 // Statically define react front-end
 app.use(express.static(path.join(__dirname, "../client/build")));
-
+app.use(
+	"/api/img",
+	express.static(path.join(__dirname, "./public/profileImages"))
+);
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/recommend", require("./routes/recommend"));
 
 // Serve React Build
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
 	return res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
