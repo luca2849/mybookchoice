@@ -9,7 +9,7 @@
 }
 
 .modal {
-    height: 50vh;
+    height: 65vh;
     width: 25vw;
     position: absolute;
     top: 50%;
@@ -32,7 +32,7 @@
 
 .modal path {
     stroke: #000;
-    transition: all 0.3s;
+    transition: all 0.25s;
 }
 
 .modal svg:hover > path {
@@ -62,7 +62,7 @@
 
 .submitContainer {
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
 }
 
 .submitContainer > button {

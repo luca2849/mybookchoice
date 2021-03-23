@@ -5,6 +5,9 @@
 # Environment Variables
 server/config/default.json
 
+# Profile Images
+server/public/profileImages/*
+!server/public/profileImages/default.jpg
 
 #========================
 #  Default Node Ignores

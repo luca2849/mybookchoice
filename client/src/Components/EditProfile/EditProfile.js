@@ -1,17 +1,38 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { editProfile } from "../../actions/user";
+import { editProfile, changeProfilePicture } from "../../actions/user";
 import { GrClose } from "react-icons/gr";
+import ImageUploader from "react-images-upload";
+import moment from "moment";
 import styles from "./EditProfile.module.css";
 
-const EditProfile = ({ clickHandler, user, editProfile }) => {
+const EditProfile = ({
+	clickHandler,
+	user,
+	editProfile,
+	changeProfilePicture,
+}) => {
 	const [formData, setFormData] = useState({
 		name: user.name,
 		username: user.username,
 		email: user.email,
+		dob: moment(user.dob, "YYYY-MM-DD[T00:00:00.000Z]").format(
+			"YYYY-MM-DD"
+		),
+		profileImage: user.profileImage,
 	});
+	const [picture, setPicture] = useState(null);
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
+	const onDrop = async (picture) => {
+		setPicture(picture);
+	};
+	const onSubmit = () => {
+		editProfile(formData);
+		if (picture) {
+			changeProfilePicture(picture);
+		}
 	};
 	return (
 		<>
@@ -54,13 +75,32 @@ const EditProfile = ({ clickHandler, user, editProfile }) => {
 						/>
 					</div>
 					<div className={styles.formGroup}>
+						<p>Date of Birth</p>
+						<input
+							type="date"
+							name="dob"
+							onChange={(e) => handleChange(e)}
+							value={formData.dob}
+						/>
+					</div>
+					<div className={styles.formGroup}>
 						<p>Profile Image</p>
-						<input type="file" />
+						<ImageUploader
+							withIcon={false}
+							buttonText="Choose images"
+							onChange={onDrop}
+							imgExtension={[".jpg", ".gif", ".png"]}
+							buttonText={"Choose picture"}
+							label={null}
+							maxFileSize={5242880}
+							singleImage={true}
+							withPreview={true}
+							className={styles.imageUpload}
+							name={"profileImage"}
+						/>
 					</div>
 					<div className={styles.submitContainer}>
-						<button onClick={() => editProfile(formData)}>
-							Save
-						</button>
+						<button onClick={() => onSubmit()}>Save</button>
 					</div>
 				</div>
 			</div>
@@ -68,4 +108,6 @@ const EditProfile = ({ clickHandler, user, editProfile }) => {
 	);
 };
 
-export default connect(null, { editProfile })(EditProfile);
+export default connect(null, { editProfile, changeProfilePicture })(
+	EditProfile
+);

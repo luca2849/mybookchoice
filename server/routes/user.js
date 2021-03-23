@@ -220,8 +220,11 @@ router.post(
 		}
 		const oldAvatar = user.profileImage;
 		try {
-			if (oldAvatar !== "default.jpg") {
-				fs.unlinkSync(`./public/profileImages/${oldAvatar}`);
+			if (
+				oldAvatar !== "default.jpg" &&
+				fs.existsSync(`./public/profileImages/${oldAvatar}`)
+			) {
+				await fs.unlinkSync(`./public/profileImages/${oldAvatar}`);
 			}
 		} catch (error) {
 			console.log("Error deleting old avatar", error);

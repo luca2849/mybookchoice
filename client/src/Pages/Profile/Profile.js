@@ -27,7 +27,11 @@ const Profile = ({ user }) => {
 			<div className={styles.profileContainer}>
 				<div className={styles.userSection}>
 					<div className={styles.imageContainer}>
-						<img src={`/${user.profileImage}`} />
+						<div
+							style={{
+								backgroundImage: `url(/api/img/${user.profileImage})`,
+							}}
+						></div>
 					</div>
 					<h3>{user.username}</h3>
 				</div>
