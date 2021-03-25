@@ -1,17 +1,20 @@
 .Toastify__toast--success {
     background: #19cf86;
-    /* background: #13a068; */
 }
+
 .Toastify__toast--info {
     background: #1da1f2;
 }
+
 .Toastify__close-button {
     padding: 10px;
 }
+
 /* Global Styles */
-html, body{
+html, body {
     overscroll-behavior-y: contain;
 }
+
 a {
     text-decoration: none;
     color: inherit;
@@ -21,7 +24,7 @@ p {
     margin: 0;
 }
 
-button:focus{
+button:focus, input:focus {
     outline: none;
 }
 

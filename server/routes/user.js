@@ -7,6 +7,16 @@ const multer = require("multer");
 const idGen = require("../util/idGen");
 // File System
 const fs = require("fs");
+// JSON web Tokens
+const jwt = require("jsonwebtoken");
+// Password Encryption Module
+const bcrypt = require("bcryptjs");
+// Env Variables
+const config = require("config");
+// Mailing
+const nodemailer = require("nodemailer");
+// Date/Time Manipulation
+const moment = require("moment");
 // Middleware
 const auth = require("../middleware/auth");
 // Mongo Models
@@ -216,7 +226,9 @@ router.post(
 			"-password"
 		);
 		if (!user) {
-			return res.status(404).json({ msg: "User not found" });
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found" }] });
 		}
 		const oldAvatar = user.profileImage;
 		try {
@@ -234,5 +246,129 @@ router.post(
 		return res.status(200).json(user);
 	}
 );
+
+// POST /api/user/password
+// Purpose - Request a passsword reset
+// Access - Private
+router.post("/password", async (req, res) => {
+	const { email } = req.body;
+	if (!email)
+		return res.status(404).json({ errors: [{ msg: "Email is required" }] });
+	const user = await User.findOne({ email: req.body.email }).select(
+		"-password"
+	);
+	if (!user)
+		return res.status(200).json({
+			errors: [
+				{
+					msg:
+						"If you email exists, a link to reset your password has been sent.",
+				},
+			],
+		});
+	// Get client URL
+	const url = `${config.get("client_url")}`;
+	// Create tokens
+	const payload = { user: user._id };
+	// Create token w/ 5 minute expiry
+	const token = jwt.sign(payload, config.get("jwtSecret"), {
+		expiresIn: 300,
+	});
+	// Create mail config
+	const transporter = nodemailer.createTransport({
+		service: "gmail",
+		auth: {
+			user: config.get("email"),
+			pass: config.get("email_password"),
+		},
+	});
+	const tokenLink = `${url}passwordReset?t=${token}`;
+	const mailBody = `<h1>MyBookChoice</h1> <p>A password reset has been requested for your account<p><p>If you did not request this, please ignore this email</p><p>If you did, please click the following link to reset your password</p><p><a href="${tokenLink}">${tokenLink}</a></p>`;
+	const mailOptions = {
+		from: config.get("email"),
+		to: user.email,
+		subject: "MyBookChoice Password Reset",
+		html: mailBody,
+	};
+	// Send mail (nodemailer)
+	transporter.sendMail(mailOptions, (err, info) => {
+		if (err) {
+			console.error(err);
+		}
+	});
+	// Return
+	return res.status(200).json({
+		errors: [
+			{
+				msg:
+					"If you email exists, a link to reset your password has been sent.",
+			},
+		],
+	});
+});
+
+router.post("/password/reset", async (req, res) => {
+	const { password, confirmation, token } = req.body;
+	console.log(req.body);
+	if (!password || !confirmation || !token)
+		return res
+			.status(400)
+			.json({ errors: [{ msg: "Missing parameters" }] });
+	if (password !== confirmation)
+		return res
+			.status(400)
+			.json({ errors: [{ msg: "Passwords do not match" }] });
+	// Password format validation
+	const passwordRegex = new RegExp(
+		"(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])"
+	);
+	if (!passwordRegex.test(password)) {
+		return res.status(400).json({
+			errors: [
+				{
+					msg:
+						"Password requires at least 1 upper-case character, 1 symbol, 1 lower-case character and 1 number",
+				},
+			],
+		});
+	}
+	try {
+		const decoded = jwt.verify(token, config.get("jwtSecret"));
+		// Check if token has expired
+		const { exp } = decoded;
+		const expiry = exp * 1000;
+		const now = moment.now();
+		if (expiry < now)
+			return res.status(400).json({
+				errors: [
+					{
+						msg:
+							"Token has expired. Please request a new password reset.",
+					},
+				],
+			});
+		const user = await User.findOne({ _id: decoded.user });
+		if (!user)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found" }] });
+		// Hash new password
+		const salt = await bcrypt.genSalt(10);
+		user.password = await bcrypt.hash(password, salt);
+		await user.save();
+		return res.status(200).json({
+			errors: [
+				{
+					msg: "Password Changed",
+				},
+			],
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			errors: [{ msg: "Error. Please request a new password reset." }],
+		});
+	}
+});
 
 module.exports = router;

@@ -9,11 +9,13 @@ import styles from "./Landing.module.css";
 import { BsArrowLeft, BsX } from "react-icons/bs";
 
 import Logo from "../../Components/Misc/Logo/Logo";
+import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
 
 const Landing = ({ login, isAuthenticated }) => {
 	const [loginData, setLoginData] = useState({});
 	const [currentModal, setCurrentModal] = useState(null);
+	const [passwordResetModal, setPasswordResetModal] = useState(null);
 
 	//Redirect if authenticated
 	if (isAuthenticated) {
@@ -65,11 +67,17 @@ const Landing = ({ login, isAuthenticated }) => {
 									// value={loginData.password || ""}
 									onChange={(e) => handleLoginDataChange(e)}
 								/>
+								<p onClick={() => setCurrentModal("password")}>
+									Forgotten your password?
+								</p>
 								<button onClick={() => handleLoginSubmit()}>
 									Login
 								</button>
 							</div>
 						</div>
+					)}
+					{currentModal === "password" && (
+						<PasswordReset clickHandler={setCurrentModal} />
 					)}
 				</>
 			)}

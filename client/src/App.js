@@ -19,6 +19,7 @@ import "rsuite/dist/styles/rsuite-default.css";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Recommendations from "./Pages/Recommendations/Recommendations";
+import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 // Check token
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
@@ -46,6 +47,13 @@ function App() {
 					<Switch>
 						{/* Unprotected Routes */}
 						<Route exact path="/" component={Landing} />
+						<Route
+							exact
+							path="/passwordReset"
+							component={ChangePassword}
+						/>
+						<Route exact path="/logout" component={Logout} />
+						{/* Protected Routes */}
 						<PrivateRoute exact path="/home" component={Home} />
 						<PrivateRoute
 							exact
@@ -62,7 +70,6 @@ function App() {
 							path="/recommendations"
 							component={Recommendations}
 						/>
-						<Route exact path="/logout" component={Logout} />
 					</Switch>
 				</>
 			</Router>
