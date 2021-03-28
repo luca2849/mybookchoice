@@ -24,7 +24,7 @@ router.post(
 		check("email", "A valid email is required").isEmail(),
 		check("username", "Username is required").not().isEmpty(),
 		check("password", "A valid password is required").not().isEmpty(),
-		check("confirmPassword", "A valid confirmation password is required")
+		check("confirmation", "A valid confirmation password is required")
 			.not()
 			.isEmpty(),
 		check(
@@ -46,11 +46,12 @@ router.post(
 			username,
 			password,
 			location,
-			confirmPassword,
+			confirmation,
 			dob,
 		} = req.body;
 		// Check passwords match
-		if (password !== confirmPassword) {
+
+		if (password !== confirmation) {
 			return res
 				.status(400)
 				.json({ errors: [{ msg: "Passwords do not match" }] });

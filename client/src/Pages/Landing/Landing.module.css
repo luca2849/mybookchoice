@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     z-index: 2;
-    width: 25%;
+    width: 33%;
     background: white;
     position: absolute;
     top: 50%;
@@ -98,6 +98,7 @@ svg{
 }
 
 .hero .buttonsContainer{
+    margin-top: 2rem;
     display: flex;
 }
 
@@ -144,11 +145,77 @@ svg{
     cursor: pointer;
 }
 
-.closeButton{
+.closeButton, .close{
     cursor: pointer;
     transition: all 0.25s;
 }
 
-.closeButton:hover{
+.closeButton:hover, .close:hover{
     fill: red;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    border: 2px solid rgb(100, 100, 100);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.item:hover {
+    background:rgb(233, 233, 233);
+}
+
+.item svg {
+    margin: 1rem 3rem 1rem 1rem;
+    transform: scale(2.5);
+}
+
+.item:first-of-type svg {
+    fill: #4267B2;
+}
+
+.item:nth-of-type(3) svg {
+    fill: #1DA1F2;
+}
+
+.modal h3 {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 1rem;
+}
+
+.modal .close {
+    position: absolute;
+    top: 0;
+    right: 3%;
+    transform: scale(4);
+}
+
+.modal .back {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 3%;
+    transform: scale(3);
+}
+
+.key {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.confItem {
+    font-size: 1.1rem;
+    text-align: center;
 }
