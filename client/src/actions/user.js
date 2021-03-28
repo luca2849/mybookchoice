@@ -4,8 +4,10 @@ import {
 	USER_UPDATED,
 	BOOKS_UPDATED,
 	PASSWORD_RESET,
+	LOGOUT,
 } from "./types";
 import { toast } from "react-toastify";
+import setAuthToken from "../utils/setAuthToken";
 
 // Login User
 export const addPreferences = (formData) => async (dispatch) => {

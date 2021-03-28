@@ -1,20 +1,99 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import styles from "./Profile.module.css";
-
+import { deleteUser } from "../../actions/auth";
 import { Link } from "react-router-dom";
 import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
 import List from "../../Components/List/List";
 import Loading from "../../Components/Misc/Loading/Loading";
 import EditProfile from "../../Components/EditProfile/EditProfile";
+import { toast } from "react-toastify";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, deleteUser }) => {
 	const [editProfileOpen, setEditProfileOpen] = useState(false);
+	const [currentModal, setCurrentModal] = useState(null);
+	const [username, setUsername] = useState("");
 	if (!user) return <Loading />;
+
+	const handleUserChange = (e) => {
+		setUsername(e.target.value);
+	};
+
+	const handleSubmit = () => {
+		if (username !== user.username) {
+			toast.error("Username is incorrect");
+			return;
+		}
+		deleteUser();
+	};
+
 	return (
 		<div className={styles.profile}>
 			{editProfileOpen && (
 				<EditProfile clickHandler={setEditProfileOpen} user={user} />
+			)}
+			{currentModal && (
+				<>
+					<div
+						className={styles.darken}
+						onClick={() => setCurrentModal(null)}
+					></div>
+					{currentModal === "deleteAcc" && (
+						<div className={styles.modal}>
+							<h3>Delete Account</h3>
+							<p>
+								Deleting your account is an irreversible
+								operation. You will not be able to retrieve any
+								of your data.
+							</p>
+							<p>
+								All of your personal information, ratings,
+								reviews, and preferences will be deleted.
+							</p>
+							<div className={styles.buttons}>
+								<button onClick={() => setCurrentModal(null)}>
+									Cancel
+								</button>
+								<button
+									onClick={() =>
+										setCurrentModal("deleteAccConf")
+									}
+								>
+									Delete Account
+								</button>
+							</div>
+						</div>
+					)}
+					{currentModal === "deleteAccConf" && (
+						<div className={styles.modal}>
+							<h3>Delete Account</h3>
+							<p>
+								Please enter your username,{" "}
+								<span className={styles.name}>
+									{user.username}
+								</span>
+								, below to confirm your account deletion.
+							</p>
+							<div className={styles.formGroup}>
+								<input
+									onChange={(e) => handleUserChange(e)}
+									placeholder="Username..."
+									type="text"
+									name="username"
+									autoComplete="off"
+								/>
+							</div>
+							<div className={styles.buttons}>
+								<button onClick={() => setCurrentModal(null)}>
+									Cancel
+								</button>
+								<button onClick={() => handleSubmit()}>
+									Delete Account
+								</button>
+							</div>
+						</div>
+					)}
+				</>
 			)}
 			<BreadCrumb>
 				<BreadCrumb.Item>
@@ -57,7 +136,11 @@ const Profile = ({ user }) => {
 						<List.Item>
 							<Link to={"/logout"}>Log Out</Link>
 						</List.Item>
-						<List.Item>Delete My Account</List.Item>
+						<List.Item onClick={() => setCurrentModal("deleteAcc")}>
+							<span style={{ color: "red" }}>
+								Delete My Account
+							</span>
+						</List.Item>
 					</List>
 				</div>
 			</div>
@@ -69,4 +152,4 @@ const mapStateToProps = (state) => ({
 	user: state.auth.user,
 });
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, { deleteUser })(Profile);

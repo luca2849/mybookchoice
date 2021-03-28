@@ -6,6 +6,8 @@ import {
 	LOGIN_FAIL,
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
+	LOGOUT,
+	USER_ERROR,
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import { toast } from "react-toastify";
@@ -50,7 +52,6 @@ export const login = (formData) => async (dispatch) => {
 
 // Register user
 export const register = (formData) => async (dispatch) => {
-	console.log("dasdad");
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -69,5 +70,20 @@ export const register = (formData) => async (dispatch) => {
 			errors.forEach((error) => toast.error(error.msg, "danger"));
 		}
 		dispatch({ type: REGISTER_FAIL });
+	}
+};
+
+export const deleteUser = () => async (dispatch) => {
+	try {
+		setAuthToken(localStorage.getItem("token"));
+		const res = await axios.delete("/api/user");
+		toast.success("Account Deleted");
+		dispatch({ type: LOGOUT, payload: res.data });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
 	}
 };

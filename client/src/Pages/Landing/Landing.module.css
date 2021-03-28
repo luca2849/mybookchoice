@@ -219,3 +219,22 @@ svg{
     font-size: 1.1rem;
     text-align: center;
 }
+
+.forgotContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.forgot {
+    display: inline-block;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.forgot:hover {
+    border-bottom: 2px solid black;
+}

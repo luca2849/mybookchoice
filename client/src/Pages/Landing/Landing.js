@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import { login, register } from "../../actions/auth";
 import moment from "moment";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+// Redux
+import { connect } from "react-redux";
+import { login, register } from "../../actions/auth";
+// CSS
 import styles from "./Landing.module.css";
-
 // Icons
 import { BsArrowLeft, BsX } from "react-icons/bs";
 import {
@@ -15,14 +17,12 @@ import {
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { BiArrowBack } from "react-icons/bi";
-
+// Components
 import Logo from "../../Components/Misc/Logo/Logo";
 import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
-import { toast } from "react-toastify";
 
 const Landing = ({ login, register, isAuthenticated }) => {
-	console.log(register);
 	const [loginData, setLoginData] = useState({});
 	const [registrationData, setRegistrationData] = useState({
 		email: "",
@@ -95,9 +95,16 @@ const Landing = ({ login, register, isAuthenticated }) => {
 									// value={loginData.password || ""}
 									onChange={(e) => handleLoginDataChange(e)}
 								/>
-								<p onClick={() => setCurrentModal("password")}>
-									Forgotten your password?
-								</p>
+								<div className={styles.forgotContainer}>
+									<p
+										className={styles.forgot}
+										onClick={() =>
+											setCurrentModal("password")
+										}
+									>
+										Forgotten your password?
+									</p>
+								</div>
 								<button onClick={() => handleLoginSubmit()}>
 									Login
 								</button>
@@ -169,7 +176,7 @@ const Landing = ({ login, register, isAuthenticated }) => {
 	);
 };
 
-const RegistrationMethods = ({ dataHandler, clickHandler }) => {
+const RegistrationMethods = ({ clickHandler }) => {
 	return (
 		<div className={styles.modal}>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
@@ -337,7 +344,6 @@ const RegistrationDOB = ({ dataHandler, clickHandler, data }) => {
 		const dob = moment(data.dob, "YYYY-MM-DD[T00:00:00.000Z]");
 		const now = moment();
 		const diff = dob.diff(now, "years");
-		console.log(diff);
 		if (!data.dob) {
 			toast.error("Date of birth is required");
 			return;
@@ -374,7 +380,6 @@ const RegistrationDOB = ({ dataHandler, clickHandler, data }) => {
 };
 
 const RegistrationConfirmation = ({ data, clickHandler, handleRegister }) => {
-	console.log(handleRegister);
 	const items = ["email", "name", "username", "dob"];
 	return (
 		<div className={styles.modal}>
@@ -386,8 +391,8 @@ const RegistrationConfirmation = ({ data, clickHandler, handleRegister }) => {
 			<Logo fill={"rgb(150, 150, 150)"} />
 			<h3>Here's what we've got.</h3>
 			<div className={styles.confItem}>
-				{items.map((key) => (
-					<p>
+				{items.map((key, index) => (
+					<p key={index}>
 						<span className={styles.key}>{key}</span> -{" "}
 						<b>{data[key]}</b>
 					</p>
