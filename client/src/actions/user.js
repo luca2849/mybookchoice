@@ -5,6 +5,7 @@ import {
 	BOOKS_UPDATED,
 	PASSWORD_RESET,
 	LOGOUT,
+	GET_USER,
 } from "./types";
 import { toast } from "react-toastify";
 import setAuthToken from "../utils/setAuthToken";
@@ -58,7 +59,7 @@ export const editProfile = (formData) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 	};
-	const body = JSON.stringify({ formData });
+	const body = JSON.stringify(formData);
 	try {
 		const res = await axios.put("/api/user", body, config);
 		toast.success("Updates Saved", { autoClose: 2000 });
@@ -120,6 +121,20 @@ export const changePassword = (formData, token) => async (dispatch) => {
 		await axios.post("/api/user/password/reset", body, config);
 		toast.success("Password Reset");
 	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const getUser = (username) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/user/${username}`);
+		dispatch({ type: GET_USER, payload: res.data });
+	} catch (error) {
+		console.log("ERRORORORORORORO", error);
 		const errors = error.response.data.errors;
 		if (errors) {
 			errors.forEach((error) => toast.error(error.msg, "danger"));

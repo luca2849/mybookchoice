@@ -1,0 +1,112 @@
+.main {
+    background: rgb(240, 240, 240);
+    width: 60vw;
+    height: calc(80vh - 130px);
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.main > div {
+    width: 45%;
+    height: 90%;
+    background: white;
+}
+
+.divider {
+    background: rgb(211, 243, 255);
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.map {
+    height: 25%;
+    background: rgb(255, 132, 132);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.imageContainer {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+}
+
+.avatar div {
+    width: 7vw;
+    height: 7vw;
+    background-size: cover;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+    border: 5px solid white;
+    margin-top: -50%;
+    margin-left: 1rem;
+    z-index: 10;
+}
+
+.avatar {
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.imageContainer h2 {
+    display: inline-block;
+}
+
+.basicInfo {
+    padding: 1rem;
+}
+
+.infoGroup {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+}
+
+.infoGroup p {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.infoGroup p:first-of-type {
+    text-transform: uppercase;
+    color:rgb(148, 148, 148);
+}
+
+.infoGroup p:last-of-type {
+    margin-left: 1rem;
+    font-weight: bold;
+}
+
+.buttonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.add {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    background: rgb(16, 167, 209);
+    color: white;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.add:hover {
+    background: white;
+    color: rgb(16, 167, 209);
+    border: 2px solid rgb(16, 167, 209);
+}

@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import styles from "./Profile.module.css";
 import { deleteUser } from "../../actions/auth";
+import { requestPasswordReset } from "../../actions/user";
 import { Link } from "react-router-dom";
 import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
 import List from "../../Components/List/List";
 import Loading from "../../Components/Misc/Loading/Loading";
 import EditProfile from "../../Components/EditProfile/EditProfile";
+import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import { toast } from "react-toastify";
+import setAuthToken from "../../utils/setAuthToken";
 
-const Profile = ({ user, deleteUser }) => {
+const Profile = ({ user, deleteUser, requestPasswordReset }) => {
+	setAuthToken(localStorage.getItem("token"));
 	const [editProfileOpen, setEditProfileOpen] = useState(false);
 	const [currentModal, setCurrentModal] = useState(null);
 	const [username, setUsername] = useState("");
@@ -93,6 +97,12 @@ const Profile = ({ user, deleteUser }) => {
 							</div>
 						</div>
 					)}
+					{currentModal === "passwordChange" && (
+						<PasswordReset
+							clickHandler={setCurrentModal}
+							requestPasswordReset={requestPasswordReset}
+						/>
+					)}
 				</>
 			)}
 			<BreadCrumb>
@@ -129,7 +139,11 @@ const Profile = ({ user, deleteUser }) => {
 					</List>
 					<h3>Account Settings</h3>
 					<List>
-						<List.Item>Password Reset</List.Item>
+						<List.Item
+							onClick={() => setCurrentModal("passwordChange")}
+						>
+							Password Reset
+						</List.Item>
 						<List.Item onClick={() => setEditProfileOpen(true)}>
 							Edit Profile
 						</List.Item>
@@ -152,4 +166,6 @@ const mapStateToProps = (state) => ({
 	user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { deleteUser })(Profile);
+export default connect(mapStateToProps, { deleteUser, requestPasswordReset })(
+	Profile
+);

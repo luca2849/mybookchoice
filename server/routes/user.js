@@ -196,7 +196,7 @@ router.put("/", auth, async (req, res) => {
 	try {
 		const user = await User.findOneAndUpdate(
 			{ _id: req.user.id },
-			req.body.formData,
+			req.body,
 			{
 				returnOriginal: false,
 			}

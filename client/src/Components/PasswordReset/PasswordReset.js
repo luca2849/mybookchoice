@@ -13,6 +13,7 @@ const PasswordReset = ({ clickHandler, requestPasswordReset }) => {
 	};
 	const onSubmit = () => {
 		requestPasswordReset(formData);
+		clickHandler(null);
 	};
 	return (
 		<>
@@ -23,7 +24,7 @@ const PasswordReset = ({ clickHandler, requestPasswordReset }) => {
 			<div className={styles.modal}>
 				<h3>Reset Password</h3>
 				<GrClose
-					onClick={() => clickHandler("login")}
+					onClick={() => clickHandler(null)}
 					className={styles.close}
 				/>
 				<div className={styles.form}>

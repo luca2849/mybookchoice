@@ -53,7 +53,6 @@ export default function (state = initialState, action) {
 		case CLEAR_USER:
 		case CLEAR_USERS:
 			return initialState;
-
 		default:
 			return state;
 	}
