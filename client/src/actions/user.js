@@ -5,10 +5,12 @@ import {
 	BOOKS_UPDATED,
 	PASSWORD_RESET,
 	LOGOUT,
+	RATINGS_UPDATED,
+	RATING_UPDATED,
+	RATINGS_ADDED,
 	GET_USER,
 } from "./types";
 import { toast } from "react-toastify";
-import setAuthToken from "../utils/setAuthToken";
 
 // Login User
 export const addPreferences = (formData) => async (dispatch) => {
@@ -134,7 +136,56 @@ export const getUser = (username) => async (dispatch) => {
 		const res = await axios.get(`/api/user/${username}`);
 		dispatch({ type: GET_USER, payload: res.data });
 	} catch (error) {
-		console.log("ERRORORORORORORO", error);
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const getRatings = (limit, skip) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/user/ratings?limit=${limit}&skip=${skip}`
+		);
+		dispatch({ type: RATINGS_UPDATED, payload: res.data.ratings });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const addToRatings = (limit, skip) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/user/ratings?limit=${limit}&skip=${skip}`
+		);
+		dispatch({ type: RATINGS_ADDED, payload: res.data.ratings });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const updateRating = (ratingId, newRating) => async (dispatch) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		const body = JSON.stringify({ ratingId, newRating });
+		const res = await axios.put(`/api/user/ratings`, body, config);
+		toast.success("Rating Updated", { autoClose: 2000 });
+		dispatch({ type: RATING_UPDATED, payload: res.data });
+	} catch (error) {
 		const errors = error.response.data.errors;
 		if (errors) {
 			errors.forEach((error) => toast.error(error.msg, "danger"));

@@ -10,6 +10,9 @@ export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 export const CLEAR_PROFILE = "CLEAR_PROFILE";
 // Users
 export const GET_USER = "GET_USER";
+export const RATINGS_UPDATED = "RATINGS_UPDATED";
+export const RATING_UPDATED = "RATING_UPDATED";
+export const RATINGS_ADDED = "RATINGS_ADDED";
 export const USER_ERROR = "USER_ERROR";
 export const GET_USERS = "GET_USERS";
 export const FOLLOW_USER = "FOLLOW_USER";

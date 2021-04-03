@@ -50,19 +50,20 @@ const UserSchema = new Schema(
 		},
 		ratings: [
 			{
-				book_id: {
-					type: Schema.Types.ObjectId,
-					ref: "book",
-				},
-				rating: {
-					type: Number,
-					enum: [1, 0, -1],
-					required: true,
-				},
-				ratedOn: {
-					type: Date,
-					default: Date.now(),
-				},
+				type: new mongoose.Schema(
+					{
+						book_id: {
+							type: Schema.Types.ObjectId,
+							ref: "book",
+						},
+						rating: {
+							type: Number,
+							enum: [1, 0, -1],
+							required: true,
+						},
+					},
+					{ timestamps: true }
+				),
 			},
 		],
 		friends: [

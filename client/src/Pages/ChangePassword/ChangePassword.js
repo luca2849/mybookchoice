@@ -8,7 +8,6 @@ import { changePassword } from "../../actions/user";
 
 const ChangePassword = ({ changePassword, location }) => {
 	const token = new URLSearchParams(location.search).get("t");
-	console.log(token);
 	const history = useHistory();
 	const [formData, setFormData] = useState({
 		password: "",

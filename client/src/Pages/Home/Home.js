@@ -87,8 +87,6 @@ const Home = ({ addRating }) => {
 		setBooks(tmp.slice(1));
 	};
 
-	if (!books) console.log("No Books...");
-
 	return (
 		<>
 			<div className={styles.container}>

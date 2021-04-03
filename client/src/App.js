@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Recommendations from "./Pages/Recommendations/Recommendations";
 import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 import UserProfile from "./Pages/UserProfile/UserProfile";
+import PastRatings from "./Pages/PastRatings/PastRatings";
 // Check token
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
@@ -75,6 +76,11 @@ function App() {
 							exact
 							path="/user/:user"
 							component={UserProfile}
+						/>
+						<PrivateRoute
+							exact
+							path="/ratings"
+							component={PastRatings}
 						/>
 					</Switch>
 				</>

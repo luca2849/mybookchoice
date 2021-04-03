@@ -7,12 +7,16 @@ import {
 	CLEAR_USER,
 	CLEAR_USERS,
 	USER_UPDATED,
+	RATINGS_UPDATED,
+	RATING_UPDATED,
+	RATINGS_ADDED,
 } from "../actions/types";
 
 const initialState = {
 	user: null,
 	users: [],
 	error: {},
+	ratings: [],
 	loading: true,
 };
 
@@ -35,6 +39,26 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				users: payload,
+				loading: false,
+			};
+		case RATINGS_UPDATED:
+			return {
+				...state,
+				ratings: payload,
+				loading: false,
+			};
+		case RATING_UPDATED:
+			return {
+				...state,
+				ratings: state.ratings.map((x) =>
+					x._id === payload._id ? payload : x
+				),
+				loading: false,
+			};
+		case RATINGS_ADDED:
+			return {
+				...state,
+				ratings: state.ratings.concat(payload),
 				loading: false,
 			};
 		case FOLLOW_USER:

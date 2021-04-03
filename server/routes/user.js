@@ -17,6 +17,8 @@ const config = require("config");
 const nodemailer = require("nodemailer");
 // Date/Time Manipulation
 const moment = require("moment");
+// Mongoose
+const mongoose = require("mongoose");
 // Middleware
 const auth = require("../middleware/auth");
 // Mongo Models
@@ -163,6 +165,78 @@ router.get("/books", auth, async (req, res) => {
 		return res.json(books);
 	} catch (error) {
 		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
+// GET /api/user/ratings
+// Purpose - Get a user's past ratings
+// Access - Private
+router.get("/ratings", auth, async (req, res) => {
+	const { limit, skip } = req.query;
+	try {
+		// Find and delete user
+		const user = await User.findOne({ _id: req.user.id }).populate(
+			"ratings.book_id"
+		);
+		if (!user)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found" }] });
+		const ratings = user.ratings;
+		// Skip
+		const skipped = ratings.reverse().filter((rating, i) => {
+			if (i > skip - 1) return true;
+		});
+		// Limit
+		const limited = skipped.filter((rating, i) => {
+			if (i <= limit - 1) return true;
+		});
+		return res.status(200).json({ ratings: limited });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
+// PUT /api/user/ratings
+// Purpose - Update a user's ratings
+// Access - Private
+router.put("/ratings", auth, async (req, res) => {
+	try {
+		const { ratingId, newRating } = req.body;
+		if (!ratingId || !newRating)
+			return res
+				.status(400)
+				.json({ errors: [{ msg: "Missing parameters" }] });
+		// Find and delete user
+		const user = await User.findOne({ _id: req.user.id }).populate(
+			"ratings.book_id"
+		);
+		let foundRating = null;
+		user.ratings.forEach((rating, index) => {
+			if (
+				mongoose.Types.ObjectId(rating._id).equals(
+					mongoose.Types.ObjectId(ratingId)
+				)
+			) {
+				user.ratings[index].rating = newRating;
+				foundRating = user.ratings[index];
+				return;
+			}
+		});
+		if (!foundRating)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "Rating not found." }] });
+		user.save();
+		return res.status(200).json(foundRating);
+	} catch (error) {
+		console.log(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
@@ -328,7 +402,6 @@ router.post("/password", async (req, res) => {
 // Access - Private
 router.post("/password/reset", async (req, res) => {
 	const { password, confirmation, token } = req.body;
-	console.log(req.body);
 	if (!password || !confirmation || !token)
 		return res
 			.status(400)
