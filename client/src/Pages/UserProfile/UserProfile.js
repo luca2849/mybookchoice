@@ -52,11 +52,13 @@ const UserProfile = ({
 					</div>
 					<div className={styles.imageContainer}>
 						<div className={styles.avatar}>
-							<div
-								style={{
-									backgroundImage: `url(/api/img/${user.profileImage})`,
-								}}
-							></div>
+							<img
+								src={
+									user.profileImage.imageType === "EXTERNAL"
+										? user.profileImage.url
+										: `url(/api/img/${user.profileImage.url})`
+								}
+							/>
 						</div>
 						<h2>@{user.username}</h2>
 					</div>

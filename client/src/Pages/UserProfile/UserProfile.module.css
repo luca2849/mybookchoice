@@ -38,7 +38,7 @@
     position: relative;
 }
 
-.avatar div {
+.avatar img {
     width: 7vw;
     height: 7vw;
     background-size: cover;

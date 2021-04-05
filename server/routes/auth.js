@@ -13,7 +13,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 // Mongo Models
 const User = require("../models/User");
-
+// Axios
+const axios = require("axios");
 // POST /api/auth/register/email
 // Purpose - Create a new User
 // Access - Public
@@ -118,6 +119,96 @@ router.post(
 		}
 	}
 );
+
+// POST /api/auth/google
+// Purpose - Create a new / Log in a Google User
+// Access - Public
+router.post("/google", async (req, res) => {
+	const { result, token, accessToken } = req.body;
+	if (!result || !token || !accessToken)
+		return res
+			.status(400)
+			.json({ errors: [{ msg: "Malformed Request." }] });
+	const user = await User.findOne({
+		"externalId.idType": "GOOGLE",
+		"externalId.id": result.googleId,
+	});
+	// Verify Token
+	const googleApiUrl = `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}`;
+	try {
+		await axios.get(googleApiUrl);
+	} catch (error) {
+		console.error(error);
+		return res.status(400).json({ errors: [{ msg: "Token is invalid." }] });
+	}
+	try {
+		if (!user) {
+			// Create user
+			const randomNumber = Math.round(Math.random() * 1000000);
+			// Sort out DOB (From Google People API)
+			const conf = {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					Accept: "application/json",
+				},
+			};
+			const url = `https://people.googleapis.com/v1/people/me?personFields=birthdays`;
+			const peopleApiRes = await axios.get(url, conf);
+			const birthdayArray = peopleApiRes.data?.birthdays;
+			let dob;
+			for (const birthday of birthdayArray) {
+				if (Object.keys(birthday.date).length === 3) {
+					console.log(birthday);
+					const { year, month, day } = birthday.date;
+					const date = `${year}-${month}-${day}`;
+					dob = moment.utc(date, "YYYY-MM-DD").toDate();
+				}
+			}
+			console.log(dob);
+			// return res
+			// 	.status(400)
+			// 	.json({ errors: [{ msg: "Token is invalid." }] });
+			// Create new user
+			const newUser = new User({
+				externalId: { idType: "GOOGLE", id: result.googleId },
+				username: `${result.givenName}${randomNumber}`,
+				name: result.name,
+				email: result.email,
+				dob: dob,
+				profileImage: {
+					imageType: "EXTERNAL",
+					url: result.imageUrl,
+				},
+			});
+			await newUser.save();
+			const payload = {
+				user: {
+					id: newUser._id,
+				},
+			};
+			const tok = jwt.sign(payload, config.get("jwtSecret"), {
+				expiresIn: config.get("jwtExpiry"),
+			});
+			return res.status(200).json({ token: tok });
+		}
+		// Otherwise, log in (return token)
+		// Create JWT
+		const payload = {
+			user: {
+				id: user._id,
+			},
+		};
+		const tok = jwt.sign(payload, config.get("jwtSecret"), {
+			expiresIn: config.get("jwtExpiry"),
+		});
+		return res.json({ token: tok });
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
 
 // POST /api/auth/login/email
 // Purpose - Log In a user

@@ -87,7 +87,7 @@ const PastRatings = ({
 					</div>
 				</>
 			)}
-			<div className={styles.PastRatings}>
+			<div className={styles.pastRatings}>
 				<BreadCrumb>
 					<BreadCrumb.Item>
 						<Link to={"/home"}>Home</Link>
@@ -106,61 +106,71 @@ const PastRatings = ({
 							hasMore={done}
 							loader={<Loading />}
 						>
-							{ratings.map((rating, index) => {
-								let icon;
-								switch (+rating.rating) {
-									case 1:
-										icon = (
-											<FaHeart
-												style={{
-													fill: "rgb(88, 182, 88)",
-												}}
-											/>
-										);
-										break;
-									case 0:
-										icon = (
-											<FaQuestion
-												style={{
-													fill: "rgb(56, 135, 255)",
-												}}
-											/>
-										);
-										break;
-									case -1:
-										icon = (
-											<ImCross
-												style={{
-													fill: "rgb(255, 95, 95)",
-												}}
-											/>
-										);
-										break;
-								}
-								return (
-									<List.Item
-										key={index}
-										onClick={() =>
-											setSelectedRating(rating)
-										}
-									>
-										<div className={styles.container}>
-											{icon}
-											<p>
-												{rating.book_id.title}
-												{rating.book_id.authors[0] &&
-													` - ${rating.book_id.authors[0]}`}
-											</p>
-											<p>
-												{moment(
-													rating.createdAt
-												).format("DD/MM/YYYY HH:mm:ss")}
-											</p>
-											<HiDotsHorizontal />
-										</div>
-									</List.Item>
-								);
-							})}
+							{ratings.length === 0 ? (
+								<List.Item>No Books Rated</List.Item>
+							) : (
+								ratings.map((rating, index) => {
+									let icon;
+									switch (+rating.rating) {
+										case 1:
+											icon = (
+												<FaHeart
+													style={{
+														fill:
+															"rgb(88, 182, 88)",
+													}}
+												/>
+											);
+											break;
+										case 0:
+											icon = (
+												<FaQuestion
+													style={{
+														fill:
+															"rgb(56, 135, 255)",
+													}}
+												/>
+											);
+											break;
+										case -1:
+											icon = (
+												<ImCross
+													style={{
+														fill:
+															"rgb(255, 95, 95)",
+													}}
+												/>
+											);
+											break;
+									}
+									return (
+										<List.Item
+											key={index}
+											onClick={() =>
+												setSelectedRating(rating)
+											}
+										>
+											<div className={styles.container}>
+												{icon}
+												<p>
+													{rating.book_id.title}
+													{rating.book_id
+														.authors[0] &&
+														` - ${rating.book_id.authors[0]}`}
+												</p>
+												<p>
+													{moment(
+														rating.createdAt
+													).format(
+														"DD/MM/YYYY HH:mm:ss"
+													)}
+												</p>
+												<HiDotsHorizontal />
+											</div>
+										</List.Item>
+									);
+								})
+							)}
 						</InfiniteScroll>
 					</List>
 				</div>

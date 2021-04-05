@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 // Redux
 import { connect } from "react-redux";
-import { login, register } from "../../actions/auth";
+import { login, register, registerWithGoogle } from "../../actions/auth";
 // CSS
 import styles from "./Landing.module.css";
 // Icons
@@ -21,8 +21,9 @@ import { BiArrowBack } from "react-icons/bi";
 import Logo from "../../Components/Misc/Logo/Logo";
 import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
+import GoogleLogin from "react-google-login";
 
-const Landing = ({ login, register, isAuthenticated }) => {
+const Landing = ({ login, register, isAuthenticated, registerWithGoogle }) => {
 	const [loginData, setLoginData] = useState({});
 	const [registrationData, setRegistrationData] = useState({
 		email: "",
@@ -113,6 +114,7 @@ const Landing = ({ login, register, isAuthenticated }) => {
 					)}
 					{currentModal === "reg0" && (
 						<RegistrationMethods
+							registerWithGoogle={registerWithGoogle}
 							clickHandler={setCurrentModal}
 							dataHandler={handleRegistrationDataChange}
 						/>
@@ -176,7 +178,23 @@ const Landing = ({ login, register, isAuthenticated }) => {
 	);
 };
 
-const RegistrationMethods = ({ clickHandler }) => {
+const RegistrationMethods = ({ clickHandler, registerWithGoogle }) => {
+	const googleSuccess = async (response) => {
+		toast.success("Google sign in successful", { autoClose: 3000 });
+		try {
+			console.log(response);
+			registerWithGoogle(response);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+	const googleFailure = () => {
+		toast.error("Google sign in error. Please try again later.", {
+			autoClose: 3000,
+		});
+		console.error("Google Sign In Error. Try again later.");
+	};
+
 	return (
 		<div className={styles.modal}>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
@@ -187,10 +205,31 @@ const RegistrationMethods = ({ clickHandler }) => {
 					<AiFillFacebook />
 					<p>Register with Facebook</p>
 				</div>
-				<div className={styles.item}>
+				<GoogleLogin
+					clientId={
+						"380870297062-taklr4637g8ur6srf482fk7qjcedhm5p.apps.googleusercontent.com"
+					}
+					render={(renderProps) => (
+						<div
+							className={styles.item}
+							onClick={renderProps.onClick}
+							disabled={renderProps.disabled}
+						>
+							<FcGoogle />
+							<p>Register with Google</p>
+						</div>
+					)}
+					onSuccess={googleSuccess}
+					onFailure={googleFailure}
+					scope={
+						"profile email https://www.googleapis.com/auth/user.birthday.read"
+					}
+					cookiePolicy="single_host_origin"
+				/>
+				{/* <div className={styles.item} onClick={googleLogin}>
 					<FcGoogle />
 					<p>Register with Google</p>
-				</div>
+				</div> */}
 				<div className={styles.item}>
 					<AiFillTwitterCircle />
 					<p>Register with Twitter</p>
@@ -415,4 +454,8 @@ const mapStateToProps = (state) => ({
 	isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login, register })(Landing);
+export default connect(mapStateToProps, {
+	login,
+	register,
+	registerWithGoogle,
+})(Landing);

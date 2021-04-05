@@ -116,11 +116,13 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 			<div className={styles.profileContainer}>
 				<div className={styles.userSection}>
 					<div className={styles.imageContainer}>
-						<div
-							style={{
-								backgroundImage: `url(/api/img/${user.profileImage})`,
-							}}
-						></div>
+						<img
+							src={
+								user.profileImage.imageType === "EXTERNAL"
+									? user.profileImage.url
+									: `url(/api/img/${user.profileImage.url})`
+							}
+						/>
 					</div>
 					<h3>{user.username}</h3>
 				</div>

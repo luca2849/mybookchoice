@@ -171,6 +171,10 @@ svg{
     transition: all 0.25s;
 }
 
+.item:last-of-type {
+    padding: 0.5rem;
+}
+
 .item:hover {
     background:rgb(233, 233, 233);
 }

@@ -70,12 +70,53 @@ export const register = (formData) => async (dispatch) => {
 	}
 };
 
+export const registerWithGoogle = (response) => async (dispatch) => {
+	console.log("Registering with Google");
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		const result = response?.profileObj;
+		const token = response?.tokenId;
+		const accessToken = response?.tokenObj?.access_token;
+		const body = JSON.stringify({
+			result,
+			token,
+			accessToken,
+		});
+		const res = await axios.post("/api/auth/google", body, config);
+		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+		dispatch(loadUser());
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: REGISTER_FAIL });
+	}
+};
+
 export const deleteUser = () => async (dispatch) => {
 	try {
 		setAuthToken(localStorage.getItem("token"));
 		const res = await axios.delete("/api/user");
 		toast.success("Account Deleted");
 		dispatch({ type: LOGOUT, payload: res.data });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const logout = () => async (dispatch) => {
+	try {
+		toast.info("Successfully logged out", { autoClose: 2000 });
+		dispatch({ type: LOGOUT });
 	} catch (error) {
 		const errors = error.response.data.errors;
 		if (errors) {

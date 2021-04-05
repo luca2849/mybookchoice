@@ -9,7 +9,7 @@ const Recommendations = ({ getRecommendations, book: { books, loading } }) => {
 		getRecommendations(100, 0);
 	}, []);
 
-	if (loading) {
+	if (loading || !books) {
 		return <Loading />;
 	}
 	return (

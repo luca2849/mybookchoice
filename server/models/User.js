@@ -18,30 +18,31 @@ const UserSchema = new Schema(
 			required: true,
 			unique: true,
 		},
-		googleId: {
-			type: String,
-		},
-		facebookId: {
-			type: String,
-		},
-		twitterId: {
-			type: String,
+		externalId: {
+			idType: { type: String },
+			id: { type: String },
 		},
 		location: {
 			type: String,
 		},
 		password: {
 			type: String,
-			required: true,
 		},
 		dob: {
 			type: Date,
 			required: true,
 		},
 		profileImage: {
-			type: String,
-			required: true,
-			default: "default.jpg",
+			imageType: {
+				type: String,
+				required: true,
+				default: "INTERNAL",
+			},
+			url: {
+				type: String,
+				required: true,
+				default: "default.jpg",
+			},
 		},
 		preferences: {
 			genres: [{ type: String }],

@@ -346,12 +346,12 @@ router.post("/password", async (req, res) => {
 				errors: [
 					{
 						msg:
-							"If you email exists, a link to reset your password has been sent.",
+							"If your email exists in our database, a link to reset your password has been sent.",
 					},
 				],
 			});
 		// Get client URL
-		const url = `${config.get("client_url")}`;
+		const url = `${config.get("client_url")}/`;
 		// Create tokens
 		const payload = { user: user._id };
 		// Create token w/ 5 minute expiry
@@ -385,7 +385,7 @@ router.post("/password", async (req, res) => {
 			errors: [
 				{
 					msg:
-						"If you email exists, a link to reset your password has been sent.",
+						"If your email exists in our database, a link to reset your password has been sent.",
 				},
 			],
 		});
