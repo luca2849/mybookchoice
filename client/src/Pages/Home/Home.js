@@ -70,7 +70,7 @@ const Home = ({ addRating }) => {
 			}
 			return bookData;
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 

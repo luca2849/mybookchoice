@@ -158,17 +158,11 @@ router.post("/google", async (req, res) => {
 			let dob;
 			for (const birthday of birthdayArray) {
 				if (Object.keys(birthday.date).length === 3) {
-					console.log(birthday);
 					const { year, month, day } = birthday.date;
 					const date = `${year}-${month}-${day}`;
 					dob = moment.utc(date, "YYYY-MM-DD").toDate();
 				}
 			}
-			console.log(dob);
-			// return res
-			// 	.status(400)
-			// 	.json({ errors: [{ msg: "Token is invalid." }] });
-			// Create new user
 			const newUser = new User({
 				externalId: { idType: "GOOGLE", id: result.googleId },
 				username: `${result.givenName}${randomNumber}`,

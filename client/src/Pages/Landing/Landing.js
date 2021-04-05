@@ -182,7 +182,6 @@ const RegistrationMethods = ({ clickHandler, registerWithGoogle }) => {
 	const googleSuccess = async (response) => {
 		toast.success("Google sign in successful", { autoClose: 3000 });
 		try {
-			console.log(response);
 			registerWithGoogle(response);
 		} catch (error) {
 			console.error(error);

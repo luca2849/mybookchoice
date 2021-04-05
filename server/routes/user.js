@@ -196,7 +196,7 @@ router.get("/ratings", auth, async (req, res) => {
 		});
 		return res.status(200).json({ ratings: limited });
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
@@ -236,7 +236,7 @@ router.put("/ratings", auth, async (req, res) => {
 		user.save();
 		return res.status(200).json(foundRating);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
@@ -281,7 +281,7 @@ router.put("/", auth, async (req, res) => {
 				.json({ errors: [{ msg: "User not found" }] });
 		return res.json(user);
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
@@ -314,13 +314,13 @@ router.post(
 					await fs.unlinkSync(`./public/profileImages/${oldAvatar}`);
 				}
 			} catch (error) {
-				console.log("Error deleting old avatar", error);
+				console.error("Error deleting old avatar", error);
 			}
 			user.profileImage = file.filename;
 			await user.save();
 			return res.status(200).json(user);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			return res
 				.status(500)
 				.json({ errors: [{ msg: "Internal server error" }] });
@@ -390,7 +390,7 @@ router.post("/password", async (req, res) => {
 			],
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
@@ -456,7 +456,7 @@ router.post("/password/reset", async (req, res) => {
 			],
 		});
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res.status(500).json({
 			errors: [{ msg: "Error. Please request a new password reset." }],
 		});
@@ -474,7 +474,7 @@ router.delete("/", auth, async (req, res) => {
 		});
 		return res.status(200).json({ msg: "Account Deleted" });
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });

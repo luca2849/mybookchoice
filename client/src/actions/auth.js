@@ -71,7 +71,6 @@ export const register = (formData) => async (dispatch) => {
 };
 
 export const registerWithGoogle = (response) => async (dispatch) => {
-	console.log("Registering with Google");
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
