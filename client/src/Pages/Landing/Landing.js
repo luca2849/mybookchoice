@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 // Redux
 import { connect } from "react-redux";
-import { login, register, registerWithGoogle } from "../../actions/auth";
+import { login, register, authenticateWithGoogle } from "../../actions/auth";
 // CSS
 import styles from "./Landing.module.css";
 // Icons
@@ -23,7 +23,12 @@ import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
 import GoogleLogin from "react-google-login";
 
-const Landing = ({ login, register, isAuthenticated, registerWithGoogle }) => {
+const Landing = ({
+	login,
+	register,
+	isAuthenticated,
+	authenticateWithGoogle,
+}) => {
 	const [loginData, setLoginData] = useState({});
 	const [registrationData, setRegistrationData] = useState({
 		email: "",
@@ -114,7 +119,7 @@ const Landing = ({ login, register, isAuthenticated, registerWithGoogle }) => {
 					)}
 					{currentModal === "reg0" && (
 						<RegistrationMethods
-							registerWithGoogle={registerWithGoogle}
+							authenticateWithGoogle={authenticateWithGoogle}
 							clickHandler={setCurrentModal}
 							dataHandler={handleRegistrationDataChange}
 						/>
@@ -178,11 +183,10 @@ const Landing = ({ login, register, isAuthenticated, registerWithGoogle }) => {
 	);
 };
 
-const RegistrationMethods = ({ clickHandler, registerWithGoogle }) => {
+const RegistrationMethods = ({ clickHandler, authenticateWithGoogle }) => {
 	const googleSuccess = async (response) => {
-		toast.success("Google sign in successful", { autoClose: 3000 });
 		try {
-			registerWithGoogle(response);
+			authenticateWithGoogle(response);
 		} catch (error) {
 			console.error(error);
 		}
@@ -456,5 +460,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
 	login,
 	register,
-	registerWithGoogle,
+	authenticateWithGoogle,
 })(Landing);

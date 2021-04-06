@@ -70,7 +70,7 @@ export const register = (formData) => async (dispatch) => {
 	}
 };
 
-export const registerWithGoogle = (response) => async (dispatch) => {
+export const authenticateWithGoogle = (response) => async (dispatch) => {
 	const config = {
 		headers: {
 			"Content-Type": "application/json",
@@ -86,6 +86,7 @@ export const registerWithGoogle = (response) => async (dispatch) => {
 			accessToken,
 		});
 		const res = await axios.post("/api/auth/google", body, config);
+		toast.success("Google sign in successful", { autoClose: 3000 });
 		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 		dispatch(loadUser());
 	} catch (error) {
