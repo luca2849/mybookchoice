@@ -152,7 +152,7 @@ const Landing = ({
 												disabled={renderProps.disabled}
 											>
 												<FcGoogle />
-												<p>Log in with Google</p>
+												<p>Login with Google</p>
 											</div>
 										</div>
 									)}
@@ -162,6 +162,14 @@ const Landing = ({
 										"profile email https://www.googleapis.com/auth/user.birthday.read"
 									}
 									cookiePolicy="single_host_origin"
+								/>
+								<FacebookLogin
+									appId="771508680171352"
+									tag="div"
+									icon={<AiFillFacebook />}
+									cssClass={styles.fbLogin}
+									fields="name,email,picture,hometown"
+									callback={facebookResponse}
 								/>
 							</div>
 						</div>
