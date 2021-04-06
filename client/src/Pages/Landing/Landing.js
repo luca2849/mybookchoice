@@ -64,6 +64,20 @@ const Landing = ({
 		login(loginData);
 	};
 
+	const googleSuccess = async (response) => {
+		try {
+			authenticateWithGoogle(response);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+	const googleFailure = () => {
+		toast.error("Google sign in error. Please try again later.", {
+			autoClose: 3000,
+		});
+		console.error("Google Sign In Error. Try again later.");
+	};
+
 	return (
 		<LandingNavigation>
 			{currentModal && (
@@ -114,12 +128,36 @@ const Landing = ({
 								<button onClick={() => handleLoginSubmit()}>
 									Login
 								</button>
+								<GoogleLogin
+									clientId={
+										"380870297062-taklr4637g8ur6srf482fk7qjcedhm5p.apps.googleusercontent.com"
+									}
+									render={(renderProps) => (
+										<div className={styles.googleOuter}>
+											<div
+												className={styles.googleLogin}
+												onClick={renderProps.onClick}
+												disabled={renderProps.disabled}
+											>
+												<FcGoogle />
+												<p>Log in with Google</p>
+											</div>
+										</div>
+									)}
+									onSuccess={googleSuccess}
+									onFailure={googleFailure}
+									scope={
+										"profile email https://www.googleapis.com/auth/user.birthday.read"
+									}
+									cookiePolicy="single_host_origin"
+								/>
 							</div>
 						</div>
 					)}
 					{currentModal === "reg0" && (
 						<RegistrationMethods
-							authenticateWithGoogle={authenticateWithGoogle}
+							googleSuccess={googleSuccess}
+							googleFailure={googleFailure}
 							clickHandler={setCurrentModal}
 							dataHandler={handleRegistrationDataChange}
 						/>
@@ -183,21 +221,11 @@ const Landing = ({
 	);
 };
 
-const RegistrationMethods = ({ clickHandler, authenticateWithGoogle }) => {
-	const googleSuccess = async (response) => {
-		try {
-			authenticateWithGoogle(response);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-	const googleFailure = () => {
-		toast.error("Google sign in error. Please try again later.", {
-			autoClose: 3000,
-		});
-		console.error("Google Sign In Error. Try again later.");
-	};
-
+const RegistrationMethods = ({
+	clickHandler,
+	googleSuccess,
+	googleFailure,
+}) => {
 	return (
 		<div className={styles.modal}>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
