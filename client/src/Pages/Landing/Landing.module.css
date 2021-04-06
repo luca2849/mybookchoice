@@ -160,8 +160,10 @@ svg{
 }
 
 .item {
-    margin: 0.5rem;
+    margin: 0.5rem 0;
     padding: 0.5rem;
+    width: 100%;
+    background: white;
     display: flex;
     align-items: center;
     font-size: 1.2rem;
@@ -188,7 +190,7 @@ svg{
     fill: #4267B2;
 }
 
-.item:nth-of-type(3) svg {
+.item:nth-of-type(2) svg {
     fill: #1DA1F2;
 }
 

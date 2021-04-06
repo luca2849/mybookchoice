@@ -120,7 +120,7 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 							src={
 								user.profileImage.imageType === "EXTERNAL"
 									? user.profileImage.url
-									: `url(/api/img/${user.profileImage.url})`
+									: `${process.env.REACT_APP_SERVER_URL}/api/img/${user.profileImage.url}`
 							}
 						/>
 					</div>

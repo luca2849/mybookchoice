@@ -98,6 +98,32 @@ export const authenticateWithGoogle = (response) => async (dispatch) => {
 	}
 };
 
+export const authenticateWithFacebook = (accessToken, id) => async (
+	dispatch
+) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		const body = JSON.stringify({
+			accessToken,
+			id,
+		});
+		const res = await axios.post("/api/auth/facebook", body, config);
+		toast.success("Facebook sign in successful", { autoClose: 3000 });
+		dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+		dispatch(loadUser());
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: REGISTER_FAIL });
+	}
+};
+
 export const deleteUser = () => async (dispatch) => {
 	try {
 		setAuthToken(localStorage.getItem("token"));

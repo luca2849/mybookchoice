@@ -5,7 +5,12 @@ import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 // Redux
 import { connect } from "react-redux";
-import { login, register, authenticateWithGoogle } from "../../actions/auth";
+import {
+	login,
+	register,
+	authenticateWithGoogle,
+	authenticateWithFacebook,
+} from "../../actions/auth";
 // CSS
 import styles from "./Landing.module.css";
 // Icons
@@ -22,12 +27,15 @@ import Logo from "../../Components/Misc/Logo/Logo";
 import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
 import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
+import axios from "axios";
 
 const Landing = ({
 	login,
 	register,
 	isAuthenticated,
 	authenticateWithGoogle,
+	authenticateWithFacebook,
 }) => {
 	const [loginData, setLoginData] = useState({});
 	const [registrationData, setRegistrationData] = useState({
@@ -76,6 +84,10 @@ const Landing = ({
 			autoClose: 3000,
 		});
 		console.error("Google Sign In Error. Try again later.");
+	};
+
+	const facebookResponse = async (response) => {
+		authenticateWithFacebook(response.accessToken, response.id);
 	};
 
 	return (
@@ -158,6 +170,7 @@ const Landing = ({
 						<RegistrationMethods
 							googleSuccess={googleSuccess}
 							googleFailure={googleFailure}
+							facebookResponse={facebookResponse}
 							clickHandler={setCurrentModal}
 							dataHandler={handleRegistrationDataChange}
 						/>
@@ -225,6 +238,7 @@ const RegistrationMethods = ({
 	clickHandler,
 	googleSuccess,
 	googleFailure,
+	facebookResponse,
 }) => {
 	return (
 		<div className={styles.modal}>
@@ -232,10 +246,17 @@ const RegistrationMethods = ({
 			<Logo fill={"rgb(150, 150, 150)"} />
 			<h3>Create Account</h3>
 			<div className={styles.items}>
-				<div className={styles.item}>
+				{/* <div className={styles.item}>
 					<AiFillFacebook />
 					<p>Register with Facebook</p>
-				</div>
+				</div> */}
+				<FacebookLogin
+					appId="771508680171352"
+					icon={<AiFillFacebook />}
+					cssClass={styles.item}
+					fields="name,email,picture,hometown"
+					callback={facebookResponse}
+				/>
 				<GoogleLogin
 					clientId={
 						"380870297062-taklr4637g8ur6srf482fk7qjcedhm5p.apps.googleusercontent.com"
@@ -489,4 +510,5 @@ export default connect(mapStateToProps, {
 	login,
 	register,
 	authenticateWithGoogle,
+	authenticateWithFacebook,
 })(Landing);

@@ -316,7 +316,7 @@ router.post(
 			} catch (error) {
 				console.error("Error deleting old avatar", error);
 			}
-			user.profileImage = file.filename;
+			user.profileImage = { imageType: "INTERNAL", url: file.filename };
 			await user.save();
 			return res.status(200).json(user);
 		} catch (error) {

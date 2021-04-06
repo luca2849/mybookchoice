@@ -204,6 +204,75 @@ router.post("/google", async (req, res) => {
 	}
 });
 
+router.post("/facebook", async (req, res) => {
+	const { accessToken, id } = req.body;
+	console.log(accessToken);
+	// Validate token
+	const check = `https://graph.facebook.com/debug_token?input_token=${accessToken}&access_token=${config.get(
+		"FACEBOOK_APP_ACCESS_TOKEN"
+	)}`;
+	try {
+		const resp = await axios.get(check);
+		const valid = resp.data.data.is_valid;
+		if (!valid)
+			return res.status(401).json({
+				errors: [{ msg: "Token is invalid. Please try again." }],
+			});
+		// Check if user exists
+		const user = await User.findOne({
+			"externalId.idType": "FACEBOOK",
+			"externalId.id": id,
+		});
+		if (!user) {
+			// Register new Facebook user
+			// Query Google API for user data
+			const url = `https://graph.facebook.com/${id}?fields=name,picture,birthday,email,hometown&access_token=${accessToken}`;
+			const response = await axios.get(url);
+			console.log(response.data);
+			const { name, picture, birthday, email } = response.data;
+			const dob = moment.utc(birthday, "MM/DD/YYYY").toDate();
+			const randomNumber = Math.round(Math.random() * 1000000);
+			const username = `${name.split(" ")[0]}${randomNumber}`;
+			console.log(picture.data.url);
+			const newUser = new User({
+				name,
+				username,
+				dob,
+				email,
+				externalId: { idType: "FACEBOOK", id },
+				profileImage: {
+					imageType: "EXTERNAL",
+					url: picture.data.url,
+				},
+			});
+			await newUser.save();
+			const payload = {
+				user: {
+					id: newUser._id,
+				},
+			};
+			const tok = jwt.sign(payload, config.get("jwtSecret"), {
+				expiresIn: config.get("jwtExpiry"),
+			});
+			return res.status(200).json({ token: tok });
+		}
+		const payload = {
+			user: {
+				id: user._id,
+			},
+		};
+		const tok = jwt.sign(payload, config.get("jwtSecret"), {
+			expiresIn: config.get("jwtExpiry"),
+		});
+		return res.json({ token: tok });
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
 // POST /api/auth/login/email
 // Purpose - Log In a user
 // Access - Public
