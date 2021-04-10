@@ -23,6 +23,7 @@ const Home = ({ addRating }) => {
 			const res = await axios.get(
 				`/api/user/books?bookCount=${count}&skip=${skip}`
 			);
+			console.log(res.data);
 			// Request details from OL
 			const isbnList = res.data.map((isbn) => `${isbn.isbn}`).join(",");
 			delete axios.defaults.headers.common["x-auth-token"];
@@ -64,7 +65,8 @@ const Home = ({ addRating }) => {
 					bookPeople:
 						book.subject_people &&
 						book.subject_people.map((person) => person.name),
-					subjects: book.subjects.map((sub) => sub.name),
+					subjects:
+						book.subjects && book.subjects.map((sub) => sub.name),
 				};
 				bookData.push(newBook);
 			}
@@ -86,6 +88,8 @@ const Home = ({ addRating }) => {
 		let tmp = books.concat(bookData);
 		setBooks(tmp.slice(1));
 	};
+
+	if (!books) return <Loading />;
 
 	return (
 		<>

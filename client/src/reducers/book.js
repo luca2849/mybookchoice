@@ -12,14 +12,6 @@ const initialState = {
 export default function (state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
-		case BOOK_ERROR:
-			return {
-				...state,
-				token: null,
-				isAuthenticated: false,
-				loading: false,
-				user: null,
-			};
 		case RECOMMENDATIONS_UPDATED:
 			return {
 				...state,
@@ -30,6 +22,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				books: payload,
+				loading: false,
+			};
+		case BOOK_ERROR:
+			return {
+				...state,
 				loading: false,
 			};
 		default:

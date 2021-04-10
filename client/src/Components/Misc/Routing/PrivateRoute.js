@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import MainNavigation from "../../Navigation/MainNavigation/MainNavigation";
+import Loading from "../Loading/Loading";
 
 const PrivateRoute = ({
 	component: Component,
@@ -13,12 +14,14 @@ const PrivateRoute = ({
 	<Route
 		{...rest}
 		render={(props) =>
-			!isAuthenticated && !loading ? (
-				<Redirect to="/" />
-			) : (
+			loading ? (
+				<Loading />
+			) : isAuthenticated ? (
 				<MainNavigation>
 					<Component {...props} />
 				</MainNavigation>
+			) : (
+				<Redirect to="/" />
 			)
 		}
 	/>

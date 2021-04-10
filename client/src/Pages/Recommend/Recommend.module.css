@@ -1,0 +1,164 @@
+h2 {
+    letter-spacing: 2px;
+    margin: 20px 0 20px 20px;
+}
+.books {
+    width: 75vw;
+    max-width: 75%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.book a {
+    transition: all 0.3s;
+}
+.book a:hover {
+    text-decoration: none;
+    color: rgb(105, 105, 105);
+}
+.book {
+    font-size: 60%;
+    width: 250px;
+    height: 550px;
+}
+.bookInner {
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.3);
+    height: 80%;
+    overflow: hidden;
+}
+.bookInner .imageContainer {
+    height: 70%;
+    overflow: hidden;
+}
+.bookInner .imageContainer img {
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.bookDetails {
+    padding: 10px;
+}
+
+.container {
+    width: 90vw;
+    height: 90vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Selectable Section */
+.genre {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 70rem;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.genreFlex {
+    flex: 1 0 24%;
+    display: flex;
+    flex-direction: column;
+}
+
+.genreFlex > div {
+    margin: 2rem;
+    flex: 0 1 auto;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.genreBottom {
+    display: flex;
+    align-items: flex-end;
+}
+
+.genreTop {
+    padding: 1rem;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.genreTop > * {
+    max-height: 75px;
+    max-width: 150px;
+}
+
+.genreTop > svg {
+    transform: scale(3);
+}
+
+.genreBottom {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.genreContent{
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.clicked {
+    border: 2px solid rgb(43, 158, 253);
+}
+
+.container .buttons {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container button {
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.container button:nth-of-type(2) {
+    background: #10a7d1;
+    color: #fff;
+}
+
+.container button:nth-of-type(2):hover {
+    background: #fff;
+    color: #10a7d1;
+    border: 2px solid #10a7d1;
+}
+
+.col {
+    flex-direction: column;
+    margin: 2rem auto;
+    font-size: 1.5rem;
+}
+
+.col > * {
+    margin: 0.5rem;
+}
+
+.col > input {
+    border-radius: 5px;
+    border: 1px solid #616161;
+    text-align: center;
+}

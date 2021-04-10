@@ -8,27 +8,27 @@ import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 // Notifications
 import { ToastContainer } from "react-toastify";
+// CSS
+import "rsuite/dist/styles/rsuite-default.css";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 // Pages
 import Home from "./Pages/Home/Home";
 import Landing from "./Pages/Landing/Landing";
 import Logout from "./Pages/Logout/Logout";
 import Profile from "./Pages/Profile/Profile";
 import Preferences from "./Pages/Preferences/Preferences";
-// CSS
-import "rsuite/dist/styles/rsuite-default.css";
-import "./App.css";
-import "react-toastify/dist/ReactToastify.css";
 import Recommendations from "./Pages/Recommendations/Recommendations";
 import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import PastRatings from "./Pages/PastRatings/PastRatings";
-// Check token
-if (localStorage.token) {
-	setAuthToken(localStorage.token);
-}
+import Recommend from "./Pages/Recommend/Recommend";
 
 function App() {
 	useEffect(() => {
+		if (localStorage.token) {
+			setAuthToken(localStorage.token);
+		}
 		store.dispatch(loadUser());
 	}, []);
 	return (
@@ -81,6 +81,11 @@ function App() {
 							exact
 							path="/ratings"
 							component={PastRatings}
+						/>
+						<PrivateRoute
+							exact
+							path="/recommend"
+							component={Recommend}
 						/>
 					</Switch>
 				</>

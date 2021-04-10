@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import setAuthToken from "../utils/setAuthToken";
 
-// Load User
+// Get general recommendations
 export const getRecommendations = (limit, skip) => async (dispatch) => {
 	try {
 		setAuthToken(localStorage.getItem("token"));
@@ -17,6 +17,29 @@ export const getRecommendations = (limit, skip) => async (dispatch) => {
 		if (errors) {
 			errors.forEach((error) => toast.error(error.msg, "danger"));
 		}
+		dispatch({ type: BOOK_ERROR });
+	}
+};
+
+// Get specific recommendations
+export const getSpecificRecommendations = (genres, types, limit) => async (
+	dispatch
+) => {
+	try {
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		};
+		const body = JSON.stringify({ genres, types });
+		const res = await axios.post(
+			`/api/recommend/specific?limit=${limit}`,
+			body,
+			config
+		);
+		dispatch({ type: BOOKS_UPDATED, payload: res.data });
+	} catch (error) {
+		console.log(error);
 		dispatch({ type: BOOK_ERROR });
 	}
 };
