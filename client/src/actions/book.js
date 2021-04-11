@@ -22,21 +22,25 @@ export const getRecommendations = (limit, skip) => async (dispatch) => {
 };
 
 // Get specific recommendations
-export const getSpecificRecommendations = (genres, types, limit) => async (
-	dispatch
-) => {
+export const getSpecificRecommendations = (
+	genres,
+	types,
+	preferences,
+	limit
+) => async (dispatch) => {
 	try {
 		const config = {
 			headers: {
 				"Content-Type": "application/json",
 			},
 		};
-		const body = JSON.stringify({ genres, types });
+		const body = JSON.stringify({ genres, types, preferences });
 		const res = await axios.post(
 			`/api/recommend/specific?limit=${limit}`,
 			body,
 			config
 		);
+		console.log(res.data);
 		dispatch({ type: BOOKS_UPDATED, payload: res.data });
 	} catch (error) {
 		console.log(error);

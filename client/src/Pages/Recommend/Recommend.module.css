@@ -42,14 +42,17 @@ h2 {
 .bookDetails {
     padding: 10px;
 }
+.steps {
+    width: 100%;
+    margin-bottom: 2rem;
 
+}
 .container {
     width: 90vw;
-    height: 90vh;
-    margin: 0 auto;
+    margin: 5rem auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    flex-direction: column;
 }
 
 /* Selectable Section */
@@ -61,7 +64,6 @@ h2 {
     max-width: 100%;
     margin: 0 auto;
     justify-content: center;
-    align-items: center;
 }
 
 .genreFlex {
@@ -161,4 +163,30 @@ h2 {
     border-radius: 5px;
     border: 1px solid #616161;
     text-align: center;
+}
+
+.tableContainer {
+    font-size: 1rem;    
+}
+
+.tableContainer > * {
+    margin: 1rem auto;
+    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.1);
+}
+
+.moreInfo {
+    color:rgb(43, 158, 253);
+    transition: all 0.25s;
+}
+
+.green {
+    color: rgb(54, 160, 80);
+}
+
+.orange {
+    color: rgb(255, 196, 107);
+}
+
+.red {
+    color: rgb(255, 89, 89);
 }
