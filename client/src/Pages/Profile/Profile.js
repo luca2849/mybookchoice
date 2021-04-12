@@ -138,7 +138,7 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 							<List.Item>My Past Ratings</List.Item>
 						</Link>
 						<Link to={"/recommend"}>
-							<List.Item>Get Specific Rating</List.Item>
+							<List.Item>Get Specific Recommendation</List.Item>
 						</Link>
 						<List.Item>My Friends</List.Item>
 						<List.Item>My Messages</List.Item>

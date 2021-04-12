@@ -298,8 +298,8 @@ const Recommend = ({
 									data={books}
 									height={
 										books.length > 5
-											? 500
-											: books.length * 100
+											? 3004
+											: books.length * 60
 									}
 								>
 									<Column

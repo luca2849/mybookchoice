@@ -36,3 +36,7 @@ a:hover {
 a.mapboxgl-ctrl-logo {
     display: none!important;
 }
+
+.rs-table-cell-header {
+    font-size: 2rem;
+}

@@ -40,7 +40,6 @@ export const getSpecificRecommendations = (
 			body,
 			config
 		);
-		console.log(res.data);
 		dispatch({ type: BOOKS_UPDATED, payload: res.data });
 	} catch (error) {
 		console.log(error);
