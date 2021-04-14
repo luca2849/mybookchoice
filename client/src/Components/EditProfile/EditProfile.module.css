@@ -32,7 +32,7 @@
 }
 
 .formGroup {
-    margin: 0.5rem;
+    margin: 0.25rem;
     width: 75%;
 }
 
@@ -42,7 +42,7 @@
 
 .formGroup input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.25rem;
 }
 
 .submitContainer > button {

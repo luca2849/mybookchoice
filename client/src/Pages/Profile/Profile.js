@@ -35,90 +35,74 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 
 	return (
 		<div className={styles.profile}>
-			{editProfileOpen && (
-				<Modal
-					open={!!editProfileOpen}
-					openHandler={setEditProfileOpen}
-					cssClass={styles.modal}
-				>
-					<EditProfile
-						clickHandler={setEditProfileOpen}
-						user={user}
-					/>
-				</Modal>
-			)}
+			<Modal
+				open={!!editProfileOpen}
+				openHandler={setEditProfileOpen}
+				cssClass={styles.modal}
+			>
+				<EditProfile clickHandler={setEditProfileOpen} user={user} />
+			</Modal>
 			{currentModal && (
 				<>
-					{currentModal === "deleteAcc" && (
-						<Modal
-							open={!!currentModal}
-							openHandler={setCurrentModal}
-							cssClass={styles.modal}
-						>
-							<h3>Delete Account</h3>
-							<p>
-								Deleting your account is an irreversible
-								operation. You will not be able to retrieve any
-								of your data.
-							</p>
-							<p>
-								All of your personal information, ratings,
-								reviews, and preferences will be deleted.
-							</p>
-							<div className={styles.buttons}>
-								<button onClick={() => setCurrentModal(null)}>
-									Cancel
-								</button>
-								<button
-									onClick={() =>
-										setCurrentModal("deleteAccConf")
-									}
-								>
-									Delete Account
-								</button>
-							</div>
-						</Modal>
-					)}
-					{currentModal === "deleteAccConf" && (
-						<Modal
-							open={!!currentModal}
-							openHandler={() => setCurrentModal(null)}
-							cssClass={styles.modal}
-						>
-							<h3>Delete Account</h3>
-							<p>
-								Please enter your username,{" "}
-								<span className={styles.name}>
-									{user.username}
-								</span>
-								, below to confirm your account deletion.
-							</p>
-							<div className={styles.formGroup}>
-								<input
-									onChange={(e) => handleUserChange(e)}
-									placeholder="Username..."
-									type="text"
-									name="username"
-									autoComplete="off"
-								/>
-							</div>
-							<div className={styles.buttons}>
-								<button onClick={() => setCurrentModal(null)}>
-									Cancel
-								</button>
-								<button onClick={() => handleSubmit()}>
-									Delete Account
-								</button>
-							</div>
-						</Modal>
-					)}
-					{currentModal === "passwordChange" && (
-						<PasswordReset
-							isOpen={!!currentModal}
-							clickHandler={setCurrentModal}
-							requestPasswordReset={requestPasswordReset}
-						/>
-					)}
+					<Modal
+						open={currentModal === "deleteAcc"}
+						openHandler={setCurrentModal}
+						cssClass={styles.modal}
+					>
+						<h3>Delete Account</h3>
+						<p>
+							Deleting your account is an irreversible operation.
+							You will not be able to retrieve any of your data.
+						</p>
+						<p>
+							All of your personal information, ratings, reviews,
+							and preferences will be deleted.
+						</p>
+						<div className={styles.buttons}>
+							<button onClick={() => setCurrentModal(null)}>
+								Cancel
+							</button>
+							<button
+								onClick={() => setCurrentModal("deleteAccConf")}
+							>
+								Delete Account
+							</button>
+						</div>
+					</Modal>
+					<Modal
+						open={currentModal === "deleteAccConf"}
+						openHandler={() => setCurrentModal(null)}
+						cssClass={styles.modal}
+					>
+						<h3>Delete Account</h3>
+						<p>
+							Please enter your username,{" "}
+							<span className={styles.name}>{user.username}</span>
+							, below to confirm your account deletion.
+						</p>
+						<div className={styles.formGroup}>
+							<input
+								onChange={(e) => handleUserChange(e)}
+								placeholder="Username..."
+								type="text"
+								name="username"
+								autoComplete="off"
+							/>
+						</div>
+						<div className={styles.buttons}>
+							<button onClick={() => setCurrentModal(null)}>
+								Cancel
+							</button>
+							<button onClick={() => handleSubmit()}>
+								Delete Account
+							</button>
+						</div>
+					</Modal>
+					<PasswordReset
+						isOpen={currentModal === "passwordChange"}
+						clickHandler={setCurrentModal}
+						requestPasswordReset={requestPasswordReset}
+					/>
 				</>
 			)}
 
