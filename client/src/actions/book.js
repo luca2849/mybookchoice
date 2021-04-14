@@ -26,6 +26,7 @@ export const getSpecificRecommendations = (
 	genres,
 	types,
 	preferences,
+	eras,
 	limit
 ) => async (dispatch) => {
 	try {
@@ -34,7 +35,7 @@ export const getSpecificRecommendations = (
 				"Content-Type": "application/json",
 			},
 		};
-		const body = JSON.stringify({ genres, types, preferences });
+		const body = JSON.stringify({ genres, types, preferences, eras });
 		const res = await axios.post(
 			`/api/recommend/specific?limit=${limit}`,
 			body,

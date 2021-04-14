@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Steps } from "rsuite";
-import { Table } from "rsuite";
 import { getSpecificRecommendations } from "../../actions/book";
 import Loading from "../../Components/Misc/Loading/Loading";
+import Book from "../../Components/Book/Book";
 import styles from "./Recommend.module.css";
-import { FaTheaterMasks, FaSuperpowers, FaMagic, FaDove } from "react-icons/fa";
+import {
+	FaTheaterMasks,
+	FaSuperpowers,
+	FaMagic,
+	FaDove,
+	FaUserAstronaut,
+	FaDragon,
+	FaChild,
+} from "react-icons/fa";
+import { AiOutlineQuestion } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 import { BiLaugh } from "react-icons/bi";
 import {
@@ -14,10 +23,20 @@ import {
 	GiAncientColumns,
 	GiDramaMasks,
 	GiChalkOutlineMurder,
+	GiAncientRuins,
+	GiPirateFlag,
+	GiRayGun,
+	GiMusket,
+	GiFactory,
+	GiRocketFlight,
+	GiMicrochip,
+	GiArtificialIntelligence,
+	GiFilmProjector,
+	GiCrimeSceneTape,
+	GiLoveLetter,
+	GiWhip,
 } from "react-icons/gi";
 import { RiGovernmentFill } from "react-icons/ri";
-
-const { Column, HeaderCell, Cell, Pagination } = Table;
 
 const Recommend = ({
 	book: { loading, books },
@@ -28,41 +47,49 @@ const Recommend = ({
 			name: "science fiction",
 			display: "Science-Fiction",
 			image: "./img/astronaut.png",
+			icon: <FaUserAstronaut />,
 		},
 		{
 			name: "non fiction",
 			display: "Non-Fiction",
 			image: "./img/nonfiction.png",
+			icon: <GiFilmProjector />,
 		},
 		{
 			name: "fiction",
 			display: "Fiction",
 			image: "./img/fiction.png",
+			icon: <FaDragon />,
 		},
 		{
 			name: "thriller",
 			display: "Thriller",
 			image: "./img/thriller.png",
+			icon: <GiCrimeSceneTape />,
 		},
 		{
 			name: "romance",
 			display: "Romance",
 			image: "./img/romance.png",
+			icon: <GiLoveLetter />,
 		},
 		{
 			name: "adventure",
 			display: "Adventure",
 			image: "./img/horror.png",
+			icon: <GiWhip />,
 		},
 		{
 			name: "mystery",
 			display: "Mystery",
 			image: "./img/mystery.png",
+			icon: <AiOutlineQuestion />,
 		},
 		{
 			name: "Childrens",
 			display: "Children's",
 			image: "./img/children.png",
+			icon: <FaChild />,
 		},
 	];
 
@@ -131,16 +158,61 @@ const Recommend = ({
 			icon: <GiChalkOutlineMurder />,
 		},
 	];
+
+	const eras = [
+		{
+			display: "Past",
+			name: "past",
+			icon: <GiAncientRuins />,
+		},
+		{
+			display: "1600-1699",
+			name: "1600",
+			icon: <GiPirateFlag />,
+		},
+		{
+			display: "1700-1799",
+			name: "1700",
+			icon: <GiMusket />,
+		},
+		{
+			display: "1800-1899",
+			name: "1800",
+			icon: <GiFactory />,
+		},
+		{
+			display: "1900-1999",
+			name: "1900",
+			icon: <GiRocketFlight />,
+		},
+		{
+			display: "2000-2099",
+			name: "2000",
+			icon: <GiMicrochip />,
+		},
+		{
+			display: "2100-2199",
+			name: "2100",
+			icon: <GiArtificialIntelligence />,
+		},
+		{
+			display: "Future",
+			name: "future",
+			icon: <GiRayGun />,
+		},
+	];
 	const [selectedGenres, setSelectedGenres] = useState([]);
 	const [selectedTypes, setSelectedTypes] = useState([]);
 	const [selectedPreferences, setSelectedPreferences] = useState([]);
+	const [selectedEras, setSelectedEras] = useState([]);
 	const [limit, setLimit] = useState(0);
 	const [currentSection, setCurrentSection] = useState(0);
 	const handleClick = (name) => {
 		if (
 			selectedGenres.includes(name) ||
 			selectedTypes.includes(name) ||
-			selectedPreferences.includes(name)
+			selectedPreferences.includes(name) ||
+			selectedEras.includes(name)
 		) {
 			if (currentSection === 0) {
 				const spliced = selectedGenres.splice(
@@ -169,6 +241,15 @@ const Recommend = ({
 					(x) => !spliced.includes(x)
 				);
 				setSelectedPreferences(difference);
+			} else if (currentSection === 3) {
+				const spliced = selectedEras.splice(
+					selectedEras.indexOf(name),
+					1
+				);
+				const difference = selectedEras.filter(
+					(x) => !spliced.includes(x)
+				);
+				setSelectedEras(difference);
 			}
 		} else {
 			if (currentSection === 0) {
@@ -177,6 +258,8 @@ const Recommend = ({
 				setSelectedTypes([...selectedTypes, name]);
 			} else if (currentSection === 2) {
 				setSelectedPreferences([...selectedPreferences, name]);
+			} else if (currentSection === 3) {
+				setSelectedEras([...selectedEras, name]);
 			}
 		}
 	};
@@ -192,17 +275,18 @@ const Recommend = ({
 			selectedGenres,
 			selectedTypes,
 			selectedPreferences,
+			selectedEras,
 			limit
 		);
 		setCurrentSection(currentSection + 1);
 	};
-	console.log(selectedPreferences);
 	return (
 		<div className={styles.container}>
 			<Steps className={styles.steps} current={currentSection}>
 				<Steps.Item description="Genre" />
 				<Steps.Item description="Book Type" />
 				<Steps.Item description="Preferences" />
+				<Steps.Item description="Eras" />
 				<Steps.Item description="Limit" />
 				<Steps.Item description="Results" />
 			</Steps>
@@ -219,7 +303,7 @@ const Recommend = ({
 									onClick={() => handleClick(genre.name)}
 								>
 									<div className={styles.genreTop}>
-										<img src={genre.image} />
+										{genre.icon}
 									</div>
 									<div className={styles.genreBottom}>
 										<p>{genre.display}</p>
@@ -230,9 +314,11 @@ const Recommend = ({
 					</section>
 				)}
 				{currentSection === 1 && (
-					<section className={styles.genre}>
+					<section
+						className={`${styles.genre} ${styles.genreSelection}`}
+					>
 						{types.map((type) => (
-							<div className={styles.genreFlex}>
+							<div className={styles.genreFlex} key={type.name}>
 								<div
 									className={`${styles.genreContent} ${
 										selectedTypes.includes(type.name) &&
@@ -278,6 +364,28 @@ const Recommend = ({
 					</section>
 				)}
 				{currentSection === 3 && (
+					<section className={styles.genre}>
+						{eras.map((era) => (
+							<div className={styles.genreFlex} key={era.name}>
+								<div
+									className={`${styles.genreContent} ${
+										selectedEras.includes(era.name) &&
+										styles.clicked
+									}`}
+									onClick={() => handleClick(era.name)}
+								>
+									<div className={styles.genreTop}>
+										{era.icon}
+									</div>
+									<div className={styles.genreBottom}>
+										<p>{era.display}</p>
+									</div>
+								</div>
+							</div>
+						))}
+					</section>
+				)}
+				{currentSection === 4 && (
 					<section className={`${styles.genre} ${styles.col}`}>
 						<h3>Limiting</h3>
 						<p>How many results should we return?</p>
@@ -287,51 +395,21 @@ const Recommend = ({
 						/>
 					</section>
 				)}
-				{currentSection === 4 && (
+				{currentSection === 5 && (
 					<>
 						<h3>Your Results</h3>
 						{loading ? (
 							<Loading />
 						) : (
-							<div className={styles.tableContainer}>
-								<Table
-									data={books}
-									height={
-										books.length > 5
-											? 3004
-											: books.length * 60
-									}
-								>
-									<Column
-										width={100}
-										align="center"
-										flexGrow={true}
-									>
-										<HeaderCell>Title</HeaderCell>
-										<Cell dataKey="title" />
-									</Column>
-									<Column align="center">
-										<HeaderCell>OpenLibrary ID</HeaderCell>
-										<Cell dataKey="olId" />
-									</Column>
-									<Column align="center" flexGrow={true}>
-										<HeaderCell>Author(s)</HeaderCell>
-										<ListCell dataKey="authors" />
-									</Column>
-									<Column align="center">
-										<HeaderCell>Accuracy</HeaderCell>
-										<ScoreCell dataKey="score" />
-									</Column>
-									<Column align="center">
-										<HeaderCell></HeaderCell>
-										<ActionCell dataKey="olId" />
-									</Column>
-								</Table>
+							<div className={styles.books}>
+								{books.map((book) => (
+									<Book book={book} />
+								))}
 							</div>
 						)}
 					</>
 				)}
-				{currentSection < 4 && (
+				{currentSection < 5 && (
 					<div className={styles.buttons}>
 						<button
 							onClick={() => goBack()}
@@ -341,7 +419,7 @@ const Recommend = ({
 						</button>
 						<button
 							onClick={() =>
-								validateInputs(true) && currentSection === 3
+								validateInputs(true) && currentSection === 4
 									? getResults()
 									: setCurrentSection(currentSection + 1)
 							}
@@ -352,48 +430,6 @@ const Recommend = ({
 				)}
 			</div>
 		</div>
-	);
-};
-
-const ActionCell = ({ rowData, dataKey, ...props }) => {
-	return (
-		<Cell {...props} className="link-group">
-			<a
-				target="_blank"
-				href={`https://openlibrary.org/works/${rowData[dataKey]}`}
-				className={styles.moreInfo}
-			>
-				More Info
-			</a>
-		</Cell>
-	);
-};
-
-const ListCell = ({ rowData, dataKey, ...props }) => {
-	const cleanData = rowData[dataKey].join(", ");
-	return (
-		<Cell {...props} className="link-group">
-			{cleanData}
-		</Cell>
-	);
-};
-
-const ScoreCell = ({ rowData, dataKey, ...props }) => {
-	const score = rowData[dataKey].split("%")[0];
-	console.log(score);
-	return (
-		<Cell
-			{...props}
-			className={`link-group ${
-				score > 75
-					? styles.green
-					: score > 50
-					? styles.orange
-					: styles.red
-			}`}
-		>
-			{rowData[dataKey]}
-		</Cell>
 	);
 };
 

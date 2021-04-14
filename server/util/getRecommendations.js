@@ -22,6 +22,8 @@ const preferences = [
 	"suspense",
 ];
 
+const eras = ["past", "1600", "1700", "1800", "1900", "2000", "2100", "future"];
+
 const getGenre = (bookSubjects) => {
 	const presentGenres = new Array(8).fill(0);
 	for (let i = 0; i < genres.length; i++) {
@@ -67,9 +69,24 @@ const getOtherPreferences = (bookSubjects) => {
 	return presentPreferences;
 };
 
-const compileUserVector = (inputGenres, inputTypes, inputPreferences) => {
+const getEras = (bookDates) => {
+	const presentEras = new Array(8).fill(0);
+	for (let i = 0; i < eras.length; i++) {
+		for (const date of bookDates) {
+			presentEras[i] = date;
+		}
+	}
+	return presentEras;
+};
+
+const compileUserVector = (
+	inputGenres,
+	inputTypes,
+	inputPreferences,
+	inputEras
+) => {
 	const userVector = new Array(
-		genres.length + types.length + preferences.length
+		genres.length + types.length + preferences.length + eras.length
 	).fill(0);
 	for (let i = 0; i < genres.length; i++) {
 		for (const genre of inputGenres) {
@@ -88,7 +105,16 @@ const compileUserVector = (inputGenres, inputTypes, inputPreferences) => {
 	for (let i = 0; i < preferences.length; i++) {
 		for (const preference of inputPreferences) {
 			if (preference.toLowerCase() === preferences[i].toLowerCase()) {
-				userVector[i + genres.length] = 1;
+				userVector[i + genres.length + types.length] = 1;
+			}
+		}
+	}
+	for (let i = 0; i < eras.length; i++) {
+		for (const era of inputEras) {
+			if (era.toLowerCase() === eras[i].toLowerCase()) {
+				userVector[
+					i + genres.length + types.length + preferences.length
+				] = 1;
 			}
 		}
 	}
@@ -137,22 +163,40 @@ const calculatePreferencesScore = (bookSubjects, inputPreferencesSplit) => {
 	return similarity;
 };
 
+const calculateEraScore = (bookDates, inputDatesSplit) => {
+	// Get types for book
+	const eras = getEras(bookDates);
+	// Score vector similarity
+	let sumSquares = 0;
+	for (let i = 0; i < eras.length; i++) {
+		const diff = eras[i] - inputDatesSplit[i];
+		sumSquares += diff * diff;
+	}
+	const d = Math.sqrt(sumSquares);
+	const similarity = 1 / (1 + d);
+	return similarity;
+};
+
 const calculateWeightedScore = (
 	bookSubjects,
+	bookDates,
 	inputGenres,
 	inputTypes,
-	inputPreferences
+	inputPreferences,
+	inputEras
 ) => {
 	// Compile user vector
 	const userVector = compileUserVector(
 		inputGenres,
 		inputTypes,
-		inputPreferences
+		inputPreferences,
+		inputEras
 	);
 	// Split vector into groups
 	const genreVector = userVector.slice(0, 8);
 	const typeVector = userVector.slice(8, 12);
 	const preferencesVector = userVector.slice(12, 20);
+	const erasVector = userVector.slice(20, 28);
 	// Get genre score
 	const genreScore = calculateGenreScore(bookSubjects, genreVector);
 	// Get type score
@@ -162,14 +206,17 @@ const calculateWeightedScore = (
 		bookSubjects,
 		preferencesVector
 	);
-	// Weight scores (0.7 * type + 0.3 * genre)
-	return (1 / 3) * (typeScore + genreScore + preferencesScore);
+	// Calculate eras score
+	const erasScore = calculateEraScore(bookDates, erasVector);
+	// Calculate Average Score
+	return (1 / 4) * (typeScore + genreScore + preferencesScore + erasScore);
 };
 
 const getBookRecommendation = (
 	inputGenres,
 	inputTypes,
 	inputPreferences,
+	inputEras,
 	books,
 	n
 ) => {
@@ -179,9 +226,11 @@ const getBookRecommendation = (
 		// Get score
 		const score = calculateWeightedScore(
 			book.subjects,
+			book.dates ? book.dates : [],
 			inputGenres,
 			inputTypes,
-			inputPreferences
+			inputPreferences,
+			inputEras
 		);
 		// Add score to obj list
 		scores.push({ id: book._id, title: book.title, score: score });

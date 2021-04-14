@@ -45,7 +45,6 @@ h2 {
 .steps {
     width: 100%;
     margin-bottom: 2rem;
-
 }
 .container {
     width: 90vw;
@@ -189,4 +188,68 @@ h2 {
 
 .red {
     color: rgb(255, 89, 89);
+}
+
+.books {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.books > * {
+    margin: 1rem;
+    flex: 0 0 24%;
+    height: 500px;
+}
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .books {
+        width: 90vw;
+        max-width: 90vw;
+    }
+    .books > * {
+        margin: 0.5rem;
+        flex: 0 0 50%;
+    }
+    .container button {
+        font-size: 1rem;
+        margin: 0 1rem;
+    }
+    .container .buttons {
+        justify-content: space-evenly;
+    }
+    .steps {
+        display: none;
+    }
+    .genreFlex > div {
+        margin: 0.5rem;
+    }
+    .genreFlex {
+        flex: 0 0 50%;
+    }
+    .container {
+        margin: 3rem auto;
+    }
+    .container button:nth-of-type(2):hover {
+        background: #10a7d1;
+        color: #fff;
+        border: 2px solid transparent;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    .books {
+        width: 100%;
+        max-width: 100%;
+    }
+    .books > * {
+        flex: 0 0 90%;
+        margin: 2rem auto;
+    }
+    .genreBottom {
+        font-size: 0.7rem;
+    }
 }

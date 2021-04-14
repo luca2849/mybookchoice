@@ -19,9 +19,13 @@
     width: 100%;
 }
 
+.book h2 {
+    margin-left: 0;
+}
+
 .icon{
     position: absolute;
-    bottom: 0;
+    bottom: 5%;
     right: 5%;
     transform: scale(1.5);
 }

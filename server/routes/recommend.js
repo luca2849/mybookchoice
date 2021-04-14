@@ -28,9 +28,9 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.post("/specific", auth, async (req, res) => {
-	const { genres, types, preferences } = req.body;
+	const { genres, types, preferences, eras } = req.body;
 	const { limit } = req.query;
-	if (!genres || !types || limit <= 0)
+	if (!genres || !types || !eras || limit <= 0)
 		return res
 			.status(400)
 			.json({ errors: [{ msg: "Invalid/Missing Parameters" }] });
@@ -39,6 +39,7 @@ router.post("/specific", auth, async (req, res) => {
 		genres,
 		types,
 		preferences,
+		eras,
 		books,
 		limit
 	);
