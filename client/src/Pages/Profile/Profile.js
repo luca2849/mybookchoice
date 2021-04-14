@@ -11,11 +11,13 @@ import EditProfile from "../../Components/EditProfile/EditProfile";
 import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import { toast } from "react-toastify";
 import setAuthToken from "../../utils/setAuthToken";
+import Modal from "../../Components/Modal/Modal";
 
 const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 	setAuthToken(localStorage.getItem("token"));
 	const [editProfileOpen, setEditProfileOpen] = useState(false);
 	const [currentModal, setCurrentModal] = useState(null);
+	const [modalOpen, setModalOpen] = useState(true);
 	const [username, setUsername] = useState("");
 	if (!user) return <Loading />;
 
@@ -34,16 +36,25 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 	return (
 		<div className={styles.profile}>
 			{editProfileOpen && (
-				<EditProfile clickHandler={setEditProfileOpen} user={user} />
+				<Modal
+					open={!!editProfileOpen}
+					openHandler={setEditProfileOpen}
+					cssClass={styles.modal}
+				>
+					<EditProfile
+						clickHandler={setEditProfileOpen}
+						user={user}
+					/>
+				</Modal>
 			)}
 			{currentModal && (
 				<>
-					<div
-						className={styles.darken}
-						onClick={() => setCurrentModal(null)}
-					></div>
 					{currentModal === "deleteAcc" && (
-						<div className={styles.modal}>
+						<Modal
+							open={!!currentModal}
+							openHandler={setCurrentModal}
+							cssClass={styles.modal}
+						>
 							<h3>Delete Account</h3>
 							<p>
 								Deleting your account is an irreversible
@@ -66,10 +77,14 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 									Delete Account
 								</button>
 							</div>
-						</div>
+						</Modal>
 					)}
 					{currentModal === "deleteAccConf" && (
-						<div className={styles.modal}>
+						<Modal
+							open={!!currentModal}
+							openHandler={() => setCurrentModal(null)}
+							cssClass={styles.modal}
+						>
 							<h3>Delete Account</h3>
 							<p>
 								Please enter your username,{" "}
@@ -95,16 +110,18 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 									Delete Account
 								</button>
 							</div>
-						</div>
+						</Modal>
 					)}
 					{currentModal === "passwordChange" && (
 						<PasswordReset
+							isOpen={!!currentModal}
 							clickHandler={setCurrentModal}
 							requestPasswordReset={requestPasswordReset}
 						/>
 					)}
 				</>
 			)}
+
 			<BreadCrumb>
 				<BreadCrumb.Item>
 					<Link to={"/home"}>Home</Link>

@@ -178,18 +178,6 @@ h2 {
     transition: all 0.25s;
 }
 
-.green {
-    color: rgb(54, 160, 80);
-}
-
-.orange {
-    color: rgb(255, 196, 107);
-}
-
-.red {
-    color: rgb(255, 89, 89);
-}
-
 .books {
     display: flex;
     flex-wrap: wrap;

@@ -2,7 +2,7 @@
     background-size: cover;
     display: flex;
     border-radius: 10px;
-    height: 100%;
+    height: 600px;
     width: 100%;
     margin: 0 auto 2rem auto;
 }
@@ -17,6 +17,9 @@
     padding: 1rem;
     text-transform: uppercase;
     width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 10px;
 }
 
 .book h2 {
@@ -28,4 +31,45 @@
     bottom: 5%;
     right: 5%;
     transform: scale(1.5);
+}
+
+.lower {
+    position: absolute;
+    bottom: 0;
+}
+
+.score {
+    position: absolute;
+    right: 0;
+    top: 0;
+    letter-spacing: 2px;
+    font-weight: bold;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.green {
+    color: rgb(54, 160, 80);
+}
+
+.orange {
+    color: rgb(255, 196, 107);
+}
+
+.red {
+    color: rgb(255, 89, 89);
+}
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .bookContainer {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    
 }

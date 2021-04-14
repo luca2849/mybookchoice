@@ -35,76 +35,70 @@ const EditProfile = ({
 		}
 	};
 	return (
-		<>
-			<div
+		<div className={styles.modal}>
+			<h3>Edit Profile</h3>
+			<GrClose
 				onClick={() => clickHandler(false)}
-				className={styles.darkenContainer}
-			></div>
-			<div className={styles.modal}>
-				<h3>Edit Profile</h3>
-				<GrClose
-					onClick={() => clickHandler(false)}
-					className={styles.close}
-				/>
-				<div className={styles.form}>
-					<div className={styles.formGroup}>
-						<p>Name</p>
-						<input
-							type="text"
-							name="name"
-							onChange={(e) => handleChange(e)}
-							value={formData.name}
-						/>
-					</div>
-					<div className={styles.formGroup}>
-						<p>Username</p>
-						<input
-							type="text"
-							name="username"
-							onChange={(e) => handleChange(e)}
-							value={formData.username}
-						/>
-					</div>
-					<div className={styles.formGroup}>
-						<p>E-Mail</p>
-						<input
-							type="text"
-							name="email"
-							onChange={(e) => handleChange(e)}
-							value={formData.email}
-						/>
-					</div>
-					<div className={styles.formGroup}>
-						<p>Date of Birth</p>
-						<input
-							type="date"
-							name="dob"
-							onChange={(e) => handleChange(e)}
-							value={formData.dob}
-						/>
-					</div>
-					<div className={styles.formGroup}>
-						<p>Profile Image</p>
-						<ImageUploader
-							withIcon={false}
-							buttonText="Choose images"
-							onChange={onDrop}
-							imgExtension={[".jpg", ".gif", ".png"]}
-							buttonText={"Choose picture"}
-							label={null}
-							maxFileSize={5242880}
-							singleImage={true}
-							withPreview={true}
-							className={styles.imageUpload}
-							name={"profileImage"}
-						/>
-					</div>
-					<div className={styles.submitContainer}>
-						<button onClick={() => onSubmit()}>Save</button>
-					</div>
+				className={styles.close}
+			/>
+			<div className={styles.form}>
+				<div className={styles.formGroup}>
+					<p>Name</p>
+					<input
+						type="text"
+						name="name"
+						onChange={(e) => handleChange(e)}
+						value={formData.name}
+					/>
+				</div>
+				<div className={styles.formGroup}>
+					<p>Username</p>
+					<input
+						type="text"
+						name="username"
+						onChange={(e) => handleChange(e)}
+						value={formData.username}
+					/>
+				</div>
+				<div className={styles.formGroup}>
+					<p>E-Mail</p>
+					<input
+						type="text"
+						name="email"
+						onChange={(e) => handleChange(e)}
+						value={formData.email}
+					/>
+				</div>
+				<div className={styles.formGroup}>
+					<p>Date of Birth</p>
+					<input
+						type="date"
+						name="dob"
+						onChange={(e) => handleChange(e)}
+						value={formData.dob}
+					/>
+				</div>
+				<div className={styles.formGroup}>
+					<p>Profile Image</p>
+					<ImageUploader
+						withIcon={false}
+						buttonText="Choose images"
+						onChange={onDrop}
+						imgExtension={[".jpg", ".gif", ".png"]}
+						buttonText={"Choose picture"}
+						label={null}
+						maxFileSize={5242880}
+						singleImage={true}
+						withPreview={true}
+						className={styles.imageUpload}
+						name={"profileImage"}
+					/>
+				</div>
+				<div className={styles.submitContainer}>
+					<button onClick={() => onSubmit()}>Save</button>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

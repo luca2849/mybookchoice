@@ -101,7 +101,7 @@
 .item {
     padding: 0.25rem;
     margin: 0.25rem 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: white;
@@ -140,6 +140,10 @@
     width: 100vw;
     opacity: 1;
     pointer-events: all;
+}
+
+.fixed {
+    position: fixed;
 }
 
 @media screen and (max-width: 768px) {

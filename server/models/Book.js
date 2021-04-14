@@ -23,11 +23,7 @@ const BookSchema = new Schema({
 			},
 		],
 	},
-	covers: {
-		large: { type: String },
-		medium: { type: String },
-		small: { type: String },
-	},
+	dates: [{ type: String }],
 	bookPlaces: [{ type: String }],
 	bookPeople: [{ type: String }],
 	subjects: [{ type: String }],

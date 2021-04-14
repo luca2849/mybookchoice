@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import styles from "./PasswordReset.module.css";
+
 import { requestPasswordReset } from "../../actions/user";
 import { GrClose } from "react-icons/gr";
+import Modal from "../Modal/Modal";
 
-const PasswordReset = ({ clickHandler, requestPasswordReset }) => {
+const PasswordReset = ({ isOpen, clickHandler, requestPasswordReset }) => {
 	const [formData, setFormData] = useState({
 		email: null,
 	});
@@ -17,11 +19,11 @@ const PasswordReset = ({ clickHandler, requestPasswordReset }) => {
 	};
 	return (
 		<>
-			<div
-				onClick={() => clickHandler(null)}
-				className={styles.darkenContainer}
-			></div>
-			<div className={styles.modal}>
+			<Modal
+				cssClass={styles.modal}
+				openHandler={clickHandler}
+				open={isOpen}
+			>
 				<h3>Reset Password</h3>
 				<GrClose
 					onClick={() => clickHandler(null)}
@@ -43,7 +45,7 @@ const PasswordReset = ({ clickHandler, requestPasswordReset }) => {
 						</button>
 					</div>
 				</div>
-			</div>
+			</Modal>
 		</>
 	);
 };

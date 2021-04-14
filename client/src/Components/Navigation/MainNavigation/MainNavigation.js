@@ -145,8 +145,11 @@ const MainNavigation = ({ children, user }) => {
 					</div>
 				</div>
 			</nav>
-
-			{children}
+			<div
+				className={`${styles.content} ${menuOpen ? styles.fixed : ""}`}
+			>
+				{children}
+			</div>
 		</>
 	);
 };

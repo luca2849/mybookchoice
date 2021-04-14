@@ -8,6 +8,14 @@ const Book = ({ book }) => {
 	// Trucate Title
 	let title = book.title;
 	if (title.length > 30) title = book.title.substring(0, 30).concat("...");
+	let colourClass = styles.green;
+	if (book.score) {
+		if (+book.score.split("%")[0] < 75) {
+			colourClass = styles.orange;
+		} else if (+book.score.split("%")[0] < 50) {
+			colourClass = styles.red;
+		}
+	}
 	return (
 		<div
 			className={styles.bookContainer}
@@ -16,10 +24,17 @@ const Book = ({ book }) => {
 			}}
 		>
 			<div className={styles.book}>
-				<h2>{title}</h2>
-				<p>{book.authors ? book.authors[0] : null}</p>
-				<p>{book.published ? book.published.year : null}</p>
-				<BsInfoCircleFill className={styles.icon} />
+				{book.score && (
+					<div className={`${styles.score} ${colourClass}`}>
+						<p>{book.score}</p>
+					</div>
+				)}
+				<div className={styles.lower}>
+					<h2>{title}</h2>
+					<p>{book.authors ? book.authors[0] : null}</p>
+					<p>{book.published ? book.published.year : null}</p>
+					<BsInfoCircleFill className={styles.icon} />
+				</div>
 			</div>
 		</div>
 	);
