@@ -39,6 +39,7 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 				open={!!editProfileOpen}
 				openHandler={setEditProfileOpen}
 				cssClass={styles.modal}
+				stopScroll={false}
 			>
 				<EditProfile clickHandler={setEditProfileOpen} user={user} />
 			</Modal>

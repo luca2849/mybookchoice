@@ -26,3 +26,14 @@
     border-bottom: 2px solid rgb(14, 136, 170);
     text-decoration: none;
 }
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .crumb {
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+
+}

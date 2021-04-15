@@ -151,6 +151,7 @@ export const getRatings = (limit, skip) => async (dispatch) => {
 		);
 		dispatch({ type: RATINGS_UPDATED, payload: res.data.ratings });
 	} catch (error) {
+		console.log(error);
 		const errors = error.response.data.errors;
 		if (errors) {
 			errors.forEach((error) => toast.error(error.msg, "danger"));

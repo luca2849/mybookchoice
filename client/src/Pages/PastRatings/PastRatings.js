@@ -9,11 +9,13 @@ import { getRatings, updateRating, addToRatings } from "../../actions/user";
 import { FaHeart, FaQuestion } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
+import { GrClose } from "react-icons/gr";
 
 import InfiniteScroll from "react-infinite-scroller";
 import Loading from "../../Components/Misc/Loading/Loading";
 import List from "../../Components/List/List";
 import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
+import Modal from "../../Components/Modal/Modal";
 
 const PastRatings = ({
 	userState: { loading, ratings },
@@ -47,46 +49,54 @@ const PastRatings = ({
 		}
 	};
 
+	// Clip titles for mobile
+	console.log(selectedRating);
+	const clippedTitles = ratings.map((book) =>
+		book.book_id.title.length > 12
+			? book.book_id.title.substring(0, 12) + "..."
+			: book.book_id.title
+	);
+
 	return (
 		<>
-			{selectedRating && (
-				<>
-					<div
-						className={styles.darken}
-						onClick={() => setSelectedRating(null)}
-					></div>
-					<div className={styles.modal}>
-						<h3>Update Rating</h3>
-						<p>
-							You are updating your rating for{" "}
-							<b>{selectedRating.book_id.title}</b>.
-						</p>
-						<p>
-							Upon submission of this form, the rating for this
-							book will be amended, and all recommendations will
-							be tuned appropriately.
-						</p>
-						<div className={styles.form}>
-							<select
-								onChange={(e) => setNewRating(e.target.value)}
-								defaultValue="selected"
-							>
-								<option disabled="disabled" value="selected">
-									Select Rating...
-								</option>
-								<option value="1">Liked</option>
-								<option value="-1">Disliked</option>
-								<option value="0">Not Read</option>
-							</select>
-						</div>
-						<div className={styles.buttons}>
-							<button onClick={() => handleUpdate()}>
-								Update Rating
-							</button>
-						</div>
+			<Modal open={!!selectedRating} openHandler={setSelectedRating}>
+				<div
+					className={styles.modal}
+					onClick={() => setSelectedRating(null)}
+				>
+					<div className={styles.closeButton}>
+						<GrClose />
 					</div>
-				</>
-			)}
+					<h3>Update Rating</h3>
+					<p>
+						You are updating your rating for{" "}
+						<b>{selectedRating && selectedRating.book_id.title}</b>.
+					</p>
+					<p>
+						Upon submission of this form, the rating for this book
+						will be amended, and all recommendations will be tuned
+						appropriately.
+					</p>
+					<div className={styles.form}>
+						<select
+							onChange={(e) => setNewRating(e.target.value)}
+							defaultValue="selected"
+						>
+							<option disabled="disabled" value="selected">
+								Select Rating...
+							</option>
+							<option value="1">Liked</option>
+							<option value="-1">Disliked</option>
+							<option value="0">Not Read</option>
+						</select>
+					</div>
+					<div className={styles.buttons}>
+						<button onClick={() => handleUpdate()}>
+							Update Rating
+						</button>
+					</div>
+				</div>
+			</Modal>
 			<div className={styles.pastRatings}>
 				<BreadCrumb>
 					<BreadCrumb.Item>
@@ -95,7 +105,7 @@ const PastRatings = ({
 					<BreadCrumb.Item>
 						<Link to={"/profile"}>Profile</Link>
 					</BreadCrumb.Item>
-					<BreadCrumb.Item>My Past Ratings</BreadCrumb.Item>
+					<BreadCrumb.Item>Past Ratings</BreadCrumb.Item>
 				</BreadCrumb>
 				<div className={styles.content}>
 					<h3>My Past Ratings</h3>
@@ -146,19 +156,29 @@ const PastRatings = ({
 									return (
 										<List.Item
 											key={index}
+											cssClass={styles.listItem}
 											onClick={() =>
 												setSelectedRating(rating)
 											}
 										>
 											<div className={styles.container}>
 												{icon}
-												<p>
+												<p className={styles.title}>
 													{rating.book_id.title}
+												</p>
+												<p
+													className={
+														styles.clippedTitle
+													}
+												>
+													{clippedTitles[index]}
+												</p>
+												<p className={styles.auth}>
 													{rating.book_id
 														.authors[0] &&
 														` - ${rating.book_id.authors[0]}`}
 												</p>
-												<p>
+												<p className={styles.date}>
 													{moment(
 														rating.createdAt
 													).format(

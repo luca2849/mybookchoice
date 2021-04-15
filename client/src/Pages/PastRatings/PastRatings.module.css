@@ -40,22 +40,6 @@
     cursor: pointer;
 }
   
-.modal{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 33%;
-    background: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
-    padding: 1rem;
-    z-index: 3;
-}
-  
 .modal h3 {
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -109,4 +93,49 @@
     color: #10a7d1;
     background: white;
     border: 2px solid #10a7d1;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    transform: scale(2);
+    cursor: pointer;
+}
+
+.clippedTitle {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .auth, .date {
+        display: none;
+    }
+    .container p {
+        margin: 0;
+    }
+    .clippedTitle {
+        display: block;
+    }
+    .title {
+        display: none;
+    }
+    .listItem{
+        margin: 0;
+    }
+    .container select {
+        /* Stop zoom on focus on mobile */
+        font-size: 16px!important; 
+    }
+    .modal h3 {
+        text-align: center;
+    }
+    .modal p {
+        max-width: 80%;
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    
 }

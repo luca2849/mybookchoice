@@ -109,7 +109,7 @@ const MainNavigation = ({ children, user }) => {
 						<div className={styles.item}>
 							<Link
 								onClick={() => setMenuOpen(false)}
-								to="/pastRatings"
+								to="/ratings"
 							>
 								<GiBackwardTime />
 								My Past Ratings
