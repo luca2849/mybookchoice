@@ -13,10 +13,22 @@
     align-items: center;
 }
 .navLeft svg{
-    margin: auto 0.5em auto 0;
+    margin: auto 0.25em auto 0;
 }
 .container{
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://www.detroitlabs.com/wp-content/uploads/2018/02/alfons-morales-YLSwjSy7stw-unsplash.jpg");
     background-size: contain;
     height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .nav h2{
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    
 }

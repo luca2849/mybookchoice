@@ -1,5 +1,5 @@
 const genres = [
-	"science fiction",
+	"science-fiction",
 	"nonfiction",
 	"fiction",
 	"thriller",
@@ -73,7 +73,9 @@ const getEras = (bookDates) => {
 	const presentEras = new Array(8).fill(0);
 	for (let i = 0; i < eras.length; i++) {
 		for (const date of bookDates) {
-			presentEras[i] = date;
+			if (eras[i] === date) {
+				presentEras[i] = 1;
+			}
 		}
 	}
 	return presentEras;

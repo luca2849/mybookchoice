@@ -5,11 +5,11 @@ import Book from "../Book/Book";
 
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({
-	x: i * -3,
-	y: i * 10,
+	x: i,
+	y: i,
 	scale: 1,
 	rot: 0,
-	delay: i * 50,
+	delay: i,
 });
 const from = (i) => ({ x: 0, rot: 0, scale: 1, y: 0 });
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
@@ -18,7 +18,7 @@ const trans = (r, s) =>
 		r / 10
 	}deg) rotateZ(${r}deg) scale(${s})`;
 
-const Deck = ({ books }) => {
+const Deck = ({ books, height }) => {
 	const [props, set] = useSprings(books.length, (i) => ({
 		...to(i),
 		from: from(i),
@@ -37,9 +37,10 @@ const Deck = ({ books }) => {
 			<animated.div
 				style={{
 					transform: interpolate([rot, scale], trans),
+					height: height,
 				}}
 			>
-				<Book book={books[books.length - 1 - i]} />
+				<Book height={height} book={books[books.length - 1 - i]} />
 			</animated.div>
 		</animated.div>
 	));

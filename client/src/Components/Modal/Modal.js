@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./Modal.module.css";
 const Modal = ({ open, children, openHandler, cssClass }) => {
-	console.log(typeof stopScroll);
 	document.body.setAttribute("style", "");
 	if (open) {
 		const windowOffset = window.scrollY;

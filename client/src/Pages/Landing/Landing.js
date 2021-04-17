@@ -29,6 +29,7 @@ import LandingNavigation from "../../Components/Navigation/LandingNavigation/Lan
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import axios from "axios";
+import Modal from "../../Components/Modal/Modal";
 
 const Landing = ({
 	login,
@@ -89,141 +90,151 @@ const Landing = ({
 	const facebookResponse = async (response) => {
 		authenticateWithFacebook(response.accessToken, response.id);
 	};
-
 	return (
 		<LandingNavigation>
-			{currentModal && (
-				<>
-					<div
-						className={styles.darken}
+			<Modal
+				open={currentModal && currentModal === "login"}
+				openHandler={setCurrentModal}
+				cssClass={styles.loginModal}
+			>
+				<div className={styles.headerButtons}>
+					<BsArrowLeft style={{ opacity: "0" }} />
+					<Logo fill={"#808080"} className={styles.logo} />
+					<BsX
+						className={styles.closeButton}
 						onClick={() => setCurrentModal(null)}
-					></div>
-					{currentModal === "login" && (
-						<div className={`${styles.loginModal} ${styles.modal}`}>
-							<div className={styles.headerButtons}>
-								<BsArrowLeft style={{ opacity: "0" }} />
-								<Logo
-									fill={"#808080"}
-									className={styles.logo}
-								/>
-								<BsX
-									className={styles.closeButton}
-									onClick={() => setCurrentModal(null)}
-								/>
-							</div>
-							<h3>Please Enter Your Details</h3>
-							<div className={styles.form}>
-								<input
-									type="text"
-									name="email"
-									placeholder="Email..."
-									// value={loginData.email || ""}
-									onChange={(e) => handleLoginDataChange(e)}
-								/>
-								<input
-									type="password"
-									name="password"
-									placeholder="Password..."
-									// value={loginData.password || ""}
-									onChange={(e) => handleLoginDataChange(e)}
-								/>
-								<div className={styles.forgotContainer}>
-									<p
-										className={styles.forgot}
-										onClick={() =>
-											setCurrentModal("password")
-										}
-									>
-										Forgotten your password?
-									</p>
+					/>
+				</div>
+				<h3>Please Enter Your Details</h3>
+				<div className={styles.form}>
+					<input
+						type="text"
+						name="email"
+						placeholder="Email..."
+						// value={loginData.email || ""}
+						onChange={(e) => handleLoginDataChange(e)}
+					/>
+					<input
+						type="password"
+						name="password"
+						placeholder="Password..."
+						// value={loginData.password || ""}
+						onChange={(e) => handleLoginDataChange(e)}
+					/>
+					<div className={styles.forgotContainer}>
+						<p
+							className={styles.forgot}
+							onClick={() => setCurrentModal("password")}
+						>
+							Forgotten your password?
+						</p>
+					</div>
+					<button onClick={() => handleLoginSubmit()}>Login</button>
+					<GoogleLogin
+						clientId={
+							"380870297062-taklr4637g8ur6srf482fk7qjcedhm5p.apps.googleusercontent.com"
+						}
+						render={(renderProps) => (
+							<div className={styles.googleOuter}>
+								<div
+									className={styles.googleLogin}
+									onClick={renderProps.onClick}
+									disabled={renderProps.disabled}
+								>
+									<FcGoogle />
+									<p>Login with Google</p>
 								</div>
-								<button onClick={() => handleLoginSubmit()}>
-									Login
-								</button>
-								<GoogleLogin
-									clientId={
-										"380870297062-taklr4637g8ur6srf482fk7qjcedhm5p.apps.googleusercontent.com"
-									}
-									render={(renderProps) => (
-										<div className={styles.googleOuter}>
-											<div
-												className={styles.googleLogin}
-												onClick={renderProps.onClick}
-												disabled={renderProps.disabled}
-											>
-												<FcGoogle />
-												<p>Login with Google</p>
-											</div>
-										</div>
-									)}
-									onSuccess={googleSuccess}
-									onFailure={googleFailure}
-									scope={
-										"profile email https://www.googleapis.com/auth/user.birthday.read"
-									}
-									cookiePolicy="single_host_origin"
-								/>
-								<FacebookLogin
-									appId="771508680171352"
-									tag="div"
-									icon={<AiFillFacebook />}
-									cssClass={styles.fbLogin}
-									fields="name,email,picture,hometown"
-									callback={facebookResponse}
-								/>
 							</div>
-						</div>
-					)}
-					{currentModal === "reg0" && (
-						<RegistrationMethods
-							googleSuccess={googleSuccess}
-							googleFailure={googleFailure}
-							facebookResponse={facebookResponse}
-							clickHandler={setCurrentModal}
-							dataHandler={handleRegistrationDataChange}
-						/>
-					)}
-					{currentModal === "reg1" && (
-						<RegistrationEmail
-							clickHandler={setCurrentModal}
-							dataHandler={handleRegistrationDataChange}
-							data={registrationData}
-						/>
-					)}
-					{currentModal === "reg2" && (
-						<RegistrationName
-							clickHandler={setCurrentModal}
-							dataHandler={handleRegistrationDataChange}
-							data={registrationData}
-						/>
-					)}
-					{currentModal === "reg3" && (
-						<RegistrationPassword
-							clickHandler={setCurrentModal}
-							dataHandler={handleRegistrationDataChange}
-							data={registrationData}
-						/>
-					)}
-					{currentModal === "reg4" && (
-						<RegistrationDOB
-							clickHandler={setCurrentModal}
-							dataHandler={handleRegistrationDataChange}
-							data={registrationData}
-						/>
-					)}
-					{currentModal === "reg5" && (
-						<RegistrationConfirmation
-							clickHandler={setCurrentModal}
-							data={registrationData}
-							handleRegister={handleRegisterSubmit}
-						/>
-					)}
-					{currentModal === "password" && (
-						<PasswordReset clickHandler={setCurrentModal} />
-					)}
-				</>
-			)}
-
+						)}
+						onSuccess={googleSuccess}
+						onFailure={googleFailure}
+						scope={
+							"profile email https://www.googleapis.com/auth/user.birthday.read"
+						}
+						cookiePolicy="single_host_origin"
+					/>
+					<FacebookLogin
+						appId="771508680171352"
+						tag="div"
+						icon={<AiFillFacebook />}
+						cssClass={styles.fbLogin}
+						fields="name,email,picture,hometown"
+						callback={facebookResponse}
+					/>
+				</div>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg0"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationMethods
+					googleSuccess={googleSuccess}
+					googleFailure={googleFailure}
+					facebookResponse={facebookResponse}
+					clickHandler={setCurrentModal}
+					dataHandler={handleRegistrationDataChange}
+				/>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg1"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationEmail
+					clickHandler={setCurrentModal}
+					dataHandler={handleRegistrationDataChange}
+					data={registrationData}
+				/>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg2"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationName
+					clickHandler={setCurrentModal}
+					dataHandler={handleRegistrationDataChange}
+					data={registrationData}
+				/>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg3"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationPassword
+					clickHandler={setCurrentModal}
+					dataHandler={handleRegistrationDataChange}
+					data={registrationData}
+				/>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg4"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationDOB
+					clickHandler={setCurrentModal}
+					dataHandler={handleRegistrationDataChange}
+					data={registrationData}
+				/>
+			</Modal>
+			<Modal
+				open={currentModal && currentModal === "reg5"}
+				openHandler={setCurrentModal}
+				cssClass={styles.modal}
+			>
+				<RegistrationConfirmation
+					clickHandler={setCurrentModal}
+					data={registrationData}
+					handleRegister={handleRegisterSubmit}
+				/>
+			</Modal>
+			<PasswordReset
+				isOpen={currentModal && currentModal === "password"}
+				clickHandler={setCurrentModal}
+			/>
 			<div className={styles.hero}>
 				<h1>
 					Get Quick and Easy Book <br />
@@ -249,15 +260,11 @@ const RegistrationMethods = ({
 	facebookResponse,
 }) => {
 	return (
-		<div className={styles.modal}>
+		<>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
 			<Logo fill={"rgb(150, 150, 150)"} />
 			<h3>Create Account</h3>
 			<div className={styles.items}>
-				{/* <div className={styles.item}>
-					<AiFillFacebook />
-					<p>Register with Facebook</p>
-				</div> */}
 				<FacebookLogin
 					appId="771508680171352"
 					icon={<AiFillFacebook />}
@@ -302,7 +309,7 @@ const RegistrationMethods = ({
 					<p>Register with E-Mail</p>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
@@ -319,7 +326,7 @@ const RegistrationEmail = ({ dataHandler, clickHandler, data }) => {
 		clickHandler("reg2");
 	};
 	return (
-		<div className={styles.modal}>
+		<>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
 			<BiArrowBack
 				className={styles.back}
@@ -337,7 +344,7 @@ const RegistrationEmail = ({ dataHandler, clickHandler, data }) => {
 				/>
 				<button onClick={() => validate()}>Continue</button>
 			</div>
-		</div>
+		</>
 	);
 };
 
@@ -362,7 +369,7 @@ const RegistrationName = ({ dataHandler, clickHandler, data }) => {
 		clickHandler("reg3");
 	};
 	return (
-		<div className={styles.modal}>
+		<>
 			<BsX className={styles.close} onClick={() => clickHandler(null)} />
 			<BiArrowBack
 				className={styles.back}
@@ -387,7 +394,7 @@ const RegistrationName = ({ dataHandler, clickHandler, data }) => {
 				/>
 				<button onClick={() => validate()}>Continue</button>
 			</div>
-		</div>
+		</>
 	);
 };
 

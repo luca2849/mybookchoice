@@ -2,9 +2,9 @@ import React from "react";
 
 import styles from "./BreadCrumb.module.css";
 
-const BreadCrumb = ({ children }) => {
+const BreadCrumb = ({ children, cssClass }) => {
 	return (
-		<div className={styles.crumb}>
+		<div className={`${styles.crumb} ${cssClass}`}>
 			{children.map((child, index) => (
 				<div className={styles.item} key={index}>
 					{child}

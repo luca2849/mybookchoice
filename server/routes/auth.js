@@ -206,7 +206,6 @@ router.post("/google", async (req, res) => {
 
 router.post("/facebook", async (req, res) => {
 	const { accessToken, id } = req.body;
-	console.log(accessToken);
 	// Validate token
 	const check = `https://graph.facebook.com/debug_token?input_token=${accessToken}&access_token=${config.get(
 		"FACEBOOK_APP_ACCESS_TOKEN"
@@ -228,12 +227,10 @@ router.post("/facebook", async (req, res) => {
 			// Query Google API for user data
 			const url = `https://graph.facebook.com/${id}?fields=name,picture,birthday,email,hometown&access_token=${accessToken}`;
 			const response = await axios.get(url);
-			console.log(response.data);
 			const { name, picture, birthday, email } = response.data;
 			const dob = moment.utc(birthday, "MM/DD/YYYY").toDate();
 			const randomNumber = Math.round(Math.random() * 1000000);
 			const username = `${name.split(" ")[0]}${randomNumber}`;
-			console.log(picture.data.url);
 			const newUser = new User({
 				name,
 				username,

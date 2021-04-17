@@ -31,7 +31,7 @@ const UserProfile = ({
 	const [likes, notread, dislikes] = calculateRatings(user.ratings);
 	return (
 		<div>
-			<BreadCrumb>
+			<BreadCrumb cssClass={styles.breadcrumb}>
 				<BreadCrumb.Item>Profiles</BreadCrumb.Item>
 				<BreadCrumb.Item>{user.username}'s Profile</BreadCrumb.Item>
 			</BreadCrumb>
@@ -56,7 +56,7 @@ const UserProfile = ({
 								src={
 									user.profileImage.imageType === "EXTERNAL"
 										? user.profileImage.url
-										: `url(/api/img/${user.profileImage.url})`
+										: `${process.env.REACT_APP_SERVER_URL}/api/img/${user.profileImage.url}`
 								}
 							/>
 						</div>
@@ -75,7 +75,7 @@ const UserProfile = ({
 							<p>{user.email}</p>
 						</div>
 						<div className={styles.infoGroup}>
-							<p>Member Since: </p>
+							<p>Registered: </p>
 							<p>
 								{moment(user.registered).format(
 									"DD/MM/YYYY HH:mm:ss"
@@ -83,7 +83,7 @@ const UserProfile = ({
 							</p>
 						</div>
 						<div className={styles.infoGroup}>
-							<p>Last Updated: </p>
+							<p>Updated: </p>
 							<p>
 								{moment(user.updatedAt).format(
 									"DD/MM/YYYY HH:mm:ss"

@@ -23,7 +23,6 @@ const Home = ({ addRating }) => {
 			const res = await axios.get(
 				`/api/user/books?bookCount=${count}&skip=${skip}`
 			);
-			console.log(res.data);
 			// Request details from OL
 			const isbnList = res.data.map((isbn) => `${isbn.isbn}`).join(",");
 			delete axios.defaults.headers.common["x-auth-token"];
@@ -89,16 +88,30 @@ const Home = ({ addRating }) => {
 		setBooks(tmp.slice(1));
 	};
 
-	if (!books) return <Loading />;
-
+	if (!books || books.length === 0) return <Loading />;
+	const isMobile = window.innerWidth <= 768;
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.cardsContainer}>
-					{books.length === 0 ? <Loading /> : <Deck books={books} />}
+					<Deck books={books} height={isMobile ? 450 : 600} />
 				</div>
 				<div className={styles.mainContent}>
 					<div className={styles.actions}>
+						<button>
+							<IoMdArrowRoundBack onClick={() => handleClick()} />
+						</button>
+						<button>
+							<FaQuestion onClick={() => handleClick(0)} />
+						</button>
+						<button>
+							<ImCross onClick={() => handleClick(-1)} />
+						</button>
+						<button>
+							<FaHeart onClick={() => handleClick(1)} />
+						</button>
+					</div>
+					<div className={styles.mobileActions}>
 						<button>
 							<IoMdArrowRoundBack onClick={() => handleClick()} />
 						</button>

@@ -43,7 +43,6 @@ export const getSpecificRecommendations = (
 		);
 		dispatch({ type: BOOKS_UPDATED, payload: res.data });
 	} catch (error) {
-		console.log(error);
 		dispatch({ type: BOOK_ERROR });
 	}
 };

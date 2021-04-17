@@ -110,3 +110,31 @@
     color: rgb(16, 167, 209);
     border: 2px solid rgb(16, 167, 209);
 }
+
+@media screen and (max-width: 768px) {
+    /* Tablet */    
+    .main > div {
+        width: 100vw;
+        height: auto;
+        background: white;
+    }
+    .main {
+        flex-direction: column;
+        box-shadow: none;
+        height: auto;
+    }
+    .breadcrumb {
+        margin-bottom: 4rem;
+    }
+    .avatar img {
+        width: 25vw;
+        height: 25vw;
+    }
+    .imageContainer h2 {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    
+}

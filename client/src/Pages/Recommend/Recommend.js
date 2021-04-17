@@ -44,7 +44,7 @@ const Recommend = ({
 }) => {
 	const genres = [
 		{
-			name: "science fiction",
+			name: "science-fiction",
 			display: "Science-Fiction",
 			image: "./img/astronaut.png",
 			icon: <FaUserAstronaut />,
