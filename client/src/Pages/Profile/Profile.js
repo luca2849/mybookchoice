@@ -130,42 +130,47 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 				</div>
 				<div className={styles.actions}>
 					<h3>My Account</h3>
-					<List>
-						<List.Item>
+					<List cssClass={styles.list}>
+						<List.Item cssClass={styles.item}>
 							<Link to={"/recommendations"}>
-								My Recommendations
+								My Recommendations{" "}
 							</Link>
 						</List.Item>
-						<Link to={"/ratings"}>
-							<List.Item>My Past Ratings</List.Item>
-						</Link>
-						<Link to={"/recommend"}>
-							<List.Item>Get Specific Recommendation</List.Item>
-						</Link>
-						<Link to={"/notifications"}>
-							<List.Item>My Notifications</List.Item>
-						</Link>
-						<List.Item>My Friends</List.Item>
-						<List.Item>My Messages</List.Item>
-						<List.Item>My Reviews</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={"/ratings"}>My Past Ratings </Link>
+						</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={"/recommend"}>
+								Get Specific Recommendation
+							</Link>
+						</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={"/notifications"}>My Notifications</Link>
+						</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={`/user/${user.username}`}>
+								My Public Profile
+							</Link>
+						</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={"/friends"}>My Friends</Link>
+						</List.Item>
 					</List>
 					<h3>Account Settings</h3>
-					<List>
+					<List cssClass={styles.list}>
 						<List.Item
 							onClick={() => setCurrentModal("passwordChange")}
 						>
-							Password Reset
+							<p>Password Reset</p>
 						</List.Item>
 						<List.Item onClick={() => setEditProfileOpen(true)}>
-							Edit Profile
+							<p>Edit Profile</p>
 						</List.Item>
 						<List.Item>
 							<Link to={"/logout"}>Log Out</Link>
 						</List.Item>
 						<List.Item onClick={() => setCurrentModal("deleteAcc")}>
-							<span style={{ color: "red" }}>
-								Delete My Account
-							</span>
+							<p style={{ color: "red" }}>Delete My Account</p>
 						</List.Item>
 					</List>
 				</div>

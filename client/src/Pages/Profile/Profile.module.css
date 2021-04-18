@@ -127,6 +127,18 @@
   border-radius: 5px;
 }
 
+.list {
+  margin: 1rem 0;
+}
+
+.item {
+  padding: 0;
+}
+
+.item a {
+  padding: 1rem;
+}
+
 @media screen and (max-width: 768px) {
   /* Tablet */
   .userSection {

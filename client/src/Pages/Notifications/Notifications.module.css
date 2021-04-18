@@ -27,6 +27,10 @@
     stroke: rgb(138, 0, 0);
 }
 
+.list {
+    margin: 1rem 2rem;
+}
+
 .item {
     display: flex;
     align-items: center;
@@ -36,6 +40,13 @@
     color: rgb(0, 120, 175);
     border-bottom: 2px solid transparent;
     transition: all 0.25s;
+    margin-left: 5px;
+    width: auto;
+}
+
+.item p {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .item a:hover {

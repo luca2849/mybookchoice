@@ -12,12 +12,14 @@ import {
 	RATINGS_ADDED,
 	GET_NOTIFICATIONS,
 	FRIEND_REMOVED,
+	GET_FRIENDS,
 } from "../actions/types";
 
 const initialState = {
 	user: null,
 	users: [],
 	notifications: [],
+	friends: [],
 	error: {},
 	ratings: [],
 	loading: true,
@@ -70,18 +72,17 @@ export default function (state = initialState, action) {
 				ratings: state.ratings.concat(payload),
 				loading: false,
 			};
+		case GET_FRIENDS:
+			return {
+				...state,
+				loading: false,
+				friends: payload,
+			};
 		case FRIEND_REMOVED:
 			console.log(payload);
 			return {
 				...state,
 				user: payload,
-			};
-		case FOLLOW_USER:
-		case UNFOLLOW_USER:
-			return {
-				...state,
-				user: { ...state.user, followers: payload.followers },
-				loading: false,
 			};
 		case USER_UPDATED:
 			return {
@@ -91,7 +92,11 @@ export default function (state = initialState, action) {
 			};
 		case CLEAR_USER:
 		case CLEAR_USERS:
-			return initialState;
+			return {
+				...state,
+				users: [],
+				user: null,
+			};
 		default:
 			return state;
 	}

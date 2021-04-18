@@ -5,12 +5,14 @@ import {
 	BOOKS_UPDATED,
 	PASSWORD_RESET,
 	LOGOUT,
+	CLEAR_USER,
 	RATINGS_UPDATED,
 	RATING_UPDATED,
 	RATINGS_ADDED,
 	GET_USER,
 	GET_NOTIFICATIONS,
 	FRIEND_REMOVED,
+	GET_FRIENDS,
 } from "./types";
 import { toast } from "react-toastify";
 
@@ -135,6 +137,7 @@ export const changePassword = (formData, token) => async (dispatch) => {
 
 export const getUser = (username) => async (dispatch) => {
 	try {
+		dispatch({ type: CLEAR_USER });
 		const res = await axios.get(`/api/user/${username}`);
 		dispatch({ type: GET_USER, payload: res.data });
 	} catch (error) {
@@ -277,6 +280,21 @@ export const respondToRequest = (
 		);
 		toast.success("Response Sent", { autoClose: 2000 });
 		dispatch({ type: GET_NOTIFICATIONS, payload: res.data });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const getFriends = (limit, skip) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/user/friends?limit=${limit}&skip=${skip}`
+		);
+		dispatch({ type: GET_FRIENDS, payload: res.data });
 	} catch (error) {
 		const errors = error.response.data.errors;
 		if (errors) {

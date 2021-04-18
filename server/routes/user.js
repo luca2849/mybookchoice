@@ -248,19 +248,53 @@ router.put("/ratings", auth, async (req, res) => {
 // Access - Private
 router.get("/notifications", auth, async (req, res) => {
 	const { limit, skip } = req.query;
-	console.log(+limit, +skip);
 	try {
 		if (+limit <= 0) return res.status(200).json([]);
-		const user = await User.findOne(
-			{ _id: req.user.id },
-			{ notifications: { $slice: [+skip, +limit] } }
-		).populate("notifications.from", "-ratings -notifications");
-		console.log(req.user);
+		const user = await User.findOne({ _id: req.user.id }).populate(
+			"notifications.from",
+			"-ratings -notifications"
+		);
 		if (!user)
 			return res
 				.status(404)
 				.json({ errors: [{ msg: "User not found." }] });
-		return res.status(200).json(user.notifications);
+		const notifications = user.notifications;
+		// Skip
+		const skipped = notifications.reverse().filter((notification, i) => {
+			if (i > skip - 1) return true;
+		});
+		// Limit
+		const limited = skipped.filter((notification, i) => {
+			if (i <= limit - 1) return true;
+		});
+		return res.status(200).json(limited);
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
+// GET /api/user/friends
+// Purpose - Get a user's friends list
+// Access - Private
+router.get("/friends", auth, async (req, res) => {
+	try {
+		const user = await User.findOne({ _id: req.user.id }).populate(
+			"friends.user"
+		);
+		let { limit = 10, skip = 0 } = req.query;
+		const friends = user.friends;
+		// Skip
+		const skipped = friends.reverse().filter((friend, i) => {
+			if (i > skip - 1) return true;
+		});
+		// Limit
+		const limited = skipped.filter((friend, i) => {
+			if (i <= limit - 1) return true;
+		});
+		return res.status(200).json(limited);
 	} catch (error) {
 		console.error(error);
 		return res
@@ -390,7 +424,6 @@ router.put("/friends/respond", auth, async (req, res) => {
 		let { limit, skip } = req.query;
 		if (limit <= 0) limit = 1;
 		const { remoteUser, notificationId, accepted } = req.body;
-		console.log(remoteUser, notificationId, accepted);
 		// Mark notification as actioned
 		await User.updateOne(
 			{

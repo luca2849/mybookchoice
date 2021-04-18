@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Loading from "../../Components/Misc/Loading/Loading";
 import List from "../../Components/List/List";
 
+import moment from "moment";
+
 import styles from "./Notifications.module.css";
 
 import { getNotifications, respondToRequest } from "../../actions/user";
@@ -21,25 +23,29 @@ const Notifications = ({
 		getNotifications(10, 0);
 	}, []);
 	const handleClick = (notification, remoteUser, response) => {
-		respondToRequest(notification, remoteUser, response, 1, 0);
+		respondToRequest(notification, remoteUser, response, 10, 0);
 	};
-	console.log(notifications);
 	if (loading) return <Loading />;
 	return (
 		<div>
 			<h3>Notifications</h3>
-			<List>
+			<List cssClass={styles.list}>
 				{notifications.map((notification) => (
 					<>
 						<List.Item cssClass={styles.item}>
 							{notification.type === "FRIEND_REQUEST" && (
 								<p>
-									You have recieved a friend request from{" "}
+									You have recieved a friend request from
+									{"  "}
 									<Link
 										to={`/user/${notification.from.username}`}
 									>
 										{notification.from.username}
 									</Link>
+									, on{" "}
+									{moment(notification.createdAt).format(
+										"DD/MM @ HH:mm"
+									)}
 								</p>
 							)}
 							{notification.type === "FRIEND_REQUEST" &&
