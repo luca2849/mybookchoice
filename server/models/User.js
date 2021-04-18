@@ -49,6 +49,26 @@ const UserSchema = new Schema(
 			types: [{ type: String }],
 			authors: [{ type: String }],
 		},
+		notifications: [
+			{
+				type: new mongoose.Schema(
+					{
+						type: {
+							type: String,
+						},
+						from: {
+							type: Schema.Types.ObjectId,
+							ref: "user",
+						},
+						actioned: {
+							type: Boolean,
+							default: false,
+						},
+					},
+					{ timestamps: true }
+				),
+			},
+		],
 		ratings: [
 			{
 				type: new mongoose.Schema(
@@ -69,14 +89,20 @@ const UserSchema = new Schema(
 		],
 		friends: [
 			{
-				user: {
-					type: Schema.Types.ObjectId,
-					ref: "user",
-				},
-				since: {
-					type: Date,
-					required: true,
-				},
+				type: new mongoose.Schema(
+					{
+						user: {
+							type: Schema.Types.ObjectId,
+							ref: "user",
+						},
+					},
+					{
+						timestamps: {
+							createdAt: "since",
+							updatedAt: false,
+						},
+					}
+				),
 			},
 		],
 	},

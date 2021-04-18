@@ -27,6 +27,13 @@ const UserProfile = ({
 		getUser(userParam);
 	}, []);
 	if (loading || authLoading || !user || !currentUser) return <Loading />;
+	const mostRecentFriend =
+		user.friends.length > 0
+			? user.friends.sort(
+					(a, b) => new Date(a.since) - new Date(b.since)
+			  )[0]
+			: null;
+	console.log(mostRecentFriend);
 	// Get counts for each type of rating
 	const [likes, notread, dislikes] = calculateRatings(user.ratings);
 	return (
@@ -104,7 +111,7 @@ const UserProfile = ({
 							<p>
 								{user.friends.length === 0
 									? "N/A"
-									: user.friends[0].name}
+									: mostRecentFriend.user.name}
 							</p>
 						</div>
 					</section>

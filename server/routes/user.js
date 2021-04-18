@@ -45,9 +45,9 @@ let upload = multer({
 // Access - Private
 router.get("/", auth, async (req, res) => {
 	try {
-		const user = await User.findOne({ _id: req.user.id }).select(
-			"-password -__v"
-		);
+		const user = await User.findOne({ _id: req.user.id })
+			.select("-password -__v")
+			.populate("friends.user");
 		if (!user) {
 			return res
 				.status(404)
@@ -249,7 +249,9 @@ router.put("/ratings", auth, async (req, res) => {
 router.get("/:username", auth, async (req, res) => {
 	const { username } = req.params;
 	try {
-		const user = await User.findOne({ username }).select("-password -__v");
+		const user = await User.findOne({ username })
+			.populate("friends.user")
+			.select("-password -__v");
 		if (!user) {
 			return res
 				.status(404)
@@ -327,6 +329,116 @@ router.post(
 		}
 	}
 );
+
+// PUT /api/user/friends/request
+// Purpose - Sends a friend request to another user
+// Access - Private
+router.put("/friends/request", auth, async (req, res) => {
+	try {
+		const { remoteUser } = req.body;
+		// Add notification to remoteUser
+		const remoteUserObj = await User.findOne({ username: remoteUser });
+		const user = await User.findOne({ _id: req.user.id });
+		remoteUserObj.notifications = [
+			...remoteUserObj.notifications,
+			{
+				type: "FRIEND_REQUEST",
+				from: user._id,
+			},
+		];
+		await remoteUserObj.save();
+		return res.status(200).json(user);
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
+// PUT /api/user/friends/respond
+// Purpose - Sends a friend request to another user
+// Access - Private
+router.put("/friends/respond", auth, async (req, res) => {
+	try {
+		const { remoteUser, notificationId, accepted } = req.body;
+		const remoteUserObj = await User.findOne({ username: remoteUser });
+		const user = await User.findOne({ _id: req.user.id });
+		if (!!accepted) {
+			remoteUserObj.friends.push({ user: req.user.id });
+			user.friends.push({ user: remoteUserObj._id });
+			await remoteUserObj.save();
+			await user.save();
+		}
+		// Mark notification as actioned
+		await User.updateOne(
+			{
+				_id: req.user.id,
+				notifications: {
+					$elemMatch: {
+						_id: notificationId,
+					},
+				},
+			},
+			{ $set: { "notifications.$.actioned": true } }
+		);
+		return res.status(200).json(user);
+	} catch (error) {
+		// console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
+// DELETE /api/user/friends
+// Purpose - Sends a friend request to another user
+// Access - Private
+router.delete("/friends", auth, async (req, res) => {
+	try {
+		const { remoteUser } = req.body;
+		// Remove friend
+		const remoteUserObj = await User.findOne({
+			username: remoteUser,
+		});
+		if (!remoteUserObj)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "One or both users not found" }] });
+		// Update local user
+		await User.updateOne(
+			{
+				_id: req.user.id,
+			},
+			{
+				$pull: {
+					friends: {
+						user: remoteUserObj._id,
+					},
+				},
+			}
+		);
+		// Update remote user
+		await User.updateOne(
+			{ _id: remoteUserObj._id },
+			{
+				$pull: {
+					friends: {
+						user: req.user.id,
+					},
+				},
+			}
+		);
+		// Return current user
+		const user = await User.findOne({ _id: req.user.id });
+		return res.status(200).json(user);
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
 
 // POST /api/user/password
 // Purpose - Request a passsword reset
