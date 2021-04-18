@@ -10,11 +10,13 @@ import {
 	RATINGS_UPDATED,
 	RATING_UPDATED,
 	RATINGS_ADDED,
+	GET_NOTIFICATIONS,
 } from "../actions/types";
 
 const initialState = {
 	user: null,
 	users: [],
+	notifications: [],
 	error: {},
 	ratings: [],
 	loading: true,
@@ -39,6 +41,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				users: payload,
+				loading: false,
+			};
+		case GET_NOTIFICATIONS:
+			return {
+				...state,
+				notifications: payload,
 				loading: false,
 			};
 		case RATINGS_UPDATED:

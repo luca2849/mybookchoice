@@ -2,9 +2,9 @@ import React from "react";
 
 import styles from "./List.module.css";
 
-const List = ({ children, style }) => {
+const List = ({ children, style, cssClass }) => {
 	return (
-		<div style={style} className={styles.list}>
+		<div style={style} className={`${styles.list} ${cssClass}`}>
 			{children}
 		</div>
 	);

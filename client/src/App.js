@@ -23,6 +23,7 @@ import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 import UserProfile from "./Pages/UserProfile/UserProfile";
 import PastRatings from "./Pages/PastRatings/PastRatings";
 import Recommend from "./Pages/Recommend/Recommend";
+import Notifications from "./Pages/Notifications/Notifications";
 
 function App() {
 	useEffect(() => {
@@ -86,6 +87,11 @@ function App() {
 							exact
 							path="/recommend"
 							component={Recommend}
+						/>
+						<PrivateRoute
+							exact
+							path="/notifications"
+							component={Notifications}
 						/>
 					</Switch>
 				</>

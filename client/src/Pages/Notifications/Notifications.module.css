@@ -1,0 +1,43 @@
+.buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.buttons button {
+    margin: 0 1rem;
+    border-radius: 10px;
+}
+
+.buttons button:first-of-type {
+    background: rgb(137, 255, 126);
+}
+
+.buttons button:nth-of-type(2) {
+    background: rgb(255, 126, 126);
+}
+
+.buttons svg {
+    margin: 0.75rem;
+    transform: scale(1.5);
+    fill: rgb(8, 90, 0);
+}
+
+.buttons path {
+    stroke: rgb(138, 0, 0);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.item a {
+    color: rgb(0, 120, 175);
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.item a:hover {
+    border-bottom: 2px solid rgb(0, 120, 175);
+}

@@ -9,6 +9,7 @@ import {
 	RATING_UPDATED,
 	RATINGS_ADDED,
 	GET_USER,
+	GET_NOTIFICATIONS,
 } from "./types";
 import { toast } from "react-toastify";
 
@@ -185,6 +186,52 @@ export const updateRating = (ratingId, newRating) => async (dispatch) => {
 		const res = await axios.put(`/api/user/ratings`, body, config);
 		toast.success("Rating Updated", { autoClose: 2000 });
 		dispatch({ type: RATING_UPDATED, payload: res.data });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const getNotifications = (limit, skip) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/user/notifications?limit=${limit}&skip=${skip}`
+		);
+		dispatch({ type: GET_NOTIFICATIONS, payload: res.data });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const respondToRequest = (
+	notificationId,
+	remoteUser,
+	accepted,
+	limit,
+	skip
+) => async (dispatch) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		console.log("done");
+		const body = JSON.stringify({ notificationId, remoteUser, accepted });
+		const res = await axios.put(
+			`/api/user/friends/respond?limit=${limit}&skip=${skip}`,
+			body,
+			config
+		);
+		toast.success("Response Sent", { autoClose: 2000 });
+		dispatch({ type: GET_NOTIFICATIONS, payload: res.data });
 	} catch (error) {
 		const errors = error.response.data.errors;
 		if (errors) {

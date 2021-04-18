@@ -243,6 +243,32 @@ router.put("/ratings", auth, async (req, res) => {
 	}
 });
 
+// GET /api/user/notifications
+// Purpose - Get a user's notifications
+// Access - Private
+router.get("/notifications", auth, async (req, res) => {
+	const { limit, skip } = req.query;
+	console.log(+limit, +skip);
+	try {
+		if (+limit <= 0) return res.status(200).json([]);
+		const user = await User.findOne(
+			{ _id: req.user.id },
+			{ notifications: { $slice: [+skip, +limit] } }
+		).populate("notifications.from", "-ratings -notifications");
+		console.log(req.user);
+		if (!user)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "User not found." }] });
+		return res.status(200).json(user.notifications);
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal server error" }] });
+	}
+});
+
 // GET /api/user/:username
 // Purpose - Get user data by username
 // Access - Private
@@ -361,15 +387,10 @@ router.put("/friends/request", auth, async (req, res) => {
 // Access - Private
 router.put("/friends/respond", auth, async (req, res) => {
 	try {
+		let { limit, skip } = req.query;
+		if (limit <= 0) limit = 1;
 		const { remoteUser, notificationId, accepted } = req.body;
-		const remoteUserObj = await User.findOne({ username: remoteUser });
-		const user = await User.findOne({ _id: req.user.id });
-		if (!!accepted) {
-			remoteUserObj.friends.push({ user: req.user.id });
-			user.friends.push({ user: remoteUserObj._id });
-			await remoteUserObj.save();
-			await user.save();
-		}
+		console.log(remoteUser, notificationId, accepted);
 		// Mark notification as actioned
 		await User.updateOne(
 			{
@@ -382,9 +403,20 @@ router.put("/friends/respond", auth, async (req, res) => {
 			},
 			{ $set: { "notifications.$.actioned": true } }
 		);
-		return res.status(200).json(user);
+		const remoteUserObj = await User.findOne({ username: remoteUser });
+		const user = await User.findOne(
+			{ _id: req.user.id },
+			{ notifications: { $slice: [+skip, +limit] } }
+		).populate("notifications.from");
+		if (!!accepted) {
+			remoteUserObj.friends.push({ user: req.user.id });
+			user.friends.push({ user: remoteUserObj._id });
+			await remoteUserObj.save();
+			await user.save();
+		}
+		return res.status(200).json(user.notifications);
 	} catch (error) {
-		// console.error(error);
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal server error" }] });
