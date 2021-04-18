@@ -18,7 +18,7 @@ const Notifications = ({
 	userState: { notifications, loading },
 }) => {
 	useEffect(() => {
-		getNotifications(1, 0);
+		getNotifications(10, 0);
 	}, []);
 	const handleClick = (notification, remoteUser, response) => {
 		respondToRequest(notification, remoteUser, response, 1, 0);

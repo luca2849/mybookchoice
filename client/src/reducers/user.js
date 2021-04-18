@@ -11,6 +11,7 @@ import {
 	RATING_UPDATED,
 	RATINGS_ADDED,
 	GET_NOTIFICATIONS,
+	FRIEND_REMOVED,
 } from "../actions/types";
 
 const initialState = {
@@ -68,6 +69,12 @@ export default function (state = initialState, action) {
 				...state,
 				ratings: state.ratings.concat(payload),
 				loading: false,
+			};
+		case FRIEND_REMOVED:
+			console.log(payload);
+			return {
+				...state,
+				user: payload,
 			};
 		case FOLLOW_USER:
 		case UNFOLLOW_USER:

@@ -10,6 +10,7 @@ import {
 	RATINGS_ADDED,
 	GET_USER,
 	GET_NOTIFICATIONS,
+	FRIEND_REMOVED,
 } from "./types";
 import { toast } from "react-toastify";
 
@@ -210,6 +211,51 @@ export const getNotifications = (limit, skip) => async (dispatch) => {
 	}
 };
 
+export const sendFriendRequest = (remoteUser) => async (dispatch) => {
+	const config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		const body = JSON.stringify({ remoteUser });
+		await axios.put(`/api/user/friends/request`, body, config);
+		toast.success(`Friend request sent to ${remoteUser}.`, {
+			autoClose: 2000,
+		});
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const removeFriend = (remoteUser) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/user/friends`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: {
+				remoteUser: remoteUser,
+			},
+		});
+		toast.success(`Removed ${remoteUser} as a friend.`, {
+			autoClose: 2000,
+		});
+		dispatch({ type: FRIEND_REMOVED, payload: res.data });
+	} catch (error) {
+		console.log(error);
+		// const errors = error.response.data.errors;
+		// if (errors) {
+		// 	errors.forEach((error) => toast.error(error.msg, "danger"));
+		// }
+		// dispatch({ type: USER_ERROR });
+	}
+};
+
 export const respondToRequest = (
 	notificationId,
 	remoteUser,
@@ -223,7 +269,6 @@ export const respondToRequest = (
 		},
 	};
 	try {
-		console.log("done");
 		const body = JSON.stringify({ notificationId, remoteUser, accepted });
 		const res = await axios.put(
 			`/api/user/friends/respond?limit=${limit}&skip=${skip}`,

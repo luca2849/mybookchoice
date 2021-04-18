@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import styles from "./UserProfile.module.css";
 // Action
-import { getUser } from "../../actions/user";
+import { getUser, sendFriendRequest, removeFriend } from "../../actions/user";
 // Components
 import Loading from "../../Components/Misc/Loading/Loading";
 import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
@@ -15,6 +15,8 @@ import calculateRatings from "../../utils/calculateRatings";
 const UserProfile = ({
 	userState: { loading, user },
 	getUser,
+	sendFriendRequest,
+	removeFriend,
 	authState: { loading: authLoading, user: currentUser },
 }) => {
 	const userParam = useParams().user;
@@ -26,14 +28,29 @@ const UserProfile = ({
 	useEffect(() => {
 		getUser(userParam);
 	}, []);
+
 	if (loading || authLoading || !user || !currentUser) return <Loading />;
+
+	const handleRemoveFriend = () => {
+		console.log(user.username);
+		removeFriend(user.username);
+	};
+
+	const handleFriendRequest = () => {
+		sendFriendRequest(user.username);
+	};
+
 	const mostRecentFriend =
 		user.friends.length > 0
 			? user.friends.sort(
 					(a, b) => new Date(a.since) - new Date(b.since)
 			  )[0]
 			: null;
-	console.log(mostRecentFriend);
+
+	const areFriends =
+		user.friends.map(
+			(friend) => friend.user.username === currentUser.username && true
+		).length === 1;
 	// Get counts for each type of rating
 	const [likes, notread, dislikes] = calculateRatings(user.ratings);
 	return (
@@ -123,9 +140,21 @@ const UserProfile = ({
 								<p>Actions</p>
 							</div>
 							<div className={styles.buttonContainer}>
-								<button className={styles.add}>
-									Add Friend
-								</button>
+								{areFriends ? (
+									<button
+										className={styles.remove}
+										onClick={() => handleRemoveFriend()}
+									>
+										Remove Friend
+									</button>
+								) : (
+									<button
+										className={styles.add}
+										onClick={() => handleFriendRequest()}
+									>
+										Send Friend Request
+									</button>
+								)}
 							</div>
 						</>
 					)}
@@ -161,4 +190,8 @@ const mapStateToProps = (state) => ({
 	authState: state.auth,
 });
 
-export default connect(mapStateToProps, { getUser })(UserProfile);
+export default connect(mapStateToProps, {
+	getUser,
+	sendFriendRequest,
+	removeFriend,
+})(UserProfile);

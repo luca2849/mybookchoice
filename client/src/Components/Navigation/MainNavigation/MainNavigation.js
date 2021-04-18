@@ -6,6 +6,7 @@ import styles from "./MainNavigation.module.css";
 
 // Icons
 import { BsFillPersonFill, BsQuestionCircle } from "react-icons/bs";
+import { AiFillBell } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { RiMessage2Line } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
@@ -95,6 +96,15 @@ const MainNavigation = ({ children, user }) => {
 							>
 								<GiMagnifyingGlass />
 								Specific Recommendation
+							</Link>
+						</div>
+						<div className={styles.item}>
+							<Link
+								onClick={() => setMenuOpen(false)}
+								to="/notifications"
+							>
+								<AiFillBell />
+								My Notifications
 							</Link>
 						</div>
 						<div className={styles.item}>

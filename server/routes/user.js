@@ -461,9 +461,8 @@ router.delete("/friends", auth, async (req, res) => {
 				},
 			}
 		);
-		// Return current user
-		const user = await User.findOne({ _id: req.user.id });
-		return res.status(200).json(user);
+		const returnUser = await User.findOne({ _id: remoteUserObj._id });
+		return res.status(200).json(returnUser);
 	} catch (error) {
 		console.error(error);
 		return res
