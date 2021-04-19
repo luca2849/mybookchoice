@@ -1,6 +1,7 @@
 // Express & Routing
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
 const recommend = require("../util/recommend");
 const { getBookRecommendation } = require("../util/getRecommendations");
@@ -48,10 +49,29 @@ router.post("/specific", auth, async (req, res) => {
 		const book = await Book.findOne({ _id: rec.id });
 		cleanRecommendations.push({
 			...book.toJSON(),
-			score: `${Math.round(rec.score * 10000) / 100}%`,
+			score: rec.score,
 		});
 	}
-	return res.status(200).json(cleanRecommendations);
+	// Combine with general scores
+	let output = [];
+	const generalRecs = await recommend(req.user.id, 3);
+	for (const book of cleanRecommendations) {
+		for (const recBook of generalRecs) {
+			if (
+				mongoose.Types.ObjectId(book._id).equals(
+					mongoose.Types.ObjectId(recBook.book)
+				)
+			) {
+				output.push({
+					...book,
+					score: 0.5 * (book.score + recBook.certainty),
+				});
+			} else {
+				output.push(book);
+			}
+		}
+	}
+	return res.status(200).json(output);
 });
 
 module.exports = router;
