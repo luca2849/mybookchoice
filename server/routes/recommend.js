@@ -57,6 +57,12 @@ router.post("/specific", auth, async (req, res) => {
 	const generalRecs = await recommend(req.user.id, 3);
 	for (const book of cleanRecommendations) {
 		for (const recBook of generalRecs) {
+			const isPresent = output.filter((obj) =>
+				mongoose.Types.ObjectId(book._id).equals(
+					mongoose.Types.ObjectId(obj._id)
+				)
+			);
+			if (isPresent.length > 0) continue;
 			if (
 				mongoose.Types.ObjectId(book._id).equals(
 					mongoose.Types.ObjectId(recBook.book)
@@ -64,14 +70,21 @@ router.post("/specific", auth, async (req, res) => {
 			) {
 				output.push({
 					...book,
-					score: 0.5 * (book.score + recBook.certainty),
+					score: `${
+						Math.round(
+							0.5 * (book.score + recBook.certainty) * 10000
+						) / 100
+					}%`,
 				});
 			} else {
-				output.push(book);
+				output.push({
+					...book,
+					score: `${Math.round(book.score * 10000) / 100}%`,
+				});
 			}
 		}
 	}
-	return res.status(200).json(output);
+	return res.status(200).json([...new Set(output)]);
 });
 
 module.exports = router;
