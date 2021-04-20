@@ -27,7 +27,7 @@ const Notifications = ({
 	};
 	if (loading) return <Loading />;
 	return (
-		<div>
+		<div className={styles.mainContainer}>
 			<h3>Notifications</h3>
 			<List cssClass={styles.list}>
 				{notifications.map((notification) => (

@@ -14,7 +14,7 @@ const Friends = ({ getFriends, user: { friends, loading } }) => {
 	}, []);
 	if (loading) return <Loading />;
 	return (
-		<div>
+		<div className={styles.mainContainer}>
 			<h3>Friends List</h3>
 			<List cssClass={styles.list}>
 				{friends.map((friend) => (

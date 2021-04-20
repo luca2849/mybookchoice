@@ -1,6 +1,15 @@
+.mainContainer {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.mainContainer h3 {
+    margin: 1rem;
+}
+
 .image img {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     border: 2px solid black;
 }

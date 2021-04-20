@@ -1,3 +1,12 @@
+.mainContainer {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.mainContainer h3 {
+    margin: 1rem;
+}
+
 .buttons {
     display: flex;
     align-items: center;
