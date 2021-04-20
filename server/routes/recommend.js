@@ -56,13 +56,8 @@ router.post("/specific", auth, async (req, res) => {
 	let output = [];
 	const generalRecs = await recommend(req.user.id, 3);
 	for (const book of cleanRecommendations) {
-		for (const recBook of generalRecs) {
-			const isPresent = output.filter((obj) =>
-				mongoose.Types.ObjectId(book._id).equals(
-					mongoose.Types.ObjectId(obj._id)
-				)
-			);
-			if (isPresent.length > 0) continue;
+		for (let i = 0; i < generalRecs.length; i++) {
+			const recBook = generalRecs[i];
 			if (
 				mongoose.Types.ObjectId(book._id).equals(
 					mongoose.Types.ObjectId(recBook.book)
@@ -77,10 +72,19 @@ router.post("/specific", auth, async (req, res) => {
 					}%`,
 				});
 			} else {
-				output.push({
-					...book,
-					score: `${Math.round(book.score * 10000) / 100}%`,
-				});
+				// (1) - AND check if is last index of generalRecs before adding
+				// Move presence check to (1)
+				const isPresent = output.filter((obj) =>
+					mongoose.Types.ObjectId(book._id).equals(
+						mongoose.Types.ObjectId(obj._id)
+					)
+				);
+				if (isPresent.length < 1 && i === generalRecs.length - 1) {
+					output.push({
+						...book,
+						score: `${Math.round(book.score * 10000) / 100}%`,
+					});
+				}
 			}
 		}
 	}
