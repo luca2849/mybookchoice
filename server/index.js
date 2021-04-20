@@ -23,6 +23,7 @@ app.use(
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/recommend", require("./routes/recommend"));
+app.use("/api/messaging", require("./routes/messaging"));
 
 // Serve React Build
 app.get("*", (req, res) => {

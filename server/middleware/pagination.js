@@ -1,13 +1,14 @@
 module.exports = function (req, res, next) {
 	// Get limit & skip from url query
-	const { limit, skip } = req.params;
+	const { limit, skip } = req.query;
 	// check if they exist
-	if (req.param("limit") === "" || req.param("skip") === "") {
+	if ("limit" in req.query && "skip" in req.query) {
+		req.limit = limit;
+		req.skip = skip;
+		next();
+	} else {
 		return res
 			.status(400)
 			.json({ errors: [{ message: "Missing pagination parameter(s)" }] });
 	}
-	req.limit = limit;
-	req.skip = skip;
-	next();
 };
