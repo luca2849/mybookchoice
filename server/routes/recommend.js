@@ -67,7 +67,8 @@ router.post("/specific", auth, async (req, res) => {
 					...book,
 					score: `${
 						Math.round(
-							0.5 * (book.score + recBook.certainty) * 10000
+							(0.75 * book.score + 0.25 * recBook.certainty) *
+								10000
 						) / 100
 					}%`,
 				});

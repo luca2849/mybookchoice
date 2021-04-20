@@ -44,7 +44,7 @@ const Recommend = ({
 }) => {
 	const genres = [
 		{
-			name: "science-fiction",
+			name: "science fiction",
 			display: "Science-Fiction",
 			image: "./img/astronaut.png",
 			icon: <FaUserAstronaut />,
@@ -281,155 +281,169 @@ const Recommend = ({
 		setCurrentSection(currentSection + 1);
 	};
 	return (
-		<div className={styles.container}>
-			<Steps className={styles.steps} current={currentSection}>
-				<Steps.Item description="Genre" />
-				<Steps.Item description="Book Type" />
-				<Steps.Item description="Preferences" />
-				<Steps.Item description="Eras" />
-				<Steps.Item description="Limit" />
-				<Steps.Item description="Results" />
-			</Steps>
-			<div className={styles.content}>
-				{currentSection === 0 && (
-					<section className={styles.genre}>
-						{genres.map((genre) => (
-							<div className={styles.genreFlex} key={genre.name}>
+		<>
+			<div className={styles.container}>
+				<Steps className={styles.steps} current={currentSection}>
+					<Steps.Item description="Genre" />
+					<Steps.Item description="Book Type" />
+					<Steps.Item description="Preferences" />
+					<Steps.Item description="Eras" />
+					<Steps.Item description="Limit" />
+					<Steps.Item description="Results" />
+				</Steps>
+				<div className={styles.content}>
+					{currentSection === 0 && (
+						<section className={styles.genre}>
+							{genres.map((genre) => (
 								<div
-									className={`${styles.genreContent} ${
-										selectedGenres.includes(genre.name) &&
-										styles.clicked
-									}`}
-									onClick={() => handleClick(genre.name)}
+									className={styles.genreFlex}
+									key={genre.name}
 								>
-									<div className={styles.genreTop}>
-										{genre.icon}
-									</div>
-									<div className={styles.genreBottom}>
-										<p>{genre.display}</p>
+									<div
+										className={`${styles.genreContent} ${
+											selectedGenres.includes(
+												genre.name
+											) && styles.clicked
+										}`}
+										onClick={() => handleClick(genre.name)}
+									>
+										<div className={styles.genreTop}>
+											{genre.icon}
+										</div>
+										<div className={styles.genreBottom}>
+											<p>{genre.display}</p>
+										</div>
 									</div>
 								</div>
-							</div>
-						))}
-					</section>
-				)}
-				{currentSection === 1 && (
-					<section
-						className={`${styles.genre} ${styles.genreSelection}`}
-					>
-						{types.map((type) => (
-							<div className={styles.genreFlex} key={type.name}>
+							))}
+						</section>
+					)}
+					{currentSection === 1 && (
+						<section
+							className={`${styles.genre} ${styles.genreSelection}`}
+						>
+							{types.map((type) => (
 								<div
-									className={`${styles.genreContent} ${
-										selectedTypes.includes(type.name) &&
-										styles.clicked
-									}`}
-									onClick={() => handleClick(type.name)}
+									className={styles.genreFlex}
+									key={type.name}
 								>
-									<div className={styles.genreTop}>
-										{type.icon}
-									</div>
-									<div className={styles.genreBottom}>
-										<p>{type.display}</p>
+									<div
+										className={`${styles.genreContent} ${
+											selectedTypes.includes(type.name) &&
+											styles.clicked
+										}`}
+										onClick={() => handleClick(type.name)}
+									>
+										<div className={styles.genreTop}>
+											{type.icon}
+										</div>
+										<div className={styles.genreBottom}>
+											<p>{type.display}</p>
+										</div>
 									</div>
 								</div>
-							</div>
-						))}
-					</section>
-				)}
-				{currentSection === 2 && (
-					<section className={styles.genre}>
-						{preferences.map((preference) => (
-							<div
-								className={styles.genreFlex}
-								key={preference.name}
+							))}
+						</section>
+					)}
+					{currentSection === 2 && (
+						<section className={styles.genre}>
+							{preferences.map((preference) => (
+								<div
+									className={styles.genreFlex}
+									key={preference.name}
+								>
+									<div
+										className={`${styles.genreContent} ${
+											selectedPreferences.includes(
+												preference.name
+											) && styles.clicked
+										}`}
+										onClick={() =>
+											handleClick(preference.name)
+										}
+									>
+										<div className={styles.genreTop}>
+											{preference.icon}
+										</div>
+										<div className={styles.genreBottom}>
+											<p>{preference.display}</p>
+										</div>
+									</div>
+								</div>
+							))}
+						</section>
+					)}
+					{currentSection === 3 && (
+						<section className={styles.genre}>
+							{eras.map((era) => (
+								<div
+									className={styles.genreFlex}
+									key={era.name}
+								>
+									<div
+										className={`${styles.genreContent} ${
+											selectedEras.includes(era.name) &&
+											styles.clicked
+										}`}
+										onClick={() => handleClick(era.name)}
+									>
+										<div className={styles.genreTop}>
+											{era.icon}
+										</div>
+										<div className={styles.genreBottom}>
+											<p>{era.display}</p>
+										</div>
+									</div>
+								</div>
+							))}
+						</section>
+					)}
+					{currentSection === 4 && (
+						<section className={`${styles.genre} ${styles.col}`}>
+							<h3>Limiting</h3>
+							<p>How many results should we return?</p>
+							<input
+								type="number"
+								onChange={(e) => setLimit(+e.target.value)}
+							/>
+						</section>
+					)}
+					{currentSection === 5 && (
+						<>
+							<h3>Your Results</h3>
+							{loading || !books ? (
+								<Loading />
+							) : (
+								<div className={styles.books}>
+									{books.map((book) => (
+										<Book book={book} key={book._id} />
+									))}
+								</div>
+							)}
+						</>
+					)}
+					{currentSection < 5 && (
+						<div className={styles.buttons}>
+							<button
+								onClick={() => goBack()}
+								disabled={currentSection === 0}
 							>
-								<div
-									className={`${styles.genreContent} ${
-										selectedPreferences.includes(
-											preference.name
-										) && styles.clicked
-									}`}
-									onClick={() => handleClick(preference.name)}
-								>
-									<div className={styles.genreTop}>
-										{preference.icon}
-									</div>
-									<div className={styles.genreBottom}>
-										<p>{preference.display}</p>
-									</div>
-								</div>
-							</div>
-						))}
-					</section>
-				)}
-				{currentSection === 3 && (
-					<section className={styles.genre}>
-						{eras.map((era) => (
-							<div className={styles.genreFlex} key={era.name}>
-								<div
-									className={`${styles.genreContent} ${
-										selectedEras.includes(era.name) &&
-										styles.clicked
-									}`}
-									onClick={() => handleClick(era.name)}
-								>
-									<div className={styles.genreTop}>
-										{era.icon}
-									</div>
-									<div className={styles.genreBottom}>
-										<p>{era.display}</p>
-									</div>
-								</div>
-							</div>
-						))}
-					</section>
-				)}
-				{currentSection === 4 && (
-					<section className={`${styles.genre} ${styles.col}`}>
-						<h3>Limiting</h3>
-						<p>How many results should we return?</p>
-						<input
-							type="number"
-							onChange={(e) => setLimit(+e.target.value)}
-						/>
-					</section>
-				)}
-				{currentSection === 5 && (
-					<>
-						<h3>Your Results</h3>
-						{loading ? (
-							<Loading />
-						) : (
-							<div className={styles.books}>
-								{books.map((book) => (
-									<Book book={book} />
-								))}
-							</div>
-						)}
-					</>
-				)}
-				{currentSection < 5 && (
-					<div className={styles.buttons}>
-						<button
-							onClick={() => goBack()}
-							disabled={currentSection === 0}
-						>
-							Back
-						</button>
-						<button
-							onClick={() =>
-								validateInputs(true) && currentSection === 4
-									? getResults()
-									: setCurrentSection(currentSection + 1)
-							}
-						>
-							Continue
-						</button>
-					</div>
-				)}
+								Back
+							</button>
+							<button
+								onClick={() =>
+									validateInputs(true) && currentSection === 4
+										? getResults()
+										: setCurrentSection(currentSection + 1)
+								}
+							>
+								Continue
+							</button>
+						</div>
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

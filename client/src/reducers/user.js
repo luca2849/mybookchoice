@@ -79,7 +79,6 @@ export default function (state = initialState, action) {
 				friends: payload,
 			};
 		case FRIEND_REMOVED:
-			console.log(payload);
 			return {
 				...state,
 				user: payload,

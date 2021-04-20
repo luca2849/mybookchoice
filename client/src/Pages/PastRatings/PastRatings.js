@@ -175,7 +175,7 @@ const PastRatings = ({
 												<p className={styles.auth}>
 													{rating.book_id
 														.authors[0] &&
-														` - ${rating.book_id.authors[0]}`}
+														`${rating.book_id.authors[0]}`}
 												</p>
 												<p className={styles.date}>
 													{moment(

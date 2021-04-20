@@ -15,6 +15,10 @@ const Book = ({ book, height }) => {
 			colourClass = styles.red;
 		}
 	}
+	const openBookPage = (url) => {
+		const win = window.open(url, "_blank");
+		win.focus();
+	};
 	return (
 		<div
 			className={styles.bookContainer}
@@ -22,7 +26,11 @@ const Book = ({ book, height }) => {
 				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://covers.openlibrary.org/b/olid/${book.olId}-M.jpg)`,
 				height: height,
 			}}
+			onClick={() =>
+				openBookPage(`https://openlibrary.org/works/${book.olId}`)
+			}
 		>
+			{" "}
 			<div className={styles.book}>
 				{book.score && (
 					<div className={`${styles.score} ${colourClass}`}>
@@ -33,7 +41,7 @@ const Book = ({ book, height }) => {
 					<h2>{title}</h2>
 					<p>{book.authors ? book.authors[0] : null}</p>
 					<p>{book.published ? book.published.year : null}</p>
-					<BsInfoCircleFill className={styles.icon} />
+					{/* <BsInfoCircleFill className={styles.icon} /> */}
 				</div>
 			</div>
 		</div>

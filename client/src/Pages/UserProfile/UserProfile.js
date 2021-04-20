@@ -32,7 +32,6 @@ const UserProfile = ({
 	if (loading || authLoading || !user || !currentUser) return <Loading />;
 
 	const handleRemoveFriend = () => {
-		console.log(user.username);
 		removeFriend(user.username);
 	};
 

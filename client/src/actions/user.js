@@ -250,7 +250,7 @@ export const removeFriend = (remoteUser) => async (dispatch) => {
 		});
 		dispatch({ type: FRIEND_REMOVED, payload: res.data });
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		// const errors = error.response.data.errors;
 		// if (errors) {
 		// 	errors.forEach((error) => toast.error(error.msg, "danger"));

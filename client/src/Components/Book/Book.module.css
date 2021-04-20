@@ -4,6 +4,13 @@
     border-radius: 10px;
     width: 100%;
     margin: 0 auto 2rem auto;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.bookContainer:hover{
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.2);
+    transform: scale(1.05);
 }
 
 .book{

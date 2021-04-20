@@ -1,5 +1,5 @@
 const genres = [
-	"science-fiction",
+	"science fiction",
 	"nonfiction",
 	"fiction",
 	"thriller",
