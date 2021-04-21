@@ -54,16 +54,18 @@ const Messages = ({
 				<div className={styles.messages}>
 					<p>Messages</p>
 					{selectedThread && (
-						<div>
-							{loading ? (
+						<>
+							{loading && messages.length === 0 ? (
 								<Loading />
 							) : (
 								<MessageThread
 									messages={messages}
 									me={me._id}
+									getMessages={getMessages}
+									selectedThread={selectedThread}
 								/>
 							)}
-						</div>
+						</>
 					)}
 				</div>
 			</div>

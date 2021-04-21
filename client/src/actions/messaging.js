@@ -6,6 +6,7 @@ import {
 	SEND_MESSAGE,
 	CLEAR_THREADS,
 	CLEAR_MESSAGES,
+	ADD_MESSAGES,
 	CLEAR_MESSAGING,
 	CLEAR_THREAD,
 	ADD_MESSAGE,
@@ -27,12 +28,15 @@ export const getThreads = (limit, skip) => async (dispatch) => {
 };
 
 export const getMessages = (threadId, limit, skip) => async (dispatch) => {
-	dispatch({ type: CLEAR_MESSAGES });
+	if (skip === 0) dispatch({ type: CLEAR_MESSAGES });
 	try {
 		const res = await axios.get(
 			`/api/messaging/${threadId}?limit=${limit}&skip=${skip}`
 		);
-		dispatch({ type: GET_MESSAGES, payload: res.data });
+		dispatch({
+			type: skip === 0 ? GET_MESSAGES : ADD_MESSAGES,
+			payload: res.data,
+		});
 	} catch (error) {
 		toast.error(error);
 		dispatch({ type: MESSAGE_ERROR });

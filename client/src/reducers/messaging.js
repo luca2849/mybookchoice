@@ -7,6 +7,7 @@ import {
 	CLEAR_MESSAGING,
 	CLEAR_THREAD,
 	GET_THREAD,
+	ADD_MESSAGES,
 	ADD_MESSAGE,
 	MESSAGE_RECEIVED,
 	NEW_THREAD,
@@ -40,6 +41,12 @@ export default function (state = initialState, action) {
 				...state,
 				messages: payload,
 				loading: false,
+			};
+		}
+		case ADD_MESSAGES: {
+			return {
+				...state,
+				messages: state.messages.concat(payload),
 			};
 		}
 		case GET_THREAD: {

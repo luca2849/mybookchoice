@@ -7,8 +7,8 @@
     border-radius: 10px;
     max-width: 400px;
     width: auto;
-    display: flex;
-    margin: 1rem;
+    display: inline-block;
+    margin: 0.5rem 1rem;
     font-size: 1.1rem;
     letter-spacing: 0.5px;
 }
@@ -18,10 +18,18 @@
     color: white;
     border-bottom-right-radius: 0;
     margin-left: auto;
+    float: right;
 }
 
 .otherMessage {
     background: rgb(218, 218, 218);
     border-bottom-left-radius: 0;
     margin-right: auto;
+}
+
+.thread {
+    height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
 }

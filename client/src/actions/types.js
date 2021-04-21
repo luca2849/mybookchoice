@@ -30,6 +30,7 @@ export const BOOK_ERROR = "BOOK_ERROR";
 export const GET_THREADS = "GET_THREADS";
 export const GET_THREAD = "GET_THREAD";
 export const ADD_MESSAGE = "ADD_MESSAGE";
+export const ADD_MESSAGES = "ADD_MESSAGES";
 export const NEW_THREAD = "NEW_THREAD";
 export const MESSAGE_RECEIVED = "MESSAGE_RECEIVED";
 export const GET_MESSAGES = "GET_MESSAGES";
