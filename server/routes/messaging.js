@@ -12,6 +12,8 @@ const Message = require("../models/Message");
 
 const { addMessageToDB } = require("../util/socketHelpers");
 
+const ObjectId = require("mongoose").Types.ObjectId;
+
 // GET /api/messaging/threads
 // Purpose - Get a user's threads
 // Access - Private
@@ -33,7 +35,6 @@ router.get("/threads", [auth, pagination], async (req, res) => {
 			.sort({ updatedAt: -1 });
 		return res.status(200).json(threads);
 	} catch (error) {
-		console.log(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal Server Error" }] });
@@ -65,9 +66,9 @@ router.get("/:threadId", [auth, pagination], async (req, res) => {
 			.skip(req.skip)
 			.sort({ created_at: -1 })
 			.populate("user", "name username profileImage");
-
 		return res.status(200).json(messages);
 	} catch (error) {
+		console.error(error);
 		return res
 			.status(500)
 			.json({ errors: [{ msg: "Internal Server Error" }] });
@@ -104,7 +105,6 @@ router.get("/doesExist/:username", [auth], async (req, res) => {
 			return res.status(200).json({ doesExist: false });
 		}
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ msg: "Internal Server Error" });
 	}
 });
@@ -130,7 +130,6 @@ router.get("/thread/:threadId", [auth], async (req, res) => {
 		}
 		return res.status(200).json({ thread });
 	} catch (error) {
-		console.log(error);
 		return res.status(500).json({ msg: "Internal Server Error" });
 	}
 });
@@ -204,7 +203,6 @@ router.post(
 			if (!added) return res.status(400);
 			return res.status(200).json(added);
 		} catch (error) {
-			console.log(error);
 			return res.status(500).json({ msg: "Internal Server Error" });
 		}
 	}

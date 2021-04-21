@@ -25,6 +25,7 @@ import PastRatings from "./Pages/PastRatings/PastRatings";
 import Recommend from "./Pages/Recommend/Recommend";
 import Notifications from "./Pages/Notifications/Notifications";
 import Friends from "./Pages/Friends/Friends";
+import Messages from "./Pages/Messages/Messages";
 
 function App() {
 	useEffect(() => {
@@ -98,6 +99,11 @@ function App() {
 							exact
 							path="/friends"
 							component={Friends}
+						/>
+						<PrivateRoute
+							exact
+							path="/messages"
+							component={Messages}
 						/>
 					</Switch>
 				</>

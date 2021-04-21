@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
 		case GET_THREADS: {
 			return {
 				...state,
-				threads: payload.threads,
+				threads: payload,
 				loading: false,
 			};
 		}
@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
 		case GET_MESSAGES: {
 			return {
 				...state,
-				messages: payload.messages,
+				messages: payload,
 				loading: false,
 			};
 		}
@@ -53,6 +53,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				threads: [],
+			};
+		case CLEAR_MESSAGES:
+			return {
+				...state,
+				messages: [],
 			};
 		case ADD_MESSAGE:
 		case MESSAGE_RECEIVED:

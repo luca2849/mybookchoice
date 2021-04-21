@@ -1,0 +1,36 @@
+.imageContainer img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}
+
+.imageContainer {
+    padding: 0.5rem;
+}
+
+.threadItem {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.threadItem:hover {
+    background: rgb(241, 241, 241);
+}
+
+.threadInfo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.updated {
+    margin-left: auto;
+}
+
+.selected {
+    background: rgb(241, 241, 241);
+}
