@@ -6,6 +6,7 @@ import styles from "./Messages.module.css";
 // Components
 import ThreadItem from "../../Components/ThreadItem/ThreadItem";
 import MessageThread from "../../Components/MessageThread/MessageThread";
+import ThreadHeader from "../../Components/ThreadHeader/ThreadHeader";
 import Loading from "../../Components/Misc/Loading/Loading";
 
 // Actions
@@ -52,19 +53,30 @@ const Messages = ({
 					))}
 				</div>
 				<div className={styles.messages}>
-					<p>Messages</p>
 					{selectedThread && (
 						<>
-							{loading && messages.length === 0 ? (
-								<Loading />
-							) : (
-								<MessageThread
-									messages={messages}
-									me={me._id}
-									getMessages={getMessages}
-									selectedThread={selectedThread}
-								/>
-							)}
+							<ThreadHeader
+								thread={
+									threads.filter(
+										(thread) =>
+											thread._id === selectedThread
+									)[0]
+								}
+								me={me._id}
+							/>
+
+							<>
+								{loading && messages.length === 0 ? (
+									<Loading />
+								) : (
+									<MessageThread
+										messages={messages}
+										me={me._id}
+										getMessages={getMessages}
+										selectedThread={selectedThread}
+									/>
+								)}
+							</>
 						</>
 					)}
 				</div>

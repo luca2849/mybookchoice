@@ -1,0 +1,37 @@
+.header {
+    padding: 0.5rem;
+    border-left: 1px solid rgb(196, 196, 196);
+    display: flex;
+    align-items: center;
+}
+
+.imageContainer img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.header > div {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.updated {
+    margin-left: auto;
+}
+
+.updated > p {
+    font-size: 1rem;
+}
+
+.name {
+    margin-left: 1rem;
+}
+
+.name p:first-of-type {
+    font-weight: bold;
+}
+
+.name p:last-of-type {
+    font-size: 1rem;
+}

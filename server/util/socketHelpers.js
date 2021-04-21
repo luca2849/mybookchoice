@@ -21,7 +21,7 @@ const addMessageToDB = async (text, userId, thread) => {
 		const allowed = await isAllowed(thread._id, userId);
 		if (!allowed) return false;
 		// Add message to DB
-		thread.updated_at = new Date();
+		thread.updatedAt = new Date();
 		await thread.save();
 		let newMessage = new Message({
 			text,
