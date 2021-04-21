@@ -26,3 +26,16 @@ export const GET_FRIENDS = "GET_FRIENDS";
 export const BOOKS_UPDATED = "BOOKS_UPDATED";
 export const RECOMMENDATIONS_UPDATED = "RECOMMENDATIONS_UPDATED";
 export const BOOK_ERROR = "BOOK_ERROR";
+// Messaging
+export const GET_THREADS = "GET_THREADS";
+export const GET_THREAD = "GET_THREAD";
+export const ADD_MESSAGE = "ADD_MESSAGE";
+export const NEW_THREAD = "NEW_THREAD";
+export const MESSAGE_RECEIVED = "MESSAGE_RECEIVED";
+export const GET_MESSAGES = "GET_MESSAGES";
+export const SEND_MESSAGE = "SEND_MESSAGE";
+export const CLEAR_THREADS = "CLEAR_THREADS";
+export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
+export const CLEAR_THREAD = "CLEAR_THREAD";
+export const CLEAR_MESSAGING = "CLEAR_MESSAGING";
+export const MESSAGE_ERROR = "MESSAGE_ERROR";

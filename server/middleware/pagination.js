@@ -3,8 +3,9 @@ module.exports = function (req, res, next) {
 	const { limit, skip } = req.query;
 	// check if they exist
 	if ("limit" in req.query && "skip" in req.query) {
-		req.limit = limit;
-		req.skip = skip;
+		// Set req attributes as numeric values (+)
+		req.limit = +limit;
+		req.skip = +skip;
 		next();
 	} else {
 		return res

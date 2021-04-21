@@ -23,11 +23,12 @@ const addMessageToDB = async (text, userId, thread) => {
 		// Add message to DB
 		thread.updated_at = new Date();
 		await thread.save();
-		let newMessage = new Thread({
+		let newMessage = new Message({
 			text,
 			user: userId,
 			thread: thread._id,
 		});
+		console.log(newMessage);
 		await newMessage.save();
 		const populatedModel = await Message.populate(newMessage, [
 			{ path: "user", select: "name username profileImage" },
