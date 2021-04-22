@@ -5,9 +5,9 @@ import styles from "./Messages.module.css";
 
 // Components
 import ThreadItem from "../../Components/ThreadItem/ThreadItem";
+import ThreadInput from "../../Components/ThreadInput/ThreadInput";
 import MessageThread from "../../Components/MessageThread/MessageThread";
 import ThreadHeader from "../../Components/ThreadHeader/ThreadHeader";
-import Loading from "../../Components/Misc/Loading/Loading";
 
 // Actions
 import { getThreads, getMessages } from "../../actions/messaging";
@@ -25,7 +25,7 @@ const Messages = ({
 	}, []);
 
 	useEffect(() => {
-		if (selectedThread !== null) getMessages(selectedThread, 10, 0);
+		if (selectedThread !== null) getMessages(selectedThread, 20, 0);
 	}, [selectedThread]);
 
 	const handleClick = (id) => {
@@ -64,19 +64,16 @@ const Messages = ({
 								}
 								me={me._id}
 							/>
-
 							<>
-								{loading ? (
-									<Loading />
-								) : (
-									<MessageThread
-										messages={messages.messages}
-										totalMessages={messages.totalMessages}
-										me={me._id}
-										getMessages={getMessages}
-										selectedThread={selectedThread}
-									/>
-								)}
+								<MessageThread
+									messages={messages.messages}
+									totalMessages={messages.totalMessages}
+									me={me._id}
+									getMessages={getMessages}
+									selectedThread={selectedThread}
+									loading={loading}
+								/>
+								<ThreadInput selectedThread={selectedThread} />
 							</>
 						</>
 					)}

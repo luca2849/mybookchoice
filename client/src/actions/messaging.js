@@ -55,6 +55,7 @@ export const getThread = (threadId) => async (dispatch) => {
 };
 
 export const sendMessage = (threadId, text) => async (dispatch) => {
+	console.log("Sent");
 	try {
 		const config = {
 			headers: {
@@ -62,7 +63,7 @@ export const sendMessage = (threadId, text) => async (dispatch) => {
 			},
 		};
 		const res = await axios.post(
-			`/api/messaging/message${threadId}`,
+			`/api/messaging/message/${threadId}`,
 			{ text },
 			config
 		);

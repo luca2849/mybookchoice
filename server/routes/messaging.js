@@ -206,6 +206,7 @@ router.post(
 			if (!added) return res.status(400);
 			return res.status(200).json(added);
 		} catch (error) {
+			console.log(error);
 			return res.status(500).json({ msg: "Internal Server Error" });
 		}
 	}

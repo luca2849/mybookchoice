@@ -82,7 +82,10 @@ export default function (state = initialState, action) {
 		case MESSAGE_RECEIVED:
 			return {
 				...state,
-				messages: [payload, ...state.messages],
+				messages: {
+					...state.messages,
+					messages: [payload, ...state.messages.messages],
+				},
 			};
 		case CLEAR_THREADS:
 			return {
