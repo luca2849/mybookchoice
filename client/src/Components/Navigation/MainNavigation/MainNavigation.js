@@ -137,7 +137,7 @@ const MainNavigation = ({ children, user }) => {
 						<div className={styles.item}>
 							<Link
 								onClick={() => setMenuOpen(false)}
-								to="/profile/messages"
+								to="/messages"
 							>
 								<RiMessage2Line />
 								My Messages

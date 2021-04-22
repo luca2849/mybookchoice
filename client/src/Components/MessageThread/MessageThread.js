@@ -47,14 +47,15 @@ const MessageThread = ({
 							</div>
 						))}
 					</div>
-					{messages.length !== totalMessages && (
-						<button
-							className={styles.loadMoreButton}
-							onClick={() => loadMore()}
-						>
-							Load More...
-						</button>
-					)}
+					{messages.length !== totalMessages &&
+						messages.length !== 0 && (
+							<button
+								className={styles.loadMoreButton}
+								onClick={() => loadMore()}
+							>
+								Load More...
+							</button>
+						)}
 				</>
 			)}
 		</div>

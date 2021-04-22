@@ -6,17 +6,20 @@ import styles from "./Messages.module.css";
 // Components
 import ThreadItem from "../../Components/ThreadItem/ThreadItem";
 import ThreadInput from "../../Components/ThreadInput/ThreadInput";
+import MessagesHeader from "../../Components/MessagesHeader/MessagesHeader";
 import MessageThread from "../../Components/MessageThread/MessageThread";
 import ThreadHeader from "../../Components/ThreadHeader/ThreadHeader";
+import Loading from "../../Components/Misc/Loading/Loading";
 
 // Actions
-import { getThreads, getMessages } from "../../actions/messaging";
+import { getThreads, getMessages, createThread } from "../../actions/messaging";
 
 const Messages = ({
 	messagesState: { loading, threads, messages },
-	authState: { user: me },
+	authState: { user: me, loading: authLoading },
 	getThreads,
 	getMessages,
+	createThread,
 }) => {
 	const [selectedThread, setSelectedThread] = useState(null);
 
@@ -40,6 +43,15 @@ const Messages = ({
 			<p>Messages Page</p>
 			<div className={styles.messagesContainer}>
 				<div className={styles.threads}>
+					{authLoading ? (
+						<Loading />
+					) : (
+						<MessagesHeader
+							friends={me.friends}
+							createThread={createThread}
+						/>
+					)}
+
 					{threads.map((thread) => (
 						<div key={thread._id}>
 							<ThreadItem
@@ -88,4 +100,8 @@ const mapStateToProps = (state) => ({
 	authState: state.auth,
 });
 
-export default connect(mapStateToProps, { getThreads, getMessages })(Messages);
+export default connect(mapStateToProps, {
+	getThreads,
+	getMessages,
+	createThread,
+})(Messages);

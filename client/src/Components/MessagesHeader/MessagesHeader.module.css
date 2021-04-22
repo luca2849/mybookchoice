@@ -1,0 +1,87 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(196, 196, 196);
+}
+
+.container > * {
+    padding: 1rem;
+    margin: 0 1rem;
+}
+
+.addThreadContainer svg {
+    margin: 0;
+    transform: scale(2.5);
+}
+
+.addThreadContainer {
+    border-radius: 50%;
+    color: rgb(0, 180, 235);
+    transition: all 0.25s;
+    cursor: pointer;
+}
+
+.addThreadContainer:hover {
+    background: rgb(0, 180, 235);
+    color: white;
+}
+
+.modal {
+    /* height: 40vh; */
+}
+
+.modal svg {
+    margin: 0;
+}
+
+.modal h4 {
+    margin-bottom: 0.5rem;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.modalHeader svg {
+    transform: scale(3);
+    cursor: pointer;
+}
+
+.modalHeader path {
+    transition: all 0.25s;
+}
+
+.modalHeader svg:hover > path {
+    stroke: rgb(253, 57, 57);
+}
+
+.content {
+    padding: 1rem;
+}
+
+.createThread {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.createThread button {
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    background:rgb(0, 180, 235);
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    transition: all 0.25s;
+}
+
+.createThread button:hover {
+    
+}

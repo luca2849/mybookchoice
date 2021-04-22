@@ -98,7 +98,7 @@ router.get("/doesExist/:username", [auth], async (req, res) => {
 		const me = ObjectId(req.user.id);
 		// Get messages for this thread
 		const thread = await Thread.find({
-			users: { $eq: [userId, me] },
+			users: { $all: [userId, me] },
 		});
 		if (thread.length > 0) {
 			return res

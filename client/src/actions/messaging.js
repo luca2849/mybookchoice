@@ -76,8 +76,17 @@ export const sendMessage = (threadId, text) => async (dispatch) => {
 
 export const createThread = (username) => async (dispatch) => {
 	try {
-		const res = await axios.post(`/api/messaging/${username}`);
-		dispatch({ type: NEW_THREAD, payload: res.data.newThread });
+		// Check if thread already exists
+		const existsResponse = await axios.get(
+			`/api/messaging/doesExist/${username}`
+		);
+		if (!existsResponse.data.doesExist) {
+			console.log(existsResponse.data.doesExist);
+			const res = await axios.post(`/api/messaging/${username}`);
+			dispatch({ type: NEW_THREAD, payload: res.data.newThread });
+			return;
+		}
+		toast.error(`A thread with ${username} already exists.`);
 	} catch (error) {
 		toast.error(error);
 		dispatch({ type: MESSAGE_ERROR });

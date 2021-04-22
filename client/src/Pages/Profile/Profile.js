@@ -155,6 +155,9 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 						<List.Item cssClass={styles.item}>
 							<Link to={"/friends"}>My Friends</Link>
 						</List.Item>
+						<List.Item cssClass={styles.item}>
+							<Link to={"/messages"}>My Messages</Link>
+						</List.Item>
 					</List>
 					<h3>Account Settings</h3>
 					<List cssClass={styles.list}>

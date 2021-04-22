@@ -18,8 +18,6 @@ const ThreadInput = ({ selectedThread, sendMessage }) => {
 		sendMessage(selectedThread, message);
 		// Clear input
 		setMessage("");
-		// Unfocus from input
-		inputRef.unfocus();
 		toast.success("Message Sent");
 	};
 	return (
