@@ -66,11 +66,12 @@ const Messages = ({
 							/>
 
 							<>
-								{loading && messages.length === 0 ? (
+								{loading ? (
 									<Loading />
 								) : (
 									<MessageThread
-										messages={messages}
+										messages={messages.messages}
+										totalMessages={messages.totalMessages}
 										me={me._id}
 										getMessages={getMessages}
 										selectedThread={selectedThread}

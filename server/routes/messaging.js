@@ -66,7 +66,10 @@ router.get("/:threadId", [auth, pagination], async (req, res) => {
 			.skip(req.skip)
 			.sort({ $natural: -1 })
 			.populate("user", "name username profileImage");
-		return res.status(200).json(messages);
+		const totalMessages = await Message.find({
+			thread: threadId,
+		}).countDocuments();
+		return res.status(200).json({ messages, totalMessages });
 	} catch (error) {
 		console.error(error);
 		return res

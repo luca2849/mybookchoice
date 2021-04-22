@@ -14,7 +14,10 @@ import {
 } from "../actions/types";
 
 const initialState = {
-	messages: [],
+	messages: {
+		messages: [],
+		totalMessages: null,
+	},
 	threads: [],
 	thread: null,
 	loading: true,
@@ -39,14 +42,20 @@ export default function (state = initialState, action) {
 		case GET_MESSAGES: {
 			return {
 				...state,
-				messages: payload,
+				messages: {
+					messages: payload.messages,
+					totalMessages: payload.totalMessages,
+				},
 				loading: false,
 			};
 		}
 		case ADD_MESSAGES: {
 			return {
 				...state,
-				messages: state.messages.concat(payload),
+				messages: {
+					...state.messages,
+					messages: state.messages.messages.concat(payload.messages),
+				},
 			};
 		}
 		case GET_THREAD: {
@@ -64,7 +73,10 @@ export default function (state = initialState, action) {
 		case CLEAR_MESSAGES:
 			return {
 				...state,
-				messages: [],
+				messages: {
+					messages: [],
+					totalMessages: null,
+				},
 			};
 		case ADD_MESSAGE:
 		case MESSAGE_RECEIVED:

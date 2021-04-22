@@ -1,24 +1,28 @@
 import React, { useState } from "react";
-import InfiniteScroll from "react-infinite-scroller";
 import styles from "./MessageThread.module.css";
 
-const MessageThread = ({ messages, me, getMessages, selectedThread }) => {
-	const [hasMore, setHasMore] = useState(true);
-	const fetchMore = (page) => {
-		if (messages.length % 10 === 0 && hasMore) {
+const MessageThread = ({
+	messages,
+	totalMessages,
+	me,
+	getMessages,
+	selectedThread,
+}) => {
+	const [page, setPage] = useState(1);
+	const loadMore = () => {
+		if (messages.length !== totalMessages) {
 			getMessages(selectedThread, 10, page * 10);
-		} else {
-			setHasMore(false);
+			setPage(page + 1);
 		}
 	};
 	if (messages.length < 1) return <p>Loading...</p>;
 	return (
 		<div className={styles.thread}>
-			<InfiniteScroll
-				isReverse={true}
-				hasMore={hasMore}
-				loadMore={fetchMore}
-				style={{ display: "flex", flexDirection: "column-reverse" }}
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column-reverse",
+				}}
 			>
 				{messages.map((message) => (
 					<div className={styles.messageContainer} key={message._id}>
@@ -33,7 +37,15 @@ const MessageThread = ({ messages, me, getMessages, selectedThread }) => {
 						</div>
 					</div>
 				))}
-			</InfiniteScroll>
+			</div>
+			{messages.length !== totalMessages && (
+				<button
+					className={styles.loadMoreButton}
+					onClick={() => loadMore()}
+				>
+					Load More...
+				</button>
+			)}
 		</div>
 	);
 };
