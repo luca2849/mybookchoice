@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import io from "socket.io-client";
 import styles from "./UserProfile.module.css";
 // Action
 import { getUser, sendFriendRequest, removeFriend } from "../../actions/user";
@@ -11,6 +12,8 @@ import BreadCrumb from "../../Components/BreadCrumb/BreadCrumb";
 import ReactMapGL from "react-map-gl";
 // Helpers
 import calculateRatings from "../../utils/calculateRatings";
+
+let socket;
 
 const UserProfile = ({
 	userState: { loading, user },
@@ -37,6 +40,10 @@ const UserProfile = ({
 
 	const handleFriendRequest = () => {
 		sendFriendRequest(user.username);
+		socket = io("/", { query: `user=${currentUser.username}` });
+		socket.emit("friendRequest", {
+			username: user.username,
+		});
 	};
 
 	const mostRecentFriend =

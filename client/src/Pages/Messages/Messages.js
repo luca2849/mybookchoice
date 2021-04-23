@@ -40,7 +40,6 @@ const Messages = ({
 	};
 	return (
 		<div>
-			<p>Messages Page</p>
 			<div className={styles.messagesContainer}>
 				<div className={styles.threads}>
 					{authLoading ? (

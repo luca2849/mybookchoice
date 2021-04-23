@@ -24,7 +24,6 @@ const ThreadInput = ({ selectedThread, me, sendMessage }) => {
 			toast.error("Message must not be empty.");
 			return;
 		}
-		// sendMessage(selectedThread, message);
 		// Clear input
 		socket.emit("message", {
 			message: message,

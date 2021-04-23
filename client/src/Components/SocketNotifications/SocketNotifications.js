@@ -9,18 +9,20 @@ const SocketNotifications = ({ user }) => {
 	useEffect(() => {
 		if (user !== null) {
 			const socket = io("/", { query: `user=${user.username}` });
-			console.log(socket);
 			socket.on("newMessage", (payload) => {
-				console.log("New message");
 				toast.info(`New message from ${payload.from}`, {
 					autoClose: 2000,
 				});
 			});
 			socket.on("message", (payload) => {
-				console.log("message");
 				if (payload.message) {
 					dispatch({ type: ADD_MESSAGE, payload: payload.message });
 				}
+			});
+			socket.on("friendRequest", (payload) => {
+				toast.info(
+					`You have a new friend request from ${payload.username}`
+				);
 			});
 		}
 	}, []);

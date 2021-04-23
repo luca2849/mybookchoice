@@ -65,6 +65,9 @@ io.on("connection", (socket) => {
 			console.error(error);
 		}
 	});
+	socket.on("friendRequest", async ({ username }) => {
+		io.to(username).emit("friendRequest", { username });
+	});
 });
 
 const PORT = process.env.PORT || 5000;

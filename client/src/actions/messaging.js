@@ -55,7 +55,6 @@ export const getThread = (threadId) => async (dispatch) => {
 };
 
 export const sendMessage = (threadId, text) => async (dispatch) => {
-	console.log("Sent");
 	try {
 		const config = {
 			headers: {
@@ -81,7 +80,6 @@ export const createThread = (username) => async (dispatch) => {
 			`/api/messaging/doesExist/${username}`
 		);
 		if (!existsResponse.data.doesExist) {
-			console.log(existsResponse.data.doesExist);
 			const res = await axios.post(`/api/messaging/${username}`);
 			dispatch({ type: NEW_THREAD, payload: res.data.newThread });
 			return;
