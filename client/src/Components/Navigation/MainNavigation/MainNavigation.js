@@ -18,11 +18,13 @@ import {
 } from "react-icons/gi";
 
 import Logo from "../../Misc/Logo/Logo";
+import SocketNotifications from "../../SocketNotifications/SocketNotifications";
 
 const MainNavigation = ({ children, user }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 	return (
 		<>
+			<SocketNotifications user={user} />
 			<nav className={styles.mainNav}>
 				<div className={styles.brand}>
 					<Logo fill={"rgb(16, 167, 209)"} height={40} width={40} />

@@ -85,7 +85,14 @@ const Messages = ({
 									selectedThread={selectedThread}
 									loading={loading}
 								/>
-								<ThreadInput selectedThread={selectedThread} />
+								{authLoading ? (
+									<Loading />
+								) : (
+									<ThreadInput
+										selectedThread={selectedThread}
+										me={me}
+									/>
+								)}
 							</>
 						</>
 					)}

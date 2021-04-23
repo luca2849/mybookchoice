@@ -1,6 +1,13 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+// Helper functions
+const { addMessageToDB } = require("./util/socketHelpers.js");
+// Models
+const User = require("./models/User");
+const Thread = require("./models/Thread");
 // Database connection function
 const connectDB = require("./config/db.js");
 
@@ -30,7 +37,37 @@ app.get("*", (req, res) => {
 	return res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
+// WebSockets - Realtime Responses
+io.on("connection", (socket) => {
+	const room = socket.handshake.query.user;
+	socket.join(room);
+	socket.on("message", async ({ message, threadId, username }) => {
+		try {
+			const thread = await Thread.findOne({ _id: threadId }).populate(
+				"users",
+				"username name profileImage"
+			);
+			if (!thread) return;
+			const user = await User.findOne({ username });
+			if (!user) return;
+			const otherUser = thread.users.filter(
+				(user) => user.username !== username
+			)[0];
+			const result = await addMessageToDB(message, user._id, thread);
+			// Respond with SocketIO
+			io.to(otherUser.username)
+				.to(user.username)
+				.emit("message", { message: result });
+			io.to(otherUser.username).emit("newMessage", {
+				from: user.username,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	});
+});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Server Listening on Port ${PORT}`);
 });
