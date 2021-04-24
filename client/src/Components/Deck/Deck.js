@@ -1,49 +1,47 @@
 import React, { useState } from "react";
-import { useSpring, useSprings, animated, interpolate } from "react-spring";
-import { useGesture } from "react-use-gesture";
 import Book from "../Book/Book";
 
-// These two are just helpers, they curate spring data, values that are later being interpolated into css
-const to = (i) => ({
-	x: i,
-	y: i,
-	scale: 1,
-	rot: 0,
-	delay: i,
-});
-const from = (i) => ({ x: 0, rot: 0, scale: 1, y: 0 });
-// This is being used down there in the view, it interpolates rotation and scale into a css transform
-const trans = (r, s) =>
-	`perspective(0px) rotateX(30deg) rotateY(${
-		r / 10
-	}deg) rotateZ(${r}deg) scale(${s})`;
+import { useSpring, animated } from "react-spring";
+import { useDrag } from "react-use-gesture";
 
-const Deck = ({ books, height }) => {
-	const [props, set] = useSprings(books.length, (i) => ({
-		...to(i),
-		from: from(i),
-	}));
-	return props.map(({ x, y, rot, scale }, i) => (
-		<animated.div
-			key={i}
-			style={{
-				transform: interpolate(
-					[x, y],
-					(x, y) => `translate3d(${x}px,${y}px,0)`
-				),
-			}}
-		>
-			{/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+import Loading from "../../Components/Misc/Loading/Loading";
+
+const Deck = ({ books, height, choiceEvent, loading, isMobile }) => {
+	// UseGesture
+	const [{ x }, api] = useSpring(() => ({ x: 0, y: 0 }));
+
+	// Set the drag hook and define component movement based on gesture data
+	const bind = useDrag(({ down, previous, initial, movement: [mx] }) => {
+		const diff = initial[0] - previous[0];
+		// If movement done, and over 200px threshold
+		const threshold = isMobile ? 100 : 200;
+		if (!down && Math.abs(diff) > threshold) {
+			if (diff > 0) {
+				// disliked
+				choiceEvent(-1);
+			} else {
+				// liked
+				choiceEvent(1);
+			}
+		}
+		api({ x: down ? mx : 0 });
+	});
+
+	return loading ? (
+		<Loading />
+	) : (
+		books.map((book, i) => (
 			<animated.div
+				{...bind()}
 				style={{
-					transform: interpolate([rot, scale], trans),
-					height: height,
+					transform: x.interpolate((x) => `translate3d(${x}px,0,0)`),
 				}}
 			>
-				<Book height={height} book={books[books.length - 1 - i]} />
+				{/* <p style={{ pointerEvents: "none", userSelect: "none" }}>Hello</p> */}
+				<Book book={book} height={height} key={i} link={false} />
 			</animated.div>
-		</animated.div>
-	));
+		))
+	);
 };
 
 export default Deck;

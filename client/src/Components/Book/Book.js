@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Book.module.css";
 import { BsInfoCircleFill } from "react-icons/bs";
 
-const Book = ({ book, height }) => {
+const Book = ({ book, height, link }) => {
 	if (!book) return <p>Loading...</p>;
 	// Trucate Title
 	let title = book.title;
@@ -24,11 +24,14 @@ const Book = ({ book, height }) => {
 			className={styles.bookContainer}
 			style={{
 				backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(http://covers.openlibrary.org/b/olid/${book.olId}-M.jpg)`,
+				backgroundSize: "cover",
 				height: height,
 			}}
-			onClick={() =>
-				openBookPage(`https://openlibrary.org/works/${book.olId}`)
-			}
+			onClick={() => {
+				if (link) {
+					openBookPage(`https://openlibrary.org/works/${book.olId}`);
+				}
+			}}
 		>
 			{" "}
 			<div className={styles.book}>

@@ -416,7 +416,11 @@ const Recommend = ({
 							) : (
 								<div className={styles.books}>
 									{books.map((book) => (
-										<Book book={book} key={book._id} />
+										<Book
+											book={book}
+											key={book._id}
+											link={true}
+										/>
 									))}
 								</div>
 							)}

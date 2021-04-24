@@ -15,6 +15,7 @@ import Loading from "../../Components/Misc/Loading/Loading";
 
 const Home = ({ addRating }) => {
 	const [books, setBooks] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	const getBooks = async (count, skip) => {
 		// Gather Books
@@ -81,20 +82,27 @@ const Home = ({ addRating }) => {
 	}, []);
 
 	const handleClick = async (rating) => {
+		setLoading(true);
 		setAuthToken(localStorage.getItem("token"));
 		await addRating(books[0], rating);
 		const bookData = await getBooks(1, 9);
 		let tmp = books.concat(bookData);
 		setBooks(tmp.slice(1));
+		setLoading(false);
 	};
-
 	if (!books || books.length === 0) return <Loading />;
 	const isMobile = window.innerWidth <= 768;
 	return (
 		<>
 			<div className={styles.container}>
 				<div className={styles.cardsContainer}>
-					<Deck books={books} height={isMobile ? 450 : 600} />
+					<Deck
+						loading={loading}
+						choiceEvent={handleClick}
+						books={books}
+						height={isMobile ? 450 : 600}
+						isMobile={isMobile}
+					/>
 				</div>
 				<div className={styles.mainContent}>
 					<div className={styles.actions}>
