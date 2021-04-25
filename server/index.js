@@ -31,6 +31,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/recommend", require("./routes/recommend"));
 app.use("/api/messaging", require("./routes/messaging"));
+app.use("/api/data", require("./routes/data"));
 
 // Serve React Build
 app.get("*", (req, res) => {

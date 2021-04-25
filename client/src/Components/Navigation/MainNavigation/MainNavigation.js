@@ -6,7 +6,7 @@ import styles from "./MainNavigation.module.css";
 
 // Icons
 import { BsFillPersonFill, BsQuestionCircle } from "react-icons/bs";
-import { AiFillBell } from "react-icons/ai";
+import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { RiMessage2Line } from "react-icons/ri";
 import { MdRateReview } from "react-icons/md";
@@ -23,7 +23,7 @@ import SocketNotifications from "../../SocketNotifications/SocketNotifications";
 const MainNavigation = ({ children, user }) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 	return (
-		<>
+		<div className="box">
 			<SocketNotifications user={user} />
 			<nav className={styles.mainNav}>
 				<div className={styles.brand}>
@@ -82,6 +82,15 @@ const MainNavigation = ({ children, user }) => {
 					</div>
 
 					<div className={styles.mobileMenuItems}>
+						<div className={styles.item}>
+							<Link
+								onClick={() => setMenuOpen(false)}
+								to="/search"
+							>
+								<AiOutlineSearch />
+								User Search
+							</Link>
+						</div>
 						<div className={styles.item}>
 							<Link
 								onClick={() => setMenuOpen(false)}
@@ -158,11 +167,12 @@ const MainNavigation = ({ children, user }) => {
 				</div>
 			</nav>
 			<div
-				className={`${styles.content} ${menuOpen ? styles.fixed : ""}`}
+				style={{ height: "100%" }}
+				className={menuOpen ? styles.fixed : ""}
 			>
 				{children}
 			</div>
-		</>
+		</div>
 	);
 };
 

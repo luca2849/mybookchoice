@@ -40,3 +40,9 @@ a.mapboxgl-ctrl-logo {
 .rs-table-cell-header {
     font-size: 2rem;
 }
+
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
