@@ -55,15 +55,15 @@ const PastRatings = ({
 			? book.book_id.title.substring(0, 12) + "..."
 			: book.book_id.title
 	);
-
+	console.log(selectedRating);
 	return (
 		<>
 			<Modal open={!!selectedRating} openHandler={setSelectedRating}>
-				<div
-					className={styles.modal}
-					onClick={() => setSelectedRating(null)}
-				>
-					<div className={styles.closeButton}>
+				<div className={styles.modal}>
+					<div
+						className={styles.closeButton}
+						onClick={() => setSelectedRating(null)}
+					>
 						<GrClose />
 					</div>
 					<h3>Update Rating</h3>

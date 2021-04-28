@@ -17,7 +17,6 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 	setAuthToken(localStorage.getItem("token"));
 	const [editProfileOpen, setEditProfileOpen] = useState(false);
 	const [currentModal, setCurrentModal] = useState(null);
-	const [modalOpen, setModalOpen] = useState(true);
 	const [username, setUsername] = useState("");
 	if (!user) return <Loading />;
 

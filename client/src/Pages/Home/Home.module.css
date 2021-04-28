@@ -34,43 +34,43 @@
 .actions button svg{
     transform: scale(3);
 }
-
+/* 
 .actions button:first-of-type, .mobileActions button:first-of-type{
     color: rgb(238, 174, 0);
     border: 3px solid rgb(238, 174, 0);
-}
+} */
 
-.actions button:first-of-type:hover{
+/* .actions button:first-of-type:hover{
     color: white;
     background: rgb(238, 174, 0);
-}
+} */
 
-.actions button:nth-of-type(2), .mobileActions button:nth-of-type(2){
+.actions button:nth-of-type(1), .mobileActions button:nth-of-type(1){
     color: rgb(56, 135, 255);
     border: 3px solid rgb(56, 135, 255);
 }
 
-.actions button:nth-of-type(2):hover{
+.actions button:nth-of-type(1):hover{
     color: white;
     background: rgb(56, 135, 255);
 }
 
-.actions button:nth-of-type(3), .mobileActions button:nth-of-type(3){
+.actions button:nth-of-type(2), .mobileActions button:nth-of-type(2){
     color: rgb(255, 95, 95);
     border: 3px solid rgb(255, 95, 95);
 }
 
-.actions button:nth-of-type(3):hover{
+.actions button:nth-of-type(2):hover{
     color: white;
     background: rgb(255, 95, 95);
 }
 
-.actions button:nth-of-type(4), .mobileActions button:nth-of-type(4){
+.actions button:nth-of-type(3), .mobileActions button:nth-of-type(3){
     color: rgb(88, 182, 88);
     border: 3px solid rgb(88, 182, 88);
 }
 
-.actions button:nth-of-type(4):hover{
+.actions button:nth-of-type(3):hover{
     color: white;
     background: rgb(88, 182, 88);
 }

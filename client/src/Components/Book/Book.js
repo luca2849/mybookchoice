@@ -44,7 +44,6 @@ const Book = ({ book, height, link }) => {
 					<h2>{title}</h2>
 					<p>{book.authors ? book.authors[0] : null}</p>
 					<p>{book.published ? book.published.year : null}</p>
-					{/* <BsInfoCircleFill className={styles.icon} /> */}
 				</div>
 			</div>
 		</div>

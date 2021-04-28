@@ -297,10 +297,10 @@ const RegistrationMethods = ({
 					<FcGoogle />
 					<p>Register with Google</p>
 				</div> */}
-				<div className={styles.item}>
+				{/* <div className={styles.item}>
 					<AiFillTwitterCircle />
 					<p>Register with Twitter</p>
-				</div>
+				</div> */}
 				<div
 					className={styles.item}
 					onClick={() => clickHandler("reg1")}

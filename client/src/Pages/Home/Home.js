@@ -106,9 +106,9 @@ const Home = ({ addRating }) => {
 				</div>
 				<div className={styles.mainContent}>
 					<div className={styles.actions}>
-						<button>
+						{/* <button>
 							<IoMdArrowRoundBack onClick={() => handleClick()} />
-						</button>
+						</button> */}
 						<button>
 							<FaQuestion onClick={() => handleClick(0)} />
 						</button>
@@ -120,9 +120,9 @@ const Home = ({ addRating }) => {
 						</button>
 					</div>
 					<div className={styles.mobileActions}>
-						<button>
+						{/* <button>
 							<IoMdArrowRoundBack onClick={() => handleClick()} />
-						</button>
+						</button> */}
 						<button>
 							<FaQuestion onClick={() => handleClick(0)} />
 						</button>

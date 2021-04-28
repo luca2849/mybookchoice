@@ -166,9 +166,9 @@ svg{
     fill: #4267B2;
 }
 
-.item:nth-of-type(2) svg {
+/* .item:nth-of-type(2) svg {
     fill: #1DA1F2;
-}
+} */
 
 .modal h3 {
     letter-spacing: 2px;
