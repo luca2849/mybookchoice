@@ -55,7 +55,6 @@ const PastRatings = ({
 			? book.book_id.title.substring(0, 12) + "..."
 			: book.book_id.title
 	);
-	console.log(selectedRating);
 	return (
 		<>
 			<Modal open={!!selectedRating} openHandler={setSelectedRating}>
