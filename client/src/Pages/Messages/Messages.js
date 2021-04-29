@@ -39,63 +39,63 @@ const Messages = ({
 		setSelectedThread(id);
 	};
 	return (
-		<div>
-			<div className={styles.messagesContainer}>
-				<div className={styles.threads}>
-					{authLoading ? (
-						<Loading />
-					) : (
-						<MessagesHeader
-							friends={me.friends}
-							createThread={createThread}
-						/>
-					)}
+		<div
+			style={{ height: selectedThread ? "auto" : "calc(100% - 5vh)" }}
+			className={styles.messagesContainer}
+		>
+			<div className={styles.threads}>
+				{authLoading ? (
+					<Loading />
+				) : (
+					<MessagesHeader
+						friends={me.friends}
+						createThread={createThread}
+					/>
+				)}
 
-					{threads.map((thread) => (
-						<div key={thread._id}>
-							<ThreadItem
-								thread={thread}
-								me={me._id}
-								onClick={() => handleClick(thread._id)}
-								isSelected={thread._id === selectedThread}
-							/>
-							<hr className={styles.divider} />
-						</div>
-					))}
-				</div>
-				<div className={styles.messages}>
-					{selectedThread && (
+				{threads.map((thread) => (
+					<div key={thread._id}>
+						<ThreadItem
+							thread={thread}
+							me={me._id}
+							onClick={() => handleClick(thread._id)}
+							isSelected={thread._id === selectedThread}
+						/>
+						<hr className={styles.divider} />
+					</div>
+				))}
+			</div>
+			<div className={styles.messages}>
+				{selectedThread && (
+					<>
+						<ThreadHeader
+							thread={
+								threads.filter(
+									(thread) => thread._id === selectedThread
+								)[0]
+							}
+							me={me._id}
+						/>
 						<>
-							<ThreadHeader
-								thread={
-									threads.filter(
-										(thread) =>
-											thread._id === selectedThread
-									)[0]
-								}
+							<MessageThread
+								messages={messages.messages}
+								totalMessages={messages.totalMessages}
 								me={me._id}
+								getMessages={getMessages}
+								selectedThread={selectedThread}
+								loading={loading}
 							/>
-							<>
-								<MessageThread
-									messages={messages.messages}
-									totalMessages={messages.totalMessages}
-									me={me._id}
-									getMessages={getMessages}
+							{authLoading ? (
+								<Loading />
+							) : (
+								<ThreadInput
 									selectedThread={selectedThread}
-									loading={loading}
+									me={me}
 								/>
-								{authLoading ? (
-									<Loading />
-								) : (
-									<ThreadInput
-										selectedThread={selectedThread}
-										me={me}
-									/>
-								)}
-							</>
+							)}
 						</>
-					)}
-				</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
