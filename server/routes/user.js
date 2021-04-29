@@ -47,7 +47,8 @@ router.get("/", auth, async (req, res) => {
 	try {
 		const user = await User.findOne({ _id: req.user.id })
 			.select("-password -__v")
-			.populate("friends.user");
+			.populate("friends.user", "-ratings")
+			.populate("readingList.book_id", "olId title authors");
 		if (!user) {
 			return res
 				.status(404)
@@ -673,6 +674,39 @@ router.post("/list", auth, async (req, res) => {
 		const currentReadingList = user.readingList;
 		currentReadingList.push({ book_id: bookId });
 		await user.save();
+		return res.status(200).json({ bookId });
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal Server Error" }] });
+	}
+});
+
+// DELETE /api/user/list
+// Purpose - Add to a user's reading list
+// Access - Private
+router.delete("/list", auth, async (req, res) => {
+	const { bookId } = req.body;
+	if (!bookId) return res.status(400);
+	try {
+		const book = await Book.findOne({ _id: bookId });
+		if (!book)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "Book not found" }] });
+		await User.updateOne(
+			{
+				_id: req.user.id,
+			},
+			{
+				$pull: {
+					readingList: {
+						book_id: bookId,
+					},
+				},
+			}
+		);
 		return res.status(200).json({ bookId });
 	} catch (error) {
 		console.error(error);

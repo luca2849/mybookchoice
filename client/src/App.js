@@ -27,6 +27,7 @@ import Notifications from "./Pages/Notifications/Notifications";
 import Friends from "./Pages/Friends/Friends";
 import Messages from "./Pages/Messages/Messages";
 import Search from "./Pages/Search/Search";
+import ReadingList from "./Pages/ReadingList/ReadingList";
 
 function App() {
 	useEffect(() => {
@@ -105,6 +106,11 @@ function App() {
 							exact
 							path="/messages"
 							component={Messages}
+						/>
+						<PrivateRoute
+							exact
+							path="/list"
+							component={ReadingList}
 						/>
 						<PrivateRoute exact path="/search" component={Search} />
 					</Switch>
