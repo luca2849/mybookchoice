@@ -2,6 +2,7 @@ import {
 	BOOKS_UPDATED,
 	BOOK_ERROR,
 	RECOMMENDATIONS_UPDATED,
+	REMOVE_BOOK,
 } from "../actions/types";
 
 const initialState = {
@@ -22,6 +23,15 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				books: payload,
+				loading: false,
+			};
+		case REMOVE_BOOK:
+			console.log(payload);
+			return {
+				...state,
+				books: state.books.filter(
+					(book) => book._id !== payload.bookId
+				),
 				loading: false,
 			};
 		case BOOK_ERROR:

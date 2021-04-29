@@ -87,6 +87,19 @@ const UserSchema = new Schema(
 				),
 			},
 		],
+		readingList: [
+			{
+				type: new mongoose.Schema(
+					{
+						book_id: {
+							type: Schema.Types.ObjectId,
+							ref: "book",
+						},
+					},
+					{ timestamps: true }
+				),
+			},
+		],
 		friends: [
 			{
 				type: new mongoose.Schema(

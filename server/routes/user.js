@@ -657,4 +657,29 @@ router.delete("/", auth, async (req, res) => {
 	}
 });
 
+// POST /api/user/list
+// Purpose - Add to a user's reading list
+// Access - Private
+router.post("/list", auth, async (req, res) => {
+	const { bookId } = req.body;
+	if (!bookId) return res.status(400);
+	try {
+		const book = await Book.findOne({ _id: bookId });
+		if (!book)
+			return res
+				.status(404)
+				.json({ errors: [{ msg: "Book not found" }] });
+		const user = await User.findOne({ _id: req.user.id });
+		const currentReadingList = user.readingList;
+		currentReadingList.push({ book_id: bookId });
+		await user.save();
+		return res.status(200).json({ bookId });
+	} catch (error) {
+		console.error(error);
+		return res
+			.status(500)
+			.json({ errors: [{ msg: "Internal Server Error" }] });
+	}
+});
+
 module.exports = router;

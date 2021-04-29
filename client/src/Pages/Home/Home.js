@@ -7,7 +7,6 @@ import setAuthToken from "../../utils/setAuthToken";
 import { addRating } from "../../actions/user";
 
 import { FaHeart, FaQuestion } from "react-icons/fa";
-import { IoMdArrowRoundBack } from "react-icons/io";
 import { ImCross } from "react-icons/im";
 
 import Deck from "../../Components/Deck/Deck";

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Steps } from "rsuite";
 import { getSpecificRecommendations } from "../../actions/book";
+import { addBookToReadingList } from "../../actions/user";
 import Loading from "../../Components/Misc/Loading/Loading";
-import Book from "../../Components/Book/Book";
+import Deck from "../../Components/Deck/Deck";
 import styles from "./Recommend.module.css";
 import {
 	FaTheaterMasks,
@@ -17,6 +19,8 @@ import {
 import { AiOutlineQuestion } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 import { BiLaugh } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import {
 	GiQuillInk,
 	GiRaiseZombie,
@@ -41,6 +45,7 @@ import { RiGovernmentFill } from "react-icons/ri";
 const Recommend = ({
 	book: { loading, books },
 	getSpecificRecommendations,
+	addBookToReadingList,
 }) => {
 	const genres = [
 		{
@@ -207,6 +212,17 @@ const Recommend = ({
 	const [selectedEras, setSelectedEras] = useState([]);
 	const [limit, setLimit] = useState(0);
 	const [currentSection, setCurrentSection] = useState(0);
+	const [rating, setRating] = useState(0);
+	const handleActionClick = () => {};
+
+	useEffect(() => {
+		if (books) {
+			const bookToAdd = books[0];
+			addBookToReadingList(bookToAdd?._id, rating);
+			setRating(0);
+		}
+	}, [rating]);
+
 	const handleClick = (name) => {
 		if (
 			selectedGenres.includes(name) ||
@@ -411,17 +427,43 @@ const Recommend = ({
 					{currentSection === 5 && (
 						<>
 							<h3>Your Results</h3>
-							{loading || !books ? (
+							{loading ? (
 								<Loading />
+							) : books.length === 0 ? (
+								<div className={styles.noBooks}>
+									<p>No more books remaining!</p>
+									<p>
+										Click <Link to={`/list`}>here</Link> to
+										view your reading list.
+									</p>
+								</div>
 							) : (
-								<div className={styles.books}>
-									{books.map((book) => (
-										<Book
-											book={book}
-											key={book._id}
-											link={true}
+								<div className={styles.cardsParentContainer}>
+									<div className={styles.cardsContainer}>
+										<Deck
+											loading={loading}
+											choiceEvent={handleActionClick}
+											books={[...books].reverse()}
+											translate={true}
+											choiceEvent={setRating}
 										/>
-									))}
+									</div>
+									<div className={styles.mainContent}>
+										<div className={styles.actions}>
+											<button>
+												<ImCross
+													onClick={() =>
+														setRating(-1)
+													}
+												/>
+											</button>
+											<button>
+												<FaHeart
+													onClick={() => setRating(1)}
+												/>
+											</button>
+										</div>
+									</div>
 								</div>
 							)}
 						</>
@@ -455,6 +497,7 @@ const mapStateToProps = (state) => ({
 	book: state.book,
 });
 
-export default connect(mapStateToProps, { getSpecificRecommendations })(
-	Recommend
-);
+export default connect(mapStateToProps, {
+	getSpecificRecommendations,
+	addBookToReadingList,
+})(Recommend);

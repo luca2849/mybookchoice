@@ -43,15 +43,103 @@ h2 {
     padding: 10px;
 }
 .steps {
-    width: 100%;
-    margin-bottom: 2rem;
+    width: 80%;
+    margin: 2rem auto;
 }
+
 .container {
+    height: calc(100vh - 130px);
+}
+
+.cardsParentContainer {
     width: 90vw;
-    margin: 5rem auto;
+    margin: 0 auto;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    height: 80%;
+}
+
+.noBooks {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.content {
+    height: calc(100% - 130px);
+    width: 90%;
+    margin: 0 auto;
+}
+
+.mainContent {
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    align-items: flex-end;
+}
+
+.noBooks a {
+    color:rgb(43, 158, 253);
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.noBooks a:hover {
+    border-bottom: 2px solid rgb(43, 158, 253);
+}
+
+.actions{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    margin-top: 5rem;
+    width: 500px;
+}
+
+.actions button, .mobileActions > button{
+    border-radius: 50%!important;
+    background-color: white;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.actions button:focus{
+    outline: none;
+}
+
+.actions button svg{
+    transform: scale(3);
+}
+
+.actions button:nth-of-type(1), .mobileActions button:nth-of-type(1){
+    color: rgb(255, 95, 95);
+    border: 3px solid rgb(255, 95, 95);
+}
+
+.actions button:nth-of-type(1):hover{
+    color: white;
+    background: rgb(255, 95, 95);
+}
+
+.actions button:nth-of-type(2), .mobileActions button:nth-of-type(2){
+    color: rgb(88, 182, 88);
+    border: 3px solid rgb(88, 182, 88);
+}
+
+.actions button:nth-of-type(2):hover{
+    color: white;
+    background: rgb(88, 182, 88);
 }
 
 /* Selectable Section */
@@ -120,14 +208,14 @@ h2 {
     border: 2px solid rgb(43, 158, 253);
 }
 
-.container .buttons {
+.buttons {
     width: 50%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
 }
 
-.container button {
+.buttons button {
     padding: 1rem;
     font-size: 1.5rem;
     border-radius: 10px;
@@ -137,12 +225,12 @@ h2 {
     transition: all 0.25s;
 }
 
-.container button:nth-of-type(2) {
+.buttons button:nth-of-type(2) {
     background: #10a7d1;
     color: #fff;
 }
 
-.container button:nth-of-type(2):hover {
+.buttons button:nth-of-type(2):hover {
     background: #fff;
     color: #10a7d1;
     border: 2px solid #10a7d1;
@@ -191,6 +279,43 @@ h2 {
     height: 500px;
 }
 
+.cardsContainer {
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+    height: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.cardsContainer > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40vw;
+    will-change: transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+  
+.cardsContainer > div > div {
+    background-color: white;
+    background-size: auto 85%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 45vh;
+    max-width: 400px;
+    height: 100vh;
+    max-height: 600px;
+    will-change: transform;
+    border-radius: 10px;
+    /* box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3); */
+}
+
 @media screen and (max-width: 768px) {
     /* Tablet */
     .books {
@@ -201,7 +326,7 @@ h2 {
         margin: 0.5rem;
         flex: 0 0 50%;
     }
-    .container button {
+    .buttons button {
         font-size: 1rem;
         margin: 0 1rem;
     }
@@ -220,7 +345,7 @@ h2 {
     .container {
         margin: 3rem auto;
     }
-    .container button:nth-of-type(2):hover {
+    .buttons button:nth-of-type(2):hover {
         background: #10a7d1;
         color: #fff;
         border: 2px solid transparent;

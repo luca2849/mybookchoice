@@ -5,6 +5,7 @@ import {
 	BOOKS_UPDATED,
 	PASSWORD_RESET,
 	LOGOUT,
+	REMOVE_BOOK,
 	CLEAR_USER,
 	RATINGS_UPDATED,
 	RATING_UPDATED,
@@ -301,5 +302,29 @@ export const getFriends = (limit, skip) => async (dispatch) => {
 			errors.forEach((error) => toast.error(error.msg, "danger"));
 		}
 		dispatch({ type: USER_ERROR });
+	}
+};
+
+export const addBookToReadingList = (bookId, rating) => async (dispatch) => {
+	console.log("Adding Book", bookId);
+	try {
+		if (rating === 1) {
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			};
+			const body = JSON.stringify({ bookId });
+			await axios.post(`/api/user/list`, body, config);
+			toast.success("Added to reading list");
+		}
+		if (rating !== 0) {
+			dispatch({ type: REMOVE_BOOK, payload: { bookId } });
+		}
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
 	}
 };

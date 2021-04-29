@@ -6,7 +6,7 @@ import { useDrag } from "react-use-gesture";
 
 import Loading from "../../Components/Misc/Loading/Loading";
 
-const Deck = ({ books, height, choiceEvent, loading, isMobile }) => {
+const Deck = ({ books, height, choiceEvent, loading, isMobile, translate }) => {
 	// UseGesture
 	const [{ x }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
@@ -34,11 +34,16 @@ const Deck = ({ books, height, choiceEvent, loading, isMobile }) => {
 			<animated.div
 				{...bind()}
 				style={{
-					transform: x.interpolate((x) => `translate3d(${x}px,0,0)`),
+					transform: x.interpolate((x) =>
+						translate
+							? `translate3d(calc(-50% + ${x}px),-50%,0)`
+							: `translate3d(${x}px,0,0)`
+					),
 				}}
+				key={i}
 			>
 				{/* <p style={{ pointerEvents: "none", userSelect: "none" }}>Hello</p> */}
-				<Book book={book} height={height} key={i} link={false} />
+				<Book book={book} height={height} link={false} />
 			</animated.div>
 		))
 	);
