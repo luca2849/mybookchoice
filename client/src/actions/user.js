@@ -306,8 +306,10 @@ export const getFriends = (limit, skip) => async (dispatch) => {
 };
 
 export const addBookToReadingList = (bookId, rating) => async (dispatch) => {
-	console.log("Adding Book", bookId);
 	try {
+		if (rating !== 0) {
+			dispatch({ type: REMOVE_BOOK, payload: { bookId } });
+		}
 		if (rating === 1) {
 			const config = {
 				headers: {
@@ -315,11 +317,9 @@ export const addBookToReadingList = (bookId, rating) => async (dispatch) => {
 				},
 			};
 			const body = JSON.stringify({ bookId });
-			await axios.post(`/api/user/list`, body, config);
+			const res = await axios.post(`/api/user/list`, body, config);
 			toast.success("Added to reading list");
-		}
-		if (rating !== 0) {
-			dispatch({ type: REMOVE_BOOK, payload: { bookId } });
+			dispatch({ type: USER_UPDATED, payload: res.data.user });
 		}
 	} catch (error) {
 		const errors = error.response.data.errors;

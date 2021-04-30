@@ -672,9 +672,22 @@ router.post("/list", auth, async (req, res) => {
 				.json({ errors: [{ msg: "Book not found" }] });
 		const user = await User.findOne({ _id: req.user.id });
 		const currentReadingList = user.readingList;
+		const found = currentReadingList.filter((item) =>
+			mongoose.Types.ObjectId(item.book_id).equals(
+				mongoose.Types.ObjectId(bookId)
+			)
+		);
+		if (found.length > 0)
+			return res
+				.status(400)
+				.json({ errors: [{ msg: "Book already present" }] });
 		currentReadingList.push({ book_id: bookId });
 		await user.save();
-		return res.status(200).json({ bookId });
+		const retUser = await User.findOne({ _id: req.user.id })
+			.select("-password -__v")
+			.populate("friends.user", "-ratings")
+			.populate("readingList.book_id", "olId title authors");
+		return res.status(200).json({ user: retUser });
 	} catch (error) {
 		console.error(error);
 		return res

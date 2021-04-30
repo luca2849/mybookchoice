@@ -35,6 +35,9 @@ router.post("/specific", auth, async (req, res) => {
 		return res
 			.status(400)
 			.json({ errors: [{ msg: "Invalid/Missing Parameters" }] });
+	const booksToNotInclude = await User.findOne({ _id: req.user.id }).select(
+		"readingList"
+	);
 	const books = await Book.find({ title: { $exists: true } });
 	const recs = getBookRecommendation(
 		genres,
@@ -42,7 +45,8 @@ router.post("/specific", auth, async (req, res) => {
 		preferences,
 		eras,
 		books,
-		limit
+		limit,
+		booksToNotInclude.readingList.map((book) => book.book_id)
 	);
 	let cleanRecommendations = [];
 	for (const rec of recs) {

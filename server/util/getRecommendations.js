@@ -220,11 +220,16 @@ const getBookRecommendation = (
 	inputPreferences,
 	inputEras,
 	books,
-	n
+	n,
+	disallowBooks = []
 ) => {
+	// Remove disallowed books (books already in reading list)
+	const cleanBooks = books.filter(
+		(book) => !disallowBooks.includes(book._id)
+	);
 	// Loop through books
 	const scores = [];
-	for (const book of books) {
+	for (const book of cleanBooks) {
 		// Get score
 		const score = calculateWeightedScore(
 			book.subjects,
