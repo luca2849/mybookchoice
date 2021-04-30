@@ -328,3 +328,23 @@ export const addBookToReadingList = (bookId, rating) => async (dispatch) => {
 		}
 	}
 };
+
+export const deleteBookFromList = (bookId) => async (dispatch) => {
+	try {
+		const res = await axios.delete(`/api/user/list`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: {
+				bookId: bookId,
+			},
+		});
+		toast.success("Deleted from reading list");
+		dispatch({ type: USER_UPDATED, payload: res.data.user });
+	} catch (error) {
+		const errors = error.response.data.errors;
+		if (errors) {
+			errors.forEach((error) => toast.error(error.msg, "danger"));
+		}
+	}
+};
