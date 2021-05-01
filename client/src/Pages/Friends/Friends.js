@@ -11,7 +11,7 @@ import Loading from "../../Components/Misc/Loading/Loading";
 const Friends = ({ getFriends, user: { friends, loading } }) => {
 	useEffect(() => {
 		getFriends(10, 0);
-	}, []);
+	}, [getFriends]);
 	if (loading) return <Loading />;
 	return (
 		<div className={styles.mainContainer}>
@@ -22,6 +22,7 @@ const Friends = ({ getFriends, user: { friends, loading } }) => {
 						<Link to={`/user/${friend.user.username}`}>
 							<div className={styles.image}>
 								<img
+									alt="Profile"
 									src={
 										friend.user.profileImage.imageType ===
 										"EXTERNAL"

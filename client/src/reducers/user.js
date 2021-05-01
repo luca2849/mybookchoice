@@ -2,8 +2,6 @@ import {
 	GET_USER,
 	USER_ERROR,
 	GET_USERS,
-	FOLLOW_USER,
-	UNFOLLOW_USER,
 	CLEAR_USER,
 	CLEAR_USERS,
 	USER_UPDATED,
@@ -25,7 +23,7 @@ const initialState = {
 	loading: true,
 };
 
-export default function (state = initialState, action) {
+export default function user(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case GET_USER:

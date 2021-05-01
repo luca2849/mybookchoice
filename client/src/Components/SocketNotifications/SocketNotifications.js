@@ -25,7 +25,7 @@ const SocketNotifications = ({ user }) => {
 				);
 			});
 		}
-	}, []);
+	}, [dispatch, user]);
 	return <></>;
 };
 

@@ -231,7 +231,7 @@ const GenreSelection = ({ clicked, handleClick }) => {
 						onClick={() => handleClick(genre.name)}
 					>
 						<div className={styles.genreTop}>
-							<img src={genre.image} />
+							<img alt="genre" src={genre.image} />
 						</div>
 						<div className={styles.genreBottom}>
 							<p>{genre.name}</p>

@@ -23,15 +23,13 @@ const PastRatings = ({
 	updateRating,
 	addToRatings,
 }) => {
-	const [limit, setLimit] = useState(20);
-	const [skip, setSkip] = useState(0);
 	const [done, setDone] = useState(true);
 	const [selectedRating, setSelectedRating] = useState(null);
 	const [newRating, setNewRating] = useState(null);
 
 	useEffect(() => {
-		getRatings(limit, skip);
-	}, []);
+		getRatings(20, 0);
+	}, [getRatings]);
 
 	if (loading) return <Loading />;
 
@@ -140,7 +138,7 @@ const PastRatings = ({
 												/>
 											);
 											break;
-										case -1:
+										default:
 											icon = (
 												<ImCross
 													style={{

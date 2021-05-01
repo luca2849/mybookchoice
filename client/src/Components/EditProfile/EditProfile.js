@@ -82,7 +82,6 @@ const EditProfile = ({
 					<p>Profile Image</p>
 					<ImageUploader
 						withIcon={false}
-						buttonText="Choose images"
 						onChange={onDrop}
 						imgExtension={[".jpg", ".gif", ".png"]}
 						buttonText={"Choose picture"}

@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Book.module.css";
-import { BsInfoCircleFill } from "react-icons/bs";
 
 const Book = ({ book, height, link, cssClass }) => {
 	if (!book) return <p>Loading...</p>;

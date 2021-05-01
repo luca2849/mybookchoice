@@ -18,7 +18,7 @@ const ThreadInput = ({ selectedThread, me, sendMessage }) => {
 			threadId: selectedThread,
 			currentUser: me._id,
 		});
-	}, []);
+	}, [me._id, me.username, selectedThread]);
 	const handleSend = () => {
 		if (message === "") {
 			toast.error("Message must not be empty.");

@@ -15,11 +15,7 @@ import {
 import styles from "./Landing.module.css";
 // Icons
 import { BsArrowLeft, BsX } from "react-icons/bs";
-import {
-	AiFillFacebook,
-	AiFillTwitterCircle,
-	AiOutlineMail,
-} from "react-icons/ai";
+import { AiFillFacebook, AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { BiArrowBack } from "react-icons/bi";
 // Components
@@ -28,7 +24,6 @@ import PasswordReset from "../../Components/PasswordReset/PasswordReset";
 import LandingNavigation from "../../Components/Navigation/LandingNavigation/LandingNavigation";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import axios from "axios";
 import Modal from "../../Components/Modal/Modal";
 
 const Landing = ({
@@ -315,7 +310,7 @@ const RegistrationMethods = ({
 
 const RegistrationEmail = ({ dataHandler, clickHandler, data }) => {
 	const validate = () => {
-		const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (!data.email) {
 			toast.error("E-Mail is required");
 			return;

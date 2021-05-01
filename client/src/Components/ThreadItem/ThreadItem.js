@@ -14,6 +14,7 @@ const ThreadItem = ({ thread, me, isSelected, onClick }) => {
 		>
 			<div className={styles.imageContainer}>
 				<img
+					alt="User"
 					src={
 						otherUser.profileImage.imageType === "EXTERNAL"
 							? otherUser.profileImage.url

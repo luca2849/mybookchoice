@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import styles from "./ReadingList.module.css";
 import { deleteBookFromList } from "../../actions/user";
-import List from "../../Components/List/List";
 import Book from "../../Components/Book/Book";
 import { ImBin } from "react-icons/im";
 // Eventually add remove from reading list

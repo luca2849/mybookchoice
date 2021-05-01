@@ -75,10 +75,13 @@ const Home = ({ addRating }) => {
 		}
 	};
 
-	useEffect(async () => {
-		const bookData = await getBooks(10, 0);
-		setBooks(bookData);
-	}, []);
+	useEffect(() => {
+		async function fetchData() {
+			const bookData = await getBooks(10, 0);
+			setBooks(bookData);
+		}
+		fetchData();
+	}, [setBooks]);
 
 	const handleClick = async (rating) => {
 		setLoading(true);

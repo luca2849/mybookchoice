@@ -9,6 +9,7 @@ const ThreadHeader = ({ thread, me }) => {
 		<div className={styles.header}>
 			<div className={styles.imageContainer}>
 				<img
+					alt="Thread User"
 					src={
 						otherUser.profileImage.imageType === "EXTERNAL"
 							? otherUser.profileImage.url

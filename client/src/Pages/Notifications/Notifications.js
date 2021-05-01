@@ -21,7 +21,7 @@ const Notifications = ({
 }) => {
 	useEffect(() => {
 		getNotifications(10, 0);
-	}, []);
+	}, [getNotifications]);
 	const handleClick = (notification, remoteUser, response) => {
 		respondToRequest(notification, remoteUser, response, 10, 0);
 	};

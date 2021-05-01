@@ -1,7 +1,6 @@
 import {
 	GET_THREADS,
 	GET_MESSAGES,
-	SEND_MESSAGE,
 	CLEAR_THREADS,
 	CLEAR_MESSAGES,
 	CLEAR_MESSAGING,
@@ -23,7 +22,7 @@ const initialState = {
 	loading: true,
 };
 
-export default function (state = initialState, action) {
+export default function messaging(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case GET_THREADS: {
@@ -86,11 +85,6 @@ export default function (state = initialState, action) {
 					...state.messages,
 					messages: [payload, ...state.messages.messages],
 				},
-			};
-		case CLEAR_THREADS:
-			return {
-				...state,
-				messages: [],
 			};
 		case CLEAR_THREAD:
 			return {

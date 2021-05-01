@@ -28,6 +28,7 @@ const Search = ({ data: { searchResults, loading }, searchUsers }) => {
 								<Link to={`/user/${item.username}`}>
 									<div className={styles.imageContainer}>
 										<img
+											alt="Profile"
 											src={
 												item.profileImage.imageType ===
 												"EXTERNAL"

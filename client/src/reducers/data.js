@@ -5,7 +5,7 @@ const initialState = {
 	searchResults: [],
 };
 
-export default function (state = initialState, action) {
+export default function data(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case RESULTS_UPDATED:

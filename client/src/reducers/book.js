@@ -10,7 +10,7 @@ const initialState = {
 	books: [],
 };
 
-export default function (state = initialState, action) {
+export default function book(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case RECOMMENDATIONS_UPDATED:

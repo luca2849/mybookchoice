@@ -228,7 +228,6 @@ const Recommend = ({
 	const [limit, setLimit] = useState(0);
 	const [currentSection, setCurrentSection] = useState(0);
 	const [rating, setRating] = useState(0);
-	const handleActionClick = () => {};
 
 	useEffect(() => {
 		if (books) {
@@ -236,7 +235,7 @@ const Recommend = ({
 			addBookToReadingList(bookToAdd?._id, rating);
 			setRating(0);
 		}
-	}, [rating]);
+	}, [rating, addBookToReadingList, books]);
 
 	const handleClick = (name) => {
 		if (
@@ -471,7 +470,6 @@ const Recommend = ({
 									<div className={styles.cardsContainer}>
 										<Deck
 											loading={loading}
-											choiceEvent={handleActionClick}
 											books={[...books].reverse()}
 											translate={true}
 											choiceEvent={setRating}

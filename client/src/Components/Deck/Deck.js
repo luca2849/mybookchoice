@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Book from "../Book/Book";
 
 import { useSpring, animated } from "react-spring";

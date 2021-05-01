@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Modal.module.css";
 const Modal = ({ open, children, openHandler, cssClass }) => {
 	document.body.setAttribute("style", "");

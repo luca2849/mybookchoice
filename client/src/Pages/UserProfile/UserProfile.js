@@ -30,7 +30,7 @@ const UserProfile = ({
 	});
 	useEffect(() => {
 		getUser(userParam);
-	}, []);
+	}, [getUser, userParam]);
 
 	if (loading || authLoading || !user || !currentUser) return <Loading />;
 
@@ -83,6 +83,7 @@ const UserProfile = ({
 					<div className={styles.imageContainer}>
 						<div className={styles.avatar}>
 							<img
+								alt="Profile"
 								src={
 									user.profileImage.imageType === "EXTERNAL"
 										? user.profileImage.url

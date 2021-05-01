@@ -25,11 +25,11 @@ const Messages = ({
 
 	useEffect(() => {
 		getThreads(10, 0);
-	}, []);
+	}, [getThreads]);
 
 	useEffect(() => {
 		if (selectedThread !== null) getMessages(selectedThread, 20, 0);
-	}, [selectedThread]);
+	}, [selectedThread, getMessages]);
 
 	const handleClick = (id) => {
 		if (selectedThread === id) {

@@ -118,6 +118,7 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 				<div className={styles.userSection}>
 					<div className={styles.imageContainer}>
 						<img
+							alt="Profile"
 							src={
 								user.profileImage.imageType === "EXTERNAL"
 									? user.profileImage.url
