@@ -1,10 +1,13 @@
 .container {
     width: 80%;
     margin: 0.5rem auto;
+}
+
+.books {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    border: 2px solid red;
+    padding-top: 1rem;
 }
 
 .item {

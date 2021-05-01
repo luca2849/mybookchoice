@@ -53,6 +53,7 @@ const Recommend = ({
 			display: "Science-Fiction",
 			image: "./img/astronaut.png",
 			icon: <FaUserAstronaut />,
+			colour: "#227bd4",
 		},
 		{
 			name: "non fiction",
@@ -65,24 +66,28 @@ const Recommend = ({
 			display: "Fiction",
 			image: "./img/fiction.png",
 			icon: <FaDragon />,
+			colour: "#2b8718",
 		},
 		{
 			name: "thriller",
 			display: "Thriller",
 			image: "./img/thriller.png",
 			icon: <GiCrimeSceneTape />,
+			colour: "#e08802",
 		},
 		{
 			name: "romance",
 			display: "Romance",
 			image: "./img/romance.png",
 			icon: <GiLoveLetter />,
+			colour: "#eb2d2d",
 		},
 		{
 			name: "adventure",
 			display: "Adventure",
 			image: "./img/horror.png",
 			icon: <GiWhip />,
+			colour: "#854e26",
 		},
 		{
 			name: "mystery",
@@ -113,24 +118,22 @@ const Recommend = ({
 			name: "comic",
 			display: "Comic",
 			icon: <FaSuperpowers />,
+			colour: "#eb2d2d",
 		},
 		{
 			name: "play",
 			display: "Play",
 			icon: <FaTheaterMasks />,
+			colour: "#d4087c",
 		},
 	];
 
 	const preferences = [
 		{
-			name: "humour",
-			display: "Comedy",
-			icon: <BiLaugh />,
-		},
-		{
 			name: "horror",
 			display: "Horror",
 			icon: <GiRaiseZombie />,
+			colour: "#ff4e21",
 		},
 		{
 			name: "magic",
@@ -141,6 +144,7 @@ const Recommend = ({
 			name: "classics",
 			display: "Classics",
 			icon: <GiAncientColumns />,
+			colour: "#ffe291",
 		},
 		{
 			name: "hope",
@@ -151,11 +155,18 @@ const Recommend = ({
 			name: "political",
 			display: "Politics",
 			icon: <RiGovernmentFill />,
+			colour: "#9e9e9e",
 		},
 		{
 			name: "drama",
 			display: "Drama",
 			icon: <GiDramaMasks />,
+		},
+		{
+			name: "humour",
+			display: "Comedy",
+			icon: <BiLaugh />,
+			colour: "#fab802",
 		},
 		{
 			name: "suspense",
@@ -169,6 +180,7 @@ const Recommend = ({
 			display: "Past",
 			name: "past",
 			icon: <GiAncientRuins />,
+			colour: "#ffe291",
 		},
 		{
 			display: "1600-1699",
@@ -179,6 +191,7 @@ const Recommend = ({
 			display: "1700-1799",
 			name: "1700",
 			icon: <GiMusket />,
+			colour: "#8c5f2e",
 		},
 		{
 			display: "1800-1899",
@@ -189,6 +202,7 @@ const Recommend = ({
 			display: "1900-1999",
 			name: "1900",
 			icon: <GiRocketFlight />,
+			colour: "#e88923",
 		},
 		{
 			display: "2000-2099",
@@ -204,6 +218,7 @@ const Recommend = ({
 			display: "Future",
 			name: "future",
 			icon: <GiRayGun />,
+			colour: "#ff5eb7",
 		},
 	];
 	const [selectedGenres, setSelectedGenres] = useState([]);
@@ -323,7 +338,10 @@ const Recommend = ({
 										}`}
 										onClick={() => handleClick(genre.name)}
 									>
-										<div className={styles.genreTop}>
+										<div
+											className={styles.genreTop}
+											style={{ color: genre.colour }}
+										>
 											{genre.icon}
 										</div>
 										<div className={styles.genreBottom}>
@@ -350,7 +368,10 @@ const Recommend = ({
 										}`}
 										onClick={() => handleClick(type.name)}
 									>
-										<div className={styles.genreTop}>
+										<div
+											className={styles.genreTop}
+											style={{ color: type.colour }}
+										>
 											{type.icon}
 										</div>
 										<div className={styles.genreBottom}>
@@ -378,7 +399,12 @@ const Recommend = ({
 											handleClick(preference.name)
 										}
 									>
-										<div className={styles.genreTop}>
+										<div
+											className={styles.genreTop}
+											style={{
+												color: preference.colour,
+											}}
+										>
 											{preference.icon}
 										</div>
 										<div className={styles.genreBottom}>
@@ -403,7 +429,10 @@ const Recommend = ({
 										}`}
 										onClick={() => handleClick(era.name)}
 									>
-										<div className={styles.genreTop}>
+										<div
+											className={styles.genreTop}
+											style={{ color: era.colour }}
+										>
 											{era.icon}
 										</div>
 										<div className={styles.genreBottom}>
@@ -446,6 +475,7 @@ const Recommend = ({
 											books={[...books].reverse()}
 											translate={true}
 											choiceEvent={setRating}
+											isMobile={window.innerWidth <= 768}
 										/>
 									</div>
 									<div className={styles.mainContent}>

@@ -14,7 +14,7 @@ const Deck = ({ books, height, choiceEvent, loading, isMobile, translate }) => {
 	const bind = useDrag(({ down, previous, initial, movement: [mx] }) => {
 		const diff = initial[0] - previous[0];
 		// If movement done, and over 200px threshold
-		const threshold = isMobile ? 100 : 200;
+		const threshold = isMobile ? 50 : 200;
 		if (!down && Math.abs(diff) > threshold) {
 			if (diff > 0) {
 				// disliked

@@ -12,11 +12,11 @@ const ReadingList = ({ user: { user, loading }, deleteBookFromList }) => {
 		deleteBookFromList(id);
 	};
 	return (
-		<div>
+		<div className={styles.container}>
 			<h3>Reading List</h3>
-			<div className={styles.container}>
+			<div className={styles.books}>
 				{user.readingList.map((item, i) => (
-					<div className={styles.bookContainer}>
+					<div className={styles.bookContainer} key={i}>
 						<div
 							className={styles.iconContainer}
 							onClick={() => handleDelete(item.book_id._id)}

@@ -26,7 +26,6 @@ export default function (state = initialState, action) {
 				loading: false,
 			};
 		case REMOVE_BOOK:
-			console.log(payload);
 			return {
 				...state,
 				books: state.books.filter(

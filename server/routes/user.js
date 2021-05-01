@@ -701,10 +701,8 @@ router.post("/list", auth, async (req, res) => {
 // Access - Private
 router.delete("/list", auth, async (req, res) => {
 	const { bookId } = req.body;
-	console.log(req.body);
 	if (!bookId) return res.status(400);
 	try {
-		console.log(bookId);
 		const book = await Book.findOne({ _id: bookId });
 		if (!book)
 			return res
