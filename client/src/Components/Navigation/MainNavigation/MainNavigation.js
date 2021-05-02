@@ -167,8 +167,8 @@ const MainNavigation = ({ children, user }) => {
 				</div>
 			</nav>
 			<div
-				style={{ height: "100%" }}
-				className={menuOpen ? styles.fixed : ""}
+				style={{ height: "100%", overflow: "scroll" }}
+				className={menuOpen ? styles.fixed : "main"}
 			>
 				{children}
 			</div>

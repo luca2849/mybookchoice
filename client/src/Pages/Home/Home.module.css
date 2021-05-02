@@ -1,182 +1,40 @@
-.mainContent{
-    width: 600px;
-}
-
-.booksContainer{
-    height: 700px;
-    width: 600px;
-}
-
-.actions{
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    margin-top: 5rem;
-}
-
-.actions button, .mobileActions > button{
-    border-radius: 50%;
-    background-color: white;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.25s;
-}
-
-.actions button:focus{
-    outline: none;
-}
-
-.actions button svg{
-    transform: scale(3);
-}
-/* 
-.actions button:first-of-type, .mobileActions button:first-of-type{
-    color: rgb(238, 174, 0);
-    border: 3px solid rgb(238, 174, 0);
-} */
-
-/* .actions button:first-of-type:hover{
-    color: white;
-    background: rgb(238, 174, 0);
-} */
-
-.actions button:nth-of-type(1), .mobileActions button:nth-of-type(1){
-    color: rgb(56, 135, 255);
-    border: 3px solid rgb(56, 135, 255);
-}
-
-.actions button:nth-of-type(1):hover{
-    color: white;
-    background: rgb(56, 135, 255);
-}
-
-.actions button:nth-of-type(2), .mobileActions button:nth-of-type(2){
-    color: rgb(255, 95, 95);
-    border: 3px solid rgb(255, 95, 95);
-}
-
-.actions button:nth-of-type(2):hover{
-    color: white;
-    background: rgb(255, 95, 95);
-}
-
-.actions button:nth-of-type(3), .mobileActions button:nth-of-type(3){
-    color: rgb(88, 182, 88);
-    border: 3px solid rgb(88, 182, 88);
-}
-
-.actions button:nth-of-type(3):hover{
-    color: white;
-    background: rgb(88, 182, 88);
-}
-
-.mobileActions {
-    display: none;
-}
-
-.mobileCardsContainer {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-}
-
-.cardsContainer {
-    overflow: hidden;
-    width: 80%;
-    height: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-  
-.cardsContainer > div {
-    position: absolute;
-    width: 40vw;
-    will-change: transform;
-    display: flex;
-    align-items: center;
-    justify-content: center;
- }
-  
-.cardsContainer > div > div {
-    background-color: white;
-    background-size: auto 85%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 45vh;
-    max-width: 400px;
-    height: 100vh;
-    max-height: 600px;
-    will-change: transform;
-    border-radius: 10px;
-    /* box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3); */
-}
-
 .container {
-    height: calc(100vh - 78px);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    min-height: 100%;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
-.mobileActions {
-    position: fixed;
-    bottom: 5%;
-    left: 0;
-    width: 100%;
-    justify-content: space-evenly;
+.item {
+    flex: 0 0 calc(33% - 30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 10px rgba(154,160,185,.3), 0 15px 40px rgba(166,173,201,.4);
+    border-radius: 10px;
+    transition: all 0.3s;
+    text-align: center;
+    cursor: pointer;
 }
 
-.mobileActions > button > svg{
-    transform: scale(2.5);
+.item:hover {
+    box-shadow: 0 5px 10px rgba(154,160,185,.6), 0 15px 40px rgba(166,173,201,.7);
+    color: rgb(0, 94, 131);
+
 }
 
-@media screen and (max-width: 768px) {
-    /* Tablet */
-    .container {
-        height: 60vh;
-    }
-    .mobileActions {
-        display: flex;
-    }
-    .actions {
-        display: none;
-    }
-    .cardsContainer {
-        top: 40%;
-        left: 50%;
-        overflow: hidden;
-    }
-    .mobileCardsContainer {
-        display: block;
-    }
-    .cardsContainer > div {
-        margin-top: 20px;
-        width: 70vw;
-     }    
-    .cardsContainer > div > div {
-        width: 80vw;
-        max-width: 400px;
-        height: 100vh;
-        /* box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4), 0 10px 10px -10px rgba(50, 50, 73, 0.3); */
-    }
-}
-@media screen and (max-width: 600px) {
-    /* Mobile Devices */
-    
+.item svg {
+    transform: scale(4);
+    margin-bottom: 2rem;
+    shape-rendering: geometricPrecision;
 }

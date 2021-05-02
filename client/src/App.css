@@ -45,4 +45,5 @@ a.mapboxgl-ctrl-logo {
     display: flex;
     flex-flow: column;
     height: 100%;
+    overflow: scroll;
 }

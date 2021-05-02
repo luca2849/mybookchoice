@@ -1,148 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { Link } from "react-router-dom";
+
 import styles from "./Home.module.css";
-import axios from "axios";
 
-import setAuthToken from "../../utils/setAuthToken";
-import { addRating } from "../../actions/user";
+import { BsFillPersonFill, BsQuestionCircle } from "react-icons/bs";
+import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
+import { FaUserFriends } from "react-icons/fa";
+import { RiMessage2Line } from "react-icons/ri";
+import { MdRateReview } from "react-icons/md";
+import { GrClose } from "react-icons/gr";
+import {
+	GiHamburgerMenu,
+	GiMagnifyingGlass,
+	GiBackwardTime,
+} from "react-icons/gi";
 
-import { FaHeart, FaQuestion } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
-
-import Deck from "../../Components/Deck/Deck";
-import Loading from "../../Components/Misc/Loading/Loading";
-
-const Home = ({ addRating }) => {
-	const [books, setBooks] = useState([]);
-	const [loading, setLoading] = useState(false);
-
-	const getBooks = async (count, skip) => {
-		// Gather Books
-		try {
-			setAuthToken(localStorage.getItem("token"));
-			const res = await axios.get(
-				`/api/user/books?bookCount=${count}&skip=${skip}`
-			);
-			// Request details from OL
-			const isbnList = res.data.map((isbn) => `${isbn.isbn}`).join(",");
-			delete axios.defaults.headers.common["x-auth-token"];
-			const resOpenLibrary = await axios.get(
-				`https://openlibrary.org/api/books?bibkeys=${isbnList}&jscmd=data&format=json`
-			);
-			const booksArray = Object.values(resOpenLibrary.data);
-			const bookData = [];
-			for (let i = 0; i < booksArray.length; i++) {
-				const book = booksArray[i];
-				const newBook = {
-					isbn: res.data[i].isbn,
-					olId: book.key.split("/")[2],
-					pageCount: book.number_of_pages,
-					title: book.title,
-					covers: {
-						large: book.cover ? book.cover.large : null,
-						medium: book.cover ? book.cover.medium : null,
-						small: book.cover ? book.cover.small : null,
-					},
-					authors:
-						book.authors && book.authors.map((auth) => auth.name),
-					published: {
-						by:
-							book.publishers &&
-							book.publishers.map((pub) => pub.name),
-						year:
-							book.publish_date &&
-							book.publish_date
-								.split("-")
-								.map((item) =>
-									item.length === 4 ? item : null
-								)
-								.pop(),
-					},
-					bookPlaces:
-						book.subject_places &&
-						book.subject_places.map((place) => place.name),
-					bookPeople:
-						book.subject_people &&
-						book.subject_people.map((person) => person.name),
-					subjects:
-						book.subjects && book.subjects.map((sub) => sub.name),
-				};
-				bookData.push(newBook);
-			}
-			return bookData;
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	useEffect(() => {
-		async function fetchData() {
-			const bookData = await getBooks(10, 0);
-			setBooks(bookData);
-		}
-		fetchData();
-	}, [setBooks]);
-
-	const handleClick = async (rating) => {
-		setLoading(true);
-		setAuthToken(localStorage.getItem("token"));
-		await addRating(books[0], rating);
-		const bookData = await getBooks(1, 9);
-		let tmp = books.concat(bookData);
-		setBooks(tmp.slice(1));
-		setLoading(false);
-	};
-	if (!books || books.length === 0) return <Loading />;
-	const isMobile = window.innerWidth <= 768;
+const Home = () => {
 	return (
-		<>
-			<div className={styles.container}>
-				<div className={styles.cardsContainer}>
-					<Deck
-						loading={loading}
-						choiceEvent={handleClick}
-						books={books}
-						height={isMobile ? 450 : 600}
-						isMobile={isMobile}
-					/>
+		<div className={styles.container}>
+			<h3>
+				Welcome to <span>MyBookChoice</span>
+			</h3>
+			<div className={styles.navigation}>
+				<div className={styles.item}>
+					<Link to="/search">
+						<AiOutlineSearch />
+						User Search
+					</Link>
 				</div>
-				<div className={styles.mainContent}>
-					<div className={styles.actions}>
-						{/* <button>
-							<IoMdArrowRoundBack onClick={() => handleClick()} />
-						</button> */}
-						<button>
-							<FaQuestion onClick={() => handleClick(0)} />
-						</button>
-						<button>
-							<ImCross onClick={() => handleClick(-1)} />
-						</button>
-						<button>
-							<FaHeart onClick={() => handleClick(1)} />
-						</button>
-					</div>
-					<div className={styles.mobileActions}>
-						{/* <button>
-							<IoMdArrowRoundBack onClick={() => handleClick()} />
-						</button> */}
-						<button>
-							<FaQuestion onClick={() => handleClick(0)} />
-						</button>
-						<button>
-							<ImCross onClick={() => handleClick(-1)} />
-						</button>
-						<button>
-							<FaHeart onClick={() => handleClick(1)} />
-						</button>
-					</div>
+				<div className={styles.item}>
+					<Link to="/profile">
+						<BsFillPersonFill />
+						My Profile
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/recommend">
+						<GiMagnifyingGlass />
+						Specific Recommendation
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/notifications">
+						<AiFillBell />
+						My Notifications
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/profile/friends">
+						<FaUserFriends />
+						My Friends
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/messages">
+						<RiMessage2Line />
+						My Messages
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/profile/reviews">
+						<MdRateReview />
+						My Reviews
+					</Link>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 
-// const mapStateToProps = (state) => ({
-// 	user: state.auth.user,
-// });
-
-export default connect(null, { addRating })(Home);
+export default Home;
