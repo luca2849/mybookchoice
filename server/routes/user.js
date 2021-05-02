@@ -418,7 +418,7 @@ router.put("/friends/request", auth, async (req, res) => {
 });
 
 // PUT /api/user/friends/respond
-// Purpose - Sends a friend request to another user
+// Purpose - Responds to a friend request
 // Access - Private
 router.put("/friends/respond", auth, async (req, res) => {
 	try {
@@ -441,14 +441,24 @@ router.put("/friends/respond", auth, async (req, res) => {
 		const user = await User.findOne(
 			{ _id: req.user.id },
 			{ notifications: { $slice: [+skip, +limit] } }
-		).populate("notifications.from");
+		)
+			.select("-password -__v")
+			.populate("notifications.from");
 		if (!!accepted) {
 			remoteUserObj.friends.push({ user: req.user.id });
 			user.friends.push({ user: remoteUserObj._id });
 			await remoteUserObj.save();
 			await user.save();
 		}
-		return res.status(200).json(user.notifications);
+		const returnUser = await User.findOne(
+			{ _id: req.user.id },
+			{ notifications: { $slice: [+skip, +limit] } }
+		)
+			.select("-password -__v")
+			.populate("friends.user", "-ratings")
+			.populate("notifications.from")
+			.populate("readingList.book_id", "olId title authors");
+		return res.status(200).json(returnUser);
 	} catch (error) {
 		console.error(error);
 		return res

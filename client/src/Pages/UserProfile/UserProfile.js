@@ -53,10 +53,9 @@ const UserProfile = ({
 			  )[0]
 			: null;
 
-	const areFriends =
-		user.friends.map(
-			(friend) => friend.user.username === currentUser.username && true
-		).length === 1;
+	const areFriends = user.friends
+		.map((friend) => friend.user.username === currentUser.username && true)
+		.some((el) => el === true);
 	// Get counts for each type of rating
 	const [likes, notread, dislikes] = calculateRatings(user.ratings);
 	return (

@@ -15,10 +15,6 @@ html, body {
     overscroll-behavior-y: contain;    
 }
 
-body {
-    border: 1px solid transparent;
-}
-
 a {
     text-decoration: none;
     color: inherit;

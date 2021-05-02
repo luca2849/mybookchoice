@@ -82,6 +82,7 @@ export default function user(state = initialState, action) {
 				user: payload,
 			};
 		case USER_UPDATED:
+			console.log(payload);
 			return {
 				...state,
 				user: payload,

@@ -279,7 +279,11 @@ export const respondToRequest = (
 			config
 		);
 		toast.success("Response Sent", { autoClose: 2000 });
-		dispatch({ type: GET_NOTIFICATIONS, payload: res.data });
+		console.log(res);
+		if (accepted) {
+			dispatch({ type: USER_UPDATED, payload: res.data });
+		}
+		dispatch({ type: GET_NOTIFICATIONS, payload: res.data.notifications });
 	} catch (error) {
 		const errors = error.response.data.errors;
 		if (errors) {

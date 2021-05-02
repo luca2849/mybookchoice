@@ -76,6 +76,7 @@ export default function messaging(state = initialState, action) {
 					messages: [],
 					totalMessages: null,
 				},
+				loading: true,
 			};
 		case ADD_MESSAGE:
 		case MESSAGE_RECEIVED:
