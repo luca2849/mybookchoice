@@ -3,17 +3,11 @@ import { Link } from "react-router-dom";
 
 import styles from "./Home.module.css";
 
-import { BsFillPersonFill, BsQuestionCircle } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { RiMessage2Line } from "react-icons/ri";
-import { MdRateReview } from "react-icons/md";
-import { GrClose } from "react-icons/gr";
-import {
-	GiHamburgerMenu,
-	GiMagnifyingGlass,
-	GiBackwardTime,
-} from "react-icons/gi";
+import { GiMagnifyingGlass } from "react-icons/gi";
 
 const Home = () => {
 	return (
@@ -56,12 +50,6 @@ const Home = () => {
 					<Link to="/messages">
 						<RiMessage2Line />
 						My Messages
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/profile/reviews">
-						<MdRateReview />
-						My Reviews
 					</Link>
 				</div>
 			</div>

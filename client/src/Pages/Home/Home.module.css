@@ -38,3 +38,9 @@
     margin-bottom: 2rem;
     shape-rendering: geometricPrecision;
 }
+
+@media screen and (max-width: 768px) {
+    .item {
+        flex: 0 0 80%;
+    }
+}

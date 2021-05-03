@@ -30,54 +30,60 @@ const Notifications = ({
 		<div className={styles.mainContainer}>
 			<h3>Notifications</h3>
 			<List cssClass={styles.list}>
-				{notifications.map((notification) => (
-					<>
-						<List.Item cssClass={styles.item}>
-							{notification.type === "FRIEND_REQUEST" && (
-								<p>
-									You have recieved a friend request from
-									{"  "}
-									<Link
-										to={`/user/${notification.from.username}`}
-									>
-										{notification.from.username}
-									</Link>
-									, on{" "}
-									{moment(notification.createdAt).format(
-										"DD/MM @ HH:mm"
-									)}
-								</p>
-							)}
-							{notification.type === "FRIEND_REQUEST" &&
-								notification.actioned === false && (
-									<div className={styles.buttons}>
-										<button
-											onClick={() =>
-												handleClick(
-													notification._id,
-													notification.from.username,
-													true
-												)
-											}
+				{notifications.length < 1 ? (
+					<List.Item>No Notifications Found...</List.Item>
+				) : (
+					notifications.map((notification) => (
+						<>
+							<List.Item cssClass={styles.item}>
+								{notification.type === "FRIEND_REQUEST" && (
+									<p>
+										You have recieved a friend request from
+										{"  "}
+										<Link
+											to={`/user/${notification.from.username}`}
 										>
-											<BsCheck />
-										</button>
-										<button
-											onClick={() =>
-												handleClick(
-													notification._id,
-													notification.from.username,
-													false
-												)
-											}
-										>
-											<GrClose />
-										</button>
-									</div>
+											{notification.from.username}
+										</Link>
+										, on{" "}
+										{moment(notification.createdAt).format(
+											"DD/MM @ HH:mm"
+										)}
+									</p>
 								)}
-						</List.Item>
-					</>
-				))}
+								{notification.type === "FRIEND_REQUEST" &&
+									notification.actioned === false && (
+										<div className={styles.buttons}>
+											<button
+												onClick={() =>
+													handleClick(
+														notification._id,
+														notification.from
+															.username,
+														true
+													)
+												}
+											>
+												<BsCheck />
+											</button>
+											<button
+												onClick={() =>
+													handleClick(
+														notification._id,
+														notification.from
+															.username,
+														false
+													)
+												}
+											>
+												<GrClose />
+											</button>
+										</div>
+									)}
+							</List.Item>
+						</>
+					))
+				)}
 			</List>
 		</div>
 	);
