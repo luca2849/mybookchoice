@@ -5,17 +5,12 @@ import { Link } from "react-router-dom";
 import styles from "./MainNavigation.module.css";
 
 // Icons
-import { BsFillPersonFill, BsQuestionCircle } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { RiMessage2Line } from "react-icons/ri";
-import { MdRateReview } from "react-icons/md";
 import { GrClose } from "react-icons/gr";
-import {
-	GiHamburgerMenu,
-	GiMagnifyingGlass,
-	GiBackwardTime,
-} from "react-icons/gi";
+import { GiHamburgerMenu, GiMagnifyingGlass } from "react-icons/gi";
 
 import Logo from "../../Misc/Logo/Logo";
 import SocketNotifications from "../../SocketNotifications/SocketNotifications";
@@ -121,24 +116,6 @@ const MainNavigation = ({ children, user }) => {
 						<div className={styles.item}>
 							<Link
 								onClick={() => setMenuOpen(false)}
-								to="/recommendations"
-							>
-								<BsQuestionCircle />
-								General Recommendation
-							</Link>
-						</div>
-						<div className={styles.item}>
-							<Link
-								onClick={() => setMenuOpen(false)}
-								to="/ratings"
-							>
-								<GiBackwardTime />
-								My Past Ratings
-							</Link>
-						</div>
-						<div className={styles.item}>
-							<Link
-								onClick={() => setMenuOpen(false)}
 								to="/friends"
 							>
 								<FaUserFriends />
@@ -152,15 +129,6 @@ const MainNavigation = ({ children, user }) => {
 							>
 								<RiMessage2Line />
 								My Messages
-							</Link>
-						</div>
-						<div className={styles.item}>
-							<Link
-								onClick={() => setMenuOpen(false)}
-								to="/profile/reviews"
-							>
-								<MdRateReview />
-								My Reviews
 							</Link>
 						</div>
 					</div>

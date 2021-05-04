@@ -49,3 +49,14 @@
     background: rgb(0, 180, 235);
     color: white;
 }
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .sendButtonContainer button {
+        padding: 0.5rem;
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+
+}

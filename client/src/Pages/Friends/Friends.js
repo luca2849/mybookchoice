@@ -22,8 +22,8 @@ const Friends = ({ getFriends, user: { friends, loading } }) => {
 						<p>No Friends Found.</p>
 					</List.Item>
 				) : (
-					friends.map((friend) => (
-						<List.Item cssClass={styles.item}>
+					friends.map((friend, i) => (
+						<List.Item cssClass={styles.item} key={i}>
 							<Link to={`/user/${friend.user.username}`}>
 								<div className={styles.image}>
 									<img

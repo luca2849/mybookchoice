@@ -38,6 +38,8 @@ const Messages = ({
 		}
 		setSelectedThread(id);
 	};
+
+	const isMobile = window.innerWidth <= 768;
 	return (
 		<div
 			style={{ height: selectedThread ? "auto" : "calc(100% - 5vh)" }}
@@ -47,23 +49,26 @@ const Messages = ({
 				{authLoading ? (
 					<Loading />
 				) : (
-					<MessagesHeader
-						friends={me.friends}
-						createThread={createThread}
-					/>
+					((isMobile && !selectedThread) || !isMobile) && (
+						<MessagesHeader
+							friends={me.friends}
+							createThread={createThread}
+						/>
+					)
 				)}
 
-				{threads.map((thread) => (
-					<div key={thread._id}>
-						<ThreadItem
-							thread={thread}
-							me={me._id}
-							onClick={() => handleClick(thread._id)}
-							isSelected={thread._id === selectedThread}
-						/>
-						<hr className={styles.divider} />
-					</div>
-				))}
+				{((isMobile && !selectedThread) || !isMobile) &&
+					threads.map((thread) => (
+						<div key={thread._id}>
+							<ThreadItem
+								thread={thread}
+								me={me._id}
+								onClick={() => handleClick(thread._id)}
+								isSelected={thread._id === selectedThread}
+							/>
+							<hr className={styles.divider} />
+						</div>
+					))}
 			</div>
 			<div className={styles.messages}>
 				{selectedThread && (
@@ -75,6 +80,8 @@ const Messages = ({
 								)[0]
 							}
 							me={me._id}
+							isMobile={isMobile}
+							setSelectedThread={setSelectedThread}
 						/>
 						<>
 							<MessageThread

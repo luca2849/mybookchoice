@@ -35,3 +35,21 @@
 .name p:last-of-type {
     font-size: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .imageContainer img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .header svg{
+        margin: 0 20px;
+        transform: scale(2);
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+
+}

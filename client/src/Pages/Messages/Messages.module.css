@@ -21,3 +21,20 @@
     margin: 0 auto;
     border-top: 1px solid rgb(201, 201, 201);
 }
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .messagesContainer {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        margin-top: 0;
+        border-radius: 0;
+        height: 100%;
+        box-shadow: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+
+}

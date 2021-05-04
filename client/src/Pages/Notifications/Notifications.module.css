@@ -61,3 +61,27 @@
 .item a:hover {
     border-bottom: 2px solid rgb(0, 120, 175);
 }
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .mainContainer {
+        width: 100%;
+    }
+    .item p {
+        display: block;
+    }
+    .item {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .item a {
+        display: inline-block;
+    }
+    .buttons {
+        margin: 0;
+    }
+}
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+    
+}
