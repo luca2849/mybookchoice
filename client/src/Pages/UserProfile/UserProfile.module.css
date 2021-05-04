@@ -26,7 +26,6 @@
 
 .map {
     height: 25%;
-    background: rgb(255, 132, 132);
     z-index: 1;
     pointer-events: none;
 }

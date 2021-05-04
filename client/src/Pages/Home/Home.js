@@ -17,9 +17,9 @@ const Home = () => {
 			</h3>
 			<div className={styles.navigation}>
 				<div className={styles.item}>
-					<Link to="/search">
-						<AiOutlineSearch />
-						User Search
+					<Link to="/recommend">
+						<GiMagnifyingGlass />
+						Specific Recommendation
 					</Link>
 				</div>
 				<div className={styles.item}>
@@ -29,9 +29,9 @@ const Home = () => {
 					</Link>
 				</div>
 				<div className={styles.item}>
-					<Link to="/recommend">
-						<GiMagnifyingGlass />
-						Specific Recommendation
+					<Link to="/search">
+						<AiOutlineSearch />
+						User Search
 					</Link>
 				</div>
 				<div className={styles.item}>
@@ -41,7 +41,7 @@ const Home = () => {
 					</Link>
 				</div>
 				<div className={styles.item}>
-					<Link to="/profile/friends">
+					<Link to="/friends">
 						<FaUserFriends />
 						My Friends
 					</Link>

@@ -139,7 +139,7 @@ const MainNavigation = ({ children, user }) => {
 						<div className={styles.item}>
 							<Link
 								onClick={() => setMenuOpen(false)}
-								to="/profile/friends"
+								to="/friends"
 							>
 								<FaUserFriends />
 								My Friends
