@@ -33,6 +33,10 @@ app.use("/api/recommend", require("./routes/recommend"));
 app.use("/api/messaging", require("./routes/messaging"));
 app.use("/api/data", require("./routes/data"));
 
+app.get("/service-worker.js", (req, res) => {
+	return res.sendFile(path.join(__dirname, "../client/src", "serviceWorker.js"));
+})
+
 // Serve React Build
 app.get("*", (req, res) => {
 	return res.sendFile(path.join(__dirname, "../client/build", "index.html"));
