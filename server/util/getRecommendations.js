@@ -1,7 +1,7 @@
 const { euclideanDistance, numberMap } = require("./linearAlgebra");
 
 const genres = [
-	"science fiction",
+	"science-fiction",
 	"nonfiction",
 	"fiction",
 	"thriller",
@@ -165,7 +165,7 @@ const calculateWeightedScore = (
 	// Map value to range 0, 1
 	const score = numberMap(dist, min, max, 0, 1);
 	// Calculate Average Score
-	return score;
+	return 1 - score;
 };
 
 const getBookRecommendation = (
