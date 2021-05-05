@@ -279,7 +279,6 @@ export const respondToRequest = (
 			config
 		);
 		toast.success("Response Sent", { autoClose: 2000 });
-		console.log(res);
 		if (accepted) {
 			dispatch({ type: USER_UPDATED, payload: res.data });
 		}

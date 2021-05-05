@@ -20,6 +20,7 @@ app.use(
 		extend: false,
 	})
 );
+
 // Statically define react front-end
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.use(

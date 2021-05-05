@@ -1,3 +1,5 @@
+const { euclideanDistance, numberMap } = require("./linearAlgebra");
+
 const genres = [
 	"science fiction",
 	"nonfiction",
@@ -23,6 +25,16 @@ const preferences = [
 ];
 
 const eras = ["past", "1600", "1700", "1800", "1900", "2000", "2100", "future"];
+
+// Work out constants
+const a = new Array(
+	genres.length + types.length + preferences.length + eras.length
+).fill(0);
+const b = new Array(
+	genres.length + types.length + preferences.length + eras.length
+).fill(1);
+const max = euclideanDistance(a, b);
+const min = 0;
 
 const getGenre = (bookSubjects) => {
 	const presentGenres = new Array(8).fill(0);
@@ -123,60 +135,12 @@ const compileUserVector = (
 	return userVector;
 };
 
-const calculateGenreScore = (bookSubjects, inputGenresSplit) => {
-	// Get genres for book
+const compileBookVector = (bookSubjects, bookDates) => {
 	const genres = getGenre(bookSubjects);
-	// Score vector similarity
-	let sumSquares = 0;
-	for (let i = 0; i < genres.length; i++) {
-		const diff = genres[i] - inputGenresSplit[i];
-		sumSquares += diff * diff;
-	}
-	const d = Math.sqrt(sumSquares);
-	const similarity = 1 / (1 + d);
-	return similarity;
-};
-
-const calculateTypeScore = (bookSubjects, inputTypesSplit) => {
-	// Get types for book
 	const types = getType(bookSubjects);
-	// Score vector similarity
-	let sumSquares = 0;
-	for (let i = 0; i < types.length; i++) {
-		const diff = types[i] - inputTypesSplit[i];
-		sumSquares += diff * diff;
-	}
-	const d = Math.sqrt(sumSquares);
-	const similarity = 1 / (1 + d);
-	return similarity;
-};
-
-const calculatePreferencesScore = (bookSubjects, inputPreferencesSplit) => {
-	// Get types for book
 	const preferences = getOtherPreferences(bookSubjects);
-	// Score vector similarity
-	let sumSquares = 0;
-	for (let i = 0; i < preferences.length; i++) {
-		const diff = preferences[i] - inputPreferencesSplit[i];
-		sumSquares += diff * diff;
-	}
-	const d = Math.sqrt(sumSquares);
-	const similarity = 1 / (1 + d);
-	return similarity;
-};
-
-const calculateEraScore = (bookDates, inputDatesSplit) => {
-	// Get types for book
 	const eras = getEras(bookDates);
-	// Score vector similarity
-	let sumSquares = 0;
-	for (let i = 0; i < eras.length; i++) {
-		const diff = eras[i] - inputDatesSplit[i];
-		sumSquares += diff * diff;
-	}
-	const d = Math.sqrt(sumSquares);
-	const similarity = 1 / (1 + d);
-	return similarity;
+	return [...genres, ...types, ...preferences, ...eras];
 };
 
 const calculateWeightedScore = (
@@ -194,24 +158,14 @@ const calculateWeightedScore = (
 		inputPreferences,
 		inputEras
 	);
-	// Split vector into groups
-	const genreVector = userVector.slice(0, 8);
-	const typeVector = userVector.slice(8, 12);
-	const preferencesVector = userVector.slice(12, 20);
-	const erasVector = userVector.slice(20, 28);
-	// Get genre score
-	const genreScore = calculateGenreScore(bookSubjects, genreVector);
-	// Get type score
-	const typeScore = calculateTypeScore(bookSubjects, typeVector);
-	// Get preference score
-	const preferencesScore = calculatePreferencesScore(
-		bookSubjects,
-		preferencesVector
-	);
-	// Calculate eras score
-	const erasScore = calculateEraScore(bookDates, erasVector);
+	// Compile book vector
+	const bookVector = compileBookVector(bookSubjects, bookDates);
+	// Get distance
+	const dist = euclideanDistance(bookVector, userVector);
+	// Map value to range 0, 1
+	const score = numberMap(dist, min, max, 0, 1);
 	// Calculate Average Score
-	return (1 / 4) * (typeScore + genreScore + preferencesScore + erasScore);
+	return score;
 };
 
 const getBookRecommendation = (
