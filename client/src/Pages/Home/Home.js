@@ -5,6 +5,7 @@ import styles from "./Home.module.css";
 
 import { BsFillPersonFill } from "react-icons/bs";
 import { AiFillBell, AiOutlineSearch } from "react-icons/ai";
+import { ImBookmarks } from "react-icons/im";
 import { FaUserFriends } from "react-icons/fa";
 import { RiMessage2Line } from "react-icons/ri";
 import { GiMagnifyingGlass } from "react-icons/gi";
@@ -32,6 +33,12 @@ const Home = () => {
 					<Link to="/search">
 						<AiOutlineSearch />
 						User Search
+					</Link>
+				</div>
+				<div className={styles.item}>
+					<Link to="/list">
+						<ImBookmarks />
+						Reading List
 					</Link>
 				</div>
 				<div className={styles.item}>

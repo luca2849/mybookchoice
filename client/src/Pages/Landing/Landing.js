@@ -311,11 +311,15 @@ const RegistrationMethods = ({
 const RegistrationEmail = ({ dataHandler, clickHandler, data }) => {
 	const validate = () => {
 		const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		let errors = [];
 		if (!data.email) {
-			toast.error("E-Mail is required");
-			return;
-		} else if (!emailReg.exec(data.email)) {
-			toast.error("Please enter a valid e-mail");
+			errors.push("E-Mail is required");
+		}
+		if (!emailReg.exec(data.email)) {
+			errors.push("A valid E-Mail is required");
+		}
+		if (errors.length > 0) {
+			errors.forEach((err) => toast.error(err));
 			return;
 		}
 		clickHandler("reg2");
@@ -345,20 +349,19 @@ const RegistrationEmail = ({ dataHandler, clickHandler, data }) => {
 
 const RegistrationName = ({ dataHandler, clickHandler, data }) => {
 	const validate = () => {
+		let errors = [];
 		if (!data.name) {
-			toast.error("Name is required");
-			return;
+			errors.push("Name is required");
+		} else if (data.name.length < 6) {
+			errors.push("Name must be at least 6 characters");
 		}
 		if (!data.username) {
-			toast.error("Username is required");
-			return;
+			errors.push("Username is required");
+		} else if (data.username.length < 6) {
+			errors.push("Username must be at least 6 characters");
 		}
-		if (data.username.length < 6) {
-			toast.error("Username must be at least 6 characters");
-			return;
-		}
-		if (data.name.length < 6) {
-			toast.error("Name must be at least 6 characters");
+		if (errors.length > 0) {
+			errors.forEach((err) => toast.error(err));
 			return;
 		}
 		clickHandler("reg3");
@@ -396,16 +399,18 @@ const RegistrationName = ({ dataHandler, clickHandler, data }) => {
 const RegistrationPassword = ({ dataHandler, clickHandler, data }) => {
 	const validator = () => {
 		const passRegex = /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&])/;
+		let errors = [];
 		if (!data.password) {
-			toast.error("Password is required");
-			return;
+			errors.push("Password is required");
 		}
 		if (!passRegex.exec(data.password) || data.password.length < 6) {
-			toast.error("Password does not match the requried format");
-			return;
+			errors.push("Password does not match the requried format");
 		}
 		if (data.password !== data.confirmation) {
-			toast.error("Passwords do not match");
+			errors.push("Passwords do not match");
+		}
+		if (errors.length > 0) {
+			errors.forEach((err) => toast.error(err));
 			return;
 		}
 		clickHandler("reg4");
@@ -419,6 +424,10 @@ const RegistrationPassword = ({ dataHandler, clickHandler, data }) => {
 			/>
 			<Logo fill={"rgb(150, 150, 150)"} />
 			<h3>Now, Enter a Secure Password</h3>
+			<p>
+				Your password must contain at least one upper-case letter,
+				lower-case letter, number and symbol
+			</p>
 			<div className={styles.form}>
 				<input
 					type="password"

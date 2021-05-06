@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styles from "./ReadingList.module.css";
 import { deleteBookFromList } from "../../actions/user";
@@ -14,6 +15,15 @@ const ReadingList = ({ user: { user, loading }, deleteBookFromList }) => {
 		<div className={styles.container}>
 			<h3>Reading List</h3>
 			<div className={styles.books}>
+				{!loading && user.readingList.length === 0 && (
+					<div className={styles.noBooks}>
+						<h4>No Books in Reading List.</h4>
+						<p>
+							Click <Link to={"/recommend"}>here</Link> to gather
+							book recommendations to add to this list.
+						</p>
+					</div>
+				)}
 				{user.readingList.map((item, i) => (
 					<div className={styles.bookContainer} key={i}>
 						<div

@@ -3,10 +3,27 @@
     margin: 0.5rem auto;
 }
 
+.container a {
+    color: rgb(0, 140, 255);
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+}
+
+.container a:hover {
+    color: rgb(0, 117, 212);
+    border-bottom: 2px solid rgb(0, 117, 212);
+}
+
+.noBooks {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 .books {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     padding-top: 1rem;
 }
 

@@ -135,12 +135,7 @@ const Profile = ({ user, deleteUser, requestPasswordReset }) => {
 							<Link to={"/search"}>User Search </Link>
 						</List.Item>
 						<List.Item cssClass={styles.item}>
-							<Link to={"/recommendations"}>
-								My Recommendations{" "}
-							</Link>
-						</List.Item>
-						<List.Item cssClass={styles.item}>
-							<Link to={"/ratings"}>My Past Ratings </Link>
+							<Link to={"/list"}>My Reading List </Link>
 						</List.Item>
 						<List.Item cssClass={styles.item}>
 							<Link to={"/recommend"}>
