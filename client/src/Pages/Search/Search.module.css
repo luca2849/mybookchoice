@@ -35,6 +35,10 @@
     transition: all 0.25s;
 }
 
+.noItems {
+    padding: 1rem;
+}
+
 .focused input {
     border-bottom: 3px solid rgb(85, 173, 255);
     background:rgb(241, 241, 241);

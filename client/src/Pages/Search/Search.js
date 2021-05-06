@@ -8,6 +8,7 @@ import List from "../../Components/List/List";
 
 const Search = ({ data: { searchResults, loading }, searchUsers }) => {
 	const [isFocused, setIsFocused] = useState(false);
+	console.log(searchResults.length);
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>
@@ -23,24 +24,31 @@ const Search = ({ data: { searchResults, loading }, searchUsers }) => {
 				</div>
 				{!loading && (
 					<List>
-						{searchResults.map((item) => (
-							<List.Item cssClass={styles.item}>
-								<Link to={`/user/${item.username}`}>
-									<div className={styles.imageContainer}>
-										<img
-											alt="Profile"
-											src={
-												item.profileImage.imageType ===
-												"EXTERNAL"
-													? item.profileImage.url
-													: `${process.env.REACT_APP_SERVER_URL}/api/img/${item.profileImage.url}`
-											}
-										/>
-									</div>
-									{item.name} ({item.username})
-								</Link>
+						{searchResults.length === 0 ? (
+							<List.Item cssClass={styles.noItems}>
+								No Results Found...
 							</List.Item>
-						))}
+						) : (
+							searchResults.map((item) => (
+								<List.Item cssClass={styles.item}>
+									<Link to={`/user/${item.username}`}>
+										<div className={styles.imageContainer}>
+											<img
+												alt="Profile"
+												src={
+													item.profileImage
+														.imageType ===
+													"EXTERNAL"
+														? item.profileImage.url
+														: `${process.env.REACT_APP_SERVER_URL}/api/img/${item.profileImage.url}`
+												}
+											/>
+										</div>
+										{item.name} ({item.username})
+									</Link>
+								</List.Item>
+							))
+						)}
 					</List>
 				)}
 			</div>
