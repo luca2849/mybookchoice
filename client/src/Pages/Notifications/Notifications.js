@@ -19,6 +19,7 @@ const Notifications = ({
 	respondToRequest,
 	userState: { notifications, loading },
 }) => {
+	console.log(notifications);
 	useEffect(() => {
 		getNotifications(10, 0);
 	}, [getNotifications]);
@@ -40,9 +41,9 @@ const Notifications = ({
 									You have recieved a friend request from
 									{"  "}
 									<Link
-										to={`/user/${notification.from.username}`}
+										to={`/user/${notification.from?.username}`}
 									>
-										{notification.from.username}
+										{notification.from?.username}
 									</Link>
 									, on{" "}
 									{moment(notification.createdAt).format(

@@ -206,11 +206,7 @@ export const getNotifications = (limit, skip) => async (dispatch) => {
 		);
 		dispatch({ type: GET_NOTIFICATIONS, payload: res.data });
 	} catch (error) {
-		const errors = error.response.data.errors;
-		if (errors) {
-			errors.forEach((error) => toast.error(error.msg, "danger"));
-		}
-		dispatch({ type: USER_ERROR });
+		console.error(error);
 	}
 };
 
@@ -284,11 +280,7 @@ export const respondToRequest = (
 		}
 		dispatch({ type: GET_NOTIFICATIONS, payload: res.data.notifications });
 	} catch (error) {
-		const errors = error.response.data.errors;
-		if (errors) {
-			errors.forEach((error) => toast.error(error.msg, "danger"));
-		}
-		dispatch({ type: USER_ERROR });
+		console.error(error);
 	}
 };
 

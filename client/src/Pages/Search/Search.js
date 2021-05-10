@@ -8,7 +8,6 @@ import List from "../../Components/List/List";
 
 const Search = ({ data: { searchResults, loading }, searchUsers }) => {
 	const [isFocused, setIsFocused] = useState(false);
-	console.log(searchResults.length);
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>

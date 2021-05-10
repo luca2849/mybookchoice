@@ -57,7 +57,6 @@ router.post("/specific", auth, async (req, res) => {
 		});
 	}
 	let output = [];
-	//const generalRecs = await recommend(req.user.id, 3);
 	for (const book of cleanRecommendations) {
 		output.push({
 			...book,

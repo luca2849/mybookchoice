@@ -13,51 +13,53 @@ import { GiMagnifyingGlass } from "react-icons/gi";
 const Home = () => {
 	return (
 		<div className={styles.container}>
-			<h3>
-				Welcome to <span>MyBookChoice</span>
-			</h3>
-			<div className={styles.navigation}>
-				<div className={styles.item}>
-					<Link to="/recommend">
-						<GiMagnifyingGlass />
-						Specific Recommendation
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/profile">
-						<BsFillPersonFill />
-						My Profile
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/search">
-						<AiOutlineSearch />
-						User Search
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/list">
-						<ImBookmarks />
-						Reading List
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/notifications">
-						<AiFillBell />
-						My Notifications
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/friends">
-						<FaUserFriends />
-						My Friends
-					</Link>
-				</div>
-				<div className={styles.item}>
-					<Link to="/messages">
-						<RiMessage2Line />
-						My Messages
-					</Link>
+			<div className={styles.inner}>
+				<h3>
+					Welcome to <span>MyBookChoice</span>
+				</h3>
+				<div className={styles.navigation}>
+					<div className={styles.item}>
+						<Link to="/recommend">
+							<GiMagnifyingGlass />
+							Specific Recommendation
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/profile">
+							<BsFillPersonFill />
+							My Profile
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/search">
+							<AiOutlineSearch />
+							User Search
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/list">
+							<ImBookmarks />
+							Reading List
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/notifications">
+							<AiFillBell />
+							My Notifications
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/friends">
+							<FaUserFriends />
+							My Friends
+						</Link>
+					</div>
+					<div className={styles.item}>
+						<Link to="/messages">
+							<RiMessage2Line />
+							My Messages
+						</Link>
+					</div>
 				</div>
 			</div>
 		</div>

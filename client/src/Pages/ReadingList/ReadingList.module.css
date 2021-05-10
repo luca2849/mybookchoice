@@ -37,7 +37,7 @@
     flex: 0 0 20%;
     margin: 20px;
     position: relative;
-
+    width: 150px;
 }
 
 .iconContainer {
@@ -75,4 +75,21 @@
     height: 25vw;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+    /* Tablet */
+    .bookContainer {
+        flex: 0 0 100%;
+        height: 400px;
+    }
+
+    .bookContainer > *:nth-of-type(2) {
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* Mobile Devices */
+
 }
