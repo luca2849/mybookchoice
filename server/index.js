@@ -70,6 +70,20 @@ io.on("connection", (socket) => {
 	socket.on("friendRequest", async ({ username }) => {
 		io.to(username).emit("friendRequest", { username });
 	});
+	socket.on("accepted", async ({ newFriendUsername, username }) => {
+		const newFriend = await User.findOne({
+			username: newFriendUsername,
+		})
+			.select("-password -__v")
+			.populate("friends.user", "-ratings")
+			.populate("readingList.book_id", "olId title authors");
+		const user = await User.findOne({ username })
+			.select("-password -__v")
+			.populate("friends.user", "-ratings")
+			.populate("readingList.book_id", "olId title authors");
+		io.to(username).emit("accept", { user: newFriend });
+		io.to(newFriendUsername).emit("reqAccepted", { user });
+	});
 });
 
 const PORT = process.env.PORT || 3002;

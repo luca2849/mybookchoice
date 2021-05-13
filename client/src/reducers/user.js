@@ -11,6 +11,7 @@ import {
 	GET_NOTIFICATIONS,
 	FRIEND_REMOVED,
 	GET_FRIENDS,
+	UPDATE_USER,
 } from "../actions/types";
 
 const initialState = {
@@ -82,6 +83,7 @@ export default function user(state = initialState, action) {
 				user: payload,
 			};
 		case USER_UPDATED:
+		case UPDATE_USER:
 			return {
 				...state,
 				user: payload,

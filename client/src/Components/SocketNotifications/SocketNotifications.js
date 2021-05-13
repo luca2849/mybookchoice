@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import io from "socket.io-client";
-import { ADD_MESSAGE } from "../../actions/types";
+import { ADD_MESSAGE, UPDATE_USER } from "../../actions/types";
 
 const SocketNotifications = ({ user }) => {
 	const dispatch = useDispatch();
@@ -23,6 +23,14 @@ const SocketNotifications = ({ user }) => {
 				toast.info(
 					`You have a new friend request from ${payload.username}`
 				);
+			});
+			socket.on("reqAccepted", (payload) => {
+				if (payload.user) {
+					toast.success(
+						`${payload.user.username} has accepted your request.`
+					);
+				}
+				dispatch({ type: UPDATE_USER, payload: payload.user });
 			});
 		}
 	}, [dispatch, user]);

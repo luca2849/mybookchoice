@@ -6,6 +6,7 @@ import Loading from "../../Components/Misc/Loading/Loading";
 import List from "../../Components/List/List";
 
 import moment from "moment";
+import io from "socket.io-client";
 
 import styles from "./Notifications.module.css";
 
@@ -17,15 +18,25 @@ import { GrClose } from "react-icons/gr";
 const Notifications = ({
 	getNotifications,
 	respondToRequest,
-	userState: { notifications, loading },
+	userState: { username, notifications, loading },
+	auth: { user },
 }) => {
-	console.log(notifications);
+	console.log(notifications, user);
 	useEffect(() => {
 		getNotifications(10, 0);
 	}, [getNotifications]);
 	const handleClick = (notification, remoteUser, response) => {
 		respondToRequest(notification, remoteUser, response, 10, 0);
+		// Emit event when accepting request
+		if (response) {
+			const socket = io("/", { query: `user:${user.username}` });
+			socket.emit("accepted", {
+				newFriendUsername: remoteUser,
+				username: user.username,
+			});
+		}
 	};
+
 	if (loading) return <Loading />;
 	return (
 		<div className={styles.mainContainer}>
@@ -88,6 +99,7 @@ const Notifications = ({
 
 const mapStateToProps = (state) => ({
 	userState: state.user,
+	auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getNotifications, respondToRequest })(
