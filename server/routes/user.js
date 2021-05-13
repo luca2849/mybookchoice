@@ -532,8 +532,7 @@ router.post("/password", async (req, res) => {
 			return res.status(200).json({
 				errors: [
 					{
-						msg:
-							"If your email exists in our database, a link to reset your password has been sent.",
+						msg: "If your email exists in our database, a link to reset your password has been sent.",
 					},
 				],
 			});
@@ -571,8 +570,7 @@ router.post("/password", async (req, res) => {
 		return res.status(200).json({
 			errors: [
 				{
-					msg:
-						"If your email exists in our database, a link to reset your password has been sent.",
+					msg: "If your email exists in our database, a link to reset your password has been sent.",
 				},
 			],
 		});
@@ -605,8 +603,7 @@ router.post("/password/reset", async (req, res) => {
 		return res.status(400).json({
 			errors: [
 				{
-					msg:
-						"Password requires at least 1 upper-case character, 1 symbol, 1 lower-case character and 1 number",
+					msg: "Password requires at least 1 upper-case character, 1 symbol, 1 lower-case character and 1 number",
 				},
 			],
 		});
@@ -621,8 +618,7 @@ router.post("/password/reset", async (req, res) => {
 			return res.status(400).json({
 				errors: [
 					{
-						msg:
-							"Token has expired. Please request a new password reset.",
+						msg: "Token has expired. Please request a new password reset.",
 					},
 				],
 			});
@@ -655,7 +651,28 @@ router.post("/password/reset", async (req, res) => {
 // Access - Private
 router.delete("/", auth, async (req, res) => {
 	try {
-		// Find and delete user
+		// Find and delete user, messages and threads
+		const threads = await Thread.find({ users: { $in: [req.user.id] } });
+		for (const thread of threads) {
+			await Message.deleteMany({ _id: thread._id });
+		}
+		await Thread.deleteMany({
+			users: { $in: [req.user.id] },
+		});
+		// Delete from friends lists
+		const user = await User.findOne({ _id: req.user.id });
+		for (const friend of user.friends) {
+			// Delete this user from all friend's friend lists
+			await User.updateOne(
+				{ _id: friend.user },
+				{
+					$pull: {
+						friends: { user: req.user.id },
+						notifications: { from: req.user.id },
+					},
+				}
+			);
+		}
 		await User.findOneAndDelete({ _id: req.user.id }, (err) => {
 			if (err) res.status(500).json({ errors: [{ msg: err }] });
 		});
