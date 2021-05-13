@@ -331,6 +331,17 @@ router.get("/:username", auth, async (req, res) => {
 // Access - Private
 router.put("/", auth, async (req, res) => {
 	try {
+		const foundUser = await User.findOne({ username: req.body.username });
+		const foundEmailUser = await User.findOne({ email: req.body.email });
+		if (foundUser) {
+			return res
+				.status(400)
+				.json({ errors: [{ msg: "Username is taken" }] });
+		} else if (foundEmailUser) {
+			return res
+				.status(400)
+				.json({ errors: [{ msg: "Email is taken" }] });
+		}
 		const user = await User.findOneAndUpdate(
 			{ _id: req.user.id },
 			req.body,
