@@ -331,8 +331,14 @@ router.get("/:username", auth, async (req, res) => {
 // Access - Private
 router.put("/", auth, async (req, res) => {
 	try {
-		const foundUser = await User.findOne({ username: req.body.username });
-		const foundEmailUser = await User.findOne({ email: req.body.email });
+		const foundUser = await User.findOne({
+			_id: { $ne: req.user.id },
+			username: req.body.username,
+		});
+		const foundEmailUser = await User.findOne({
+			_id: { $ne: req.user.id },
+			email: req.body.email,
+		});
 		if (foundUser) {
 			return res
 				.status(400)

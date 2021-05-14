@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -8,21 +8,18 @@ import { getFriends } from "../../actions/user";
 import List from "../../Components/List/List";
 import Loading from "../../Components/Misc/Loading/Loading";
 
-const Friends = ({ getFriends, user: { friends, loading } }) => {
-	useEffect(() => {
-		getFriends(10, 0);
-	}, [getFriends]);
+const Friends = ({ auth: { user, loading } }) => {
 	if (loading) return <Loading />;
 	return (
 		<div className={styles.mainContainer}>
 			<h3>Friends List</h3>
 			<List cssClass={styles.list}>
-				{friends.length === 0 ? (
+				{user.friends.length === 0 ? (
 					<List.Item>
 						<p>No Friends Found.</p>
 					</List.Item>
 				) : (
-					friends.map((friend, i) => (
+					user.friends.map((friend, i) => (
 						<List.Item cssClass={styles.item} key={i}>
 							<Link to={`/user/${friend.user.username}`}>
 								<div className={styles.image}>
@@ -47,7 +44,7 @@ const Friends = ({ getFriends, user: { friends, loading } }) => {
 };
 
 const mapStateToProps = (state) => ({
-	user: state.auth.user,
+	auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getFriends })(Friends);

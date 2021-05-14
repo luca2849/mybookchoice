@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import io from "socket.io-client";
 import { ADD_MESSAGE, UPDATE_USER } from "../../actions/types";
+import { loadUser } from "../../actions/auth";
 
-const SocketNotifications = ({ user }) => {
+const SocketNotifications = ({ user, loadUser }) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (user !== null) {
@@ -30,11 +32,15 @@ const SocketNotifications = ({ user }) => {
 						`${payload.user.username} has accepted your request.`
 					);
 				}
+
 				dispatch({ type: UPDATE_USER, payload: payload.user });
 			});
+			socket.on("res", (payload) => {
+				loadUser();
+			});
 		}
-	}, [dispatch, user]);
+	}, [dispatch, user, loadUser]);
 	return <></>;
 };
 
-export default SocketNotifications;
+export default connect(null, { loadUser })(SocketNotifications);

@@ -58,7 +58,6 @@ const UserProfile = ({
 		.some((el) => el === true);
 	// Get counts for each type of rating
 	const [likes, notread, dislikes] = calculateRatings(user.ratings);
-	console.log(currentUser, user);
 	return (
 		<div>
 			<BreadCrumb cssClass={styles.breadcrumb}>

@@ -84,6 +84,10 @@ io.on("connection", (socket) => {
 		io.to(username).emit("accept", { user: newFriend });
 		io.to(newFriendUsername).emit("reqAccepted", { user });
 	});
+	socket.on("responded", async ({ newFriendUsername, username }) => {
+		io.to(username).emit("res", { username: username });
+		io.to(newFriendUsername).emit("res", { username: username });
+	});
 });
 
 const PORT = process.env.PORT || 3002;

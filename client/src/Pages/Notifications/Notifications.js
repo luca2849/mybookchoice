@@ -18,18 +18,21 @@ import { GrClose } from "react-icons/gr";
 const Notifications = ({
 	getNotifications,
 	respondToRequest,
-	userState: { username, notifications, loading },
+	userState: { notifications, loading },
 	auth: { user },
 }) => {
-	console.log(notifications, user);
 	useEffect(() => {
 		getNotifications(10, 0);
 	}, [getNotifications]);
 	const handleClick = (notification, remoteUser, response) => {
 		respondToRequest(notification, remoteUser, response, 10, 0);
 		// Emit event when accepting request
+		const socket = io("/", { query: `user:${user.username}` });
+		socket.emit("responded", {
+			newFriendUsername: remoteUser,
+			username: user.username,
+		});
 		if (response) {
-			const socket = io("/", { query: `user:${user.username}` });
 			socket.emit("accepted", {
 				newFriendUsername: remoteUser,
 				username: user.username,
